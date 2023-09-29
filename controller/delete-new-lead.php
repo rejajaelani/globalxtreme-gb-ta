@@ -6,21 +6,35 @@ function deleteUserData($id)
     global $conn; // Menggunakan koneksi yang sudah dibuat di KoneksiController.php
 
     // Menggunakan prepared statement untuk menghindari SQL injection
-    $sql = "DELETE FROM new_lead WHERE Id = ?";
-    $stmt = $conn->prepare($sql);
+    $sql1 = "DELETE FROM new_lead WHERE Id = ?";
+    $stmt1 = $conn->prepare($sql1);
 
-    if ($stmt) {
+    if ($stmt1) {
         // Mengikat parameter
-        $stmt->bind_param("i", $id);
+        $stmt1->bind_param("s", $id);
 
-        if ($stmt->execute()) {
-            return true; // Data berhasil dihapus
+        if ($stmt1->execute()) {
+            // Menggunakan prepared statement untuk menghapus catatan di tb_notes_newlead
+            $sql2 = "DELETE FROM tb_notes_newlead WHERE id_newlead = ?";
+            $stmt2 = $conn->prepare($sql2);
+
+            if ($stmt2) {
+                $stmt2->bind_param("s", $id);
+                if ($stmt2->execute()) {
+                    return true; // Data berhasil dihapus
+                } else {
+                    return false; // Terjadi kesalahan saat menghapus catatan di tb_notes_newlead
+                }
+                $stmt2->close();
+            } else {
+                return false; // Terjadi kesalahan dalam persiapan pernyataan SQL untuk tb_notes_newlead
+            }
         } else {
-            return false; // Terjadi kesalahan saat menghapus data
+            return false; // Terjadi kesalahan saat menghapus data dari new_lead
         }
-        $stmt->close();
+        $stmt1->close();
     } else {
-        return false; // Terjadi kesalahan dalam persiapan pernyataan SQL
+        return false; // Terjadi kesalahan dalam persiapan pernyataan SQL untuk new_lead
     }
 }
 
@@ -31,6 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         header("Location: ../../new-lead/");
         exit;
     } else {
-        echo "Terjadi kesalahan saat menghapus data pengguna.";
+        echo "Terjadi kesalahan saat menghapus data newlead.";
     }
 }

@@ -8,6 +8,7 @@ $errorMsg = "";
 // Cek apakah form telah disubmit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Ambil data dari form
+    $id_prospect_edit = $_POST['id-prospect-edit'];
     $id_lead = $_POST["id_lead"];
     $customer_type = $_POST["customer-type"];
     $notes_customer_type = $_POST["notes-customer-type"];
@@ -40,6 +41,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sales_rep = $_POST["sales-rep"];
     $lead_tele = $_POST["lead-tele"];
     $general_notes_all = $_POST["general-notes-all"];
+    date_default_timezone_set('Asia/Makassar');
+    $last_update = date("Y-m-d h:i:s");
 
     $id_card_foto_name = $_FILES["id-card-foto"]["name"];
     $id_card_foto_tmp = $_FILES["id-card-foto"]["tmp_name"];
@@ -85,57 +88,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (in_array("", $required_fields)) {
         $errorMsg = "Semua kolom harus diisi.";
     } else {
-        // Query SQL untuk menyimpan data
-        $sql = "INSERT INTO prospect (Id, Id_newlead, Prospect_type_cust, Note_type_cust, Givenname, Gender, Birthday, Surname, Religion, Hometown, Curcity, Nationality, Curaddress, Area, Type, Mobile, home_number, Id_card_no, Passport_no, Id_card_foto, Passport_foto, Streetname, Building_type, Building_name, No, Property_ownership_type, Location, latitude, longitude, Id_packages, Id_pengguna, sales_representativ, Lead_telemarketing, General_note) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        // Query SQL untuk mengedit data
+        $sql = "UPDATE prospect SET Id_newlead = '$id_lead', Prospect_type_cust = '$customer_type', Note_type_cust = '$notes_customer_type', Givenname = '$first_name', Gender = '$gender', Birthday = '$birthday', Surname = '$last_name', Religion = '$religion', Hometown = '$hometown', Curcity = '$current_city', Nationality = '$nationality', Curaddress = '$current_address', Area = '$area', Type = '$type_general', Mobile = '$mobile_phone', home_number = '$home_phone', Id_card_no = '$id_card_no', Passport_no = '$passport_no', Id_card_foto = '$id_card_foto_name_rand', Passport_foto = '$passport_foto_name_rand', Streetname = '$street_name', Building_type = '$building_type', Building_name = '$building_name', No = '$building_number', Property_ownership_type = '$property_owner_type', Location = '$location_nickname', latitude = '$latitude', longitude = '$longitude', Id_packages = '$package_id', Id_pengguna = '$id_pengguna', sales_representativ = '$sales_rep', Lead_telemarketing = '$lead_tele', General_note = '$general_notes_all', last_update = '$last_update' WHERE Id = '$id_prospect_edit'";
 
-        $stmt = $conn->prepare($sql);
+        $stmt = mysqli_query($conn, $sql);
 
         if (!$stmt) {
-            die("Gagal menyiapkan pernyataan SQL: " . $conn->error);
+            die("Gagal menyiapkan pernyataan SQL: " . mysqli_error($conn));
         }
 
-        // Bind parameter dengan tipe data yang sesuai
-        $stmt->bind_param(
-            "sssssssssssssssssiisssssissssiiiis",
-            $id_prospect,
-            $id_lead,
-            $customer_type,
-            $notes_customer_type,
-            $first_name,
-            $gender,
-            $birthday,
-            $last_name,
-            $religion,
-            $hometown,
-            $current_city,
-            $nationality,
-            $current_address,
-            $area,
-            $type_general,
-            $mobile_phone,
-            $home_phone,
-            $id_card_no,
-            $passport_no,
-            $id_card_foto_name_rand,
-            $passport_foto_name_rand,
-            $street_name,
-            $building_type,
-            $building_name,
-            $building_number,
-            $property_owner_type,
-            $location_nickname,
-            $latitude,
-            $longitude,
-            $package_id,
-            $id_pengguna,
-            $sales_rep,
-            $lead_tele,
-            $general_notes_all
-        );
-
-        if ($stmt->execute()) {
-            // Data berhasil disimpan ke database
-            echo '<div class="alert alert-success">Data berhasil disimpan.</div>';
+        if ($stmt) {
+            // Data berhasil diubah di database
+            echo '<div class="alert alert-success">Data berhasil diubah.</div>';
 
             // Hapus foto lama jika ada
             if (!empty($id_card_foto_name_rand)) {
@@ -162,15 +126,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
         } else {
             // Gagal menyimpan data ke database
-            echo '<div class="alert alert-danger">Terjadi kesalahan saat menyimpan data: ' . $stmt->error . '</div>';
+            echo '<div class="alert alert-danger">Terjadi kesalahan saat mengubah data: ' . mysqli_error($conn) . '</div>';
         }
-
-        // Tutup statement
-        $stmt->close();
     }
 
     // Tutup koneksi database
-    $conn->close();
+    mysqli_close($conn);
 }
 
 // Jika terdapat pesan kesalahan, tampilkan pesan kesalahan

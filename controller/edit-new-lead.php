@@ -16,6 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $probability = $_POST["probability"];
     $source = $_POST["source"];
     $media = $_POST["media"];
+    date_default_timezone_set('Asia/Makassar');
     $last_update = date("Y-m-d H:i:s");
     $asigned_to = 00;
 
@@ -36,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $updateStmt = $conn->prepare($updateSql);
 
             if ($updateStmt) {
-                $updateStmt->bind_param("ssssssssssssssi", $fullname, $address, $phonenumber, $email, $companyname, $companyaddress, $companyphonenumber, $companyemail, $status, $probability, $source, $media, $asigned_to, $last_update, $id_new_lead);
+                $updateStmt->bind_param("sssssssssssssss", $fullname, $address, $phonenumber, $email, $companyname, $companyaddress, $companyphonenumber, $companyemail, $status, $probability, $source, $media, $asigned_to, $last_update, $id_new_lead);
                 if ($updateStmt->execute()) {
                     header("Location: ../new-lead/");
                     exit;

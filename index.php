@@ -1,31 +1,36 @@
-<?php 
+<?php
 session_start();
 
 include "controller/KoneksiController.php"; // Pastikan Anda memasukkan file yang benar
 
 if (isset($_SESSION['login_status'])) {
     $sql = "SELECT * FROM pengguna WHERE is_login = " . $_SESSION['login_status'];
-    
+
     $result = mysqli_query($conn, $sql);
-    
+
     if (!$result) {
         // Query tidak berhasil
         die("Error: " . mysqli_error($conn));
     }
-    
-    if (mysqli_num_rows($result) > 0) { 
+
+    if (mysqli_num_rows($result) > 0) {
         // Pengguna tidak memiliki akses yang valid, arahkan kembali ke halaman login atau halaman lain yang sesuai
         header("Location: dashboard/");
         exit; // Pastikan untuk menghentikan eksekusi kode setelah pengalihan
     }
 }
 
-  
-  // Data sesuai dengan session login_status, tidak perlu mengarahkan
-  // Anda dapat melanjutkan eksekusi kode jika pengguna memiliki akses yang valid
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    $msg = isset($_GET['msg']) ? $_GET['msg'] : '';
+}
+
+
+// Data sesuai dengan session login_status, tidak perlu mengarahkan
+// Anda dapat melanjutkan eksekusi kode jika pengguna memiliki akses yang valid
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,6 +38,7 @@ if (isset($_SESSION['login_status'])) {
     <link rel="stylesheet" href="css/style.css">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 </head>
+
 <body>
     <section class="container">
         <div class="wrapper">
@@ -41,6 +47,10 @@ if (isset($_SESSION['login_status'])) {
             </div>
             <div class="form-login">
                 <p>Welcome to</p>
+                <?php
+                if ($msg != '') { ?>
+                    <div style="font-weight: bold;padding: 2px 10px;background-color: #FF6969;border-radius: 10px;"><?= $msg ?></div>
+                <?php } ?>
                 <form action="controller/LoginController.php" method="post">
                     <input type="email" name="email" id="email" placeholder="Email" required>
                     <input type="password" name="password" id="password" placeholder="Password" required>
@@ -52,4 +62,5 @@ if (isset($_SESSION['login_status'])) {
         </div>
     </section>
 </body>
+
 </html>

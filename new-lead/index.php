@@ -168,8 +168,15 @@ if (!$result) {
                                                         <label for="status">Status</label>
                                                         <select class="form-control" id="status" name="status">
                                                             <option value="">-- Select Status --</option>
-                                                            <option value="Active" <?= ($status == 'Active') ? 'selected' : ''; ?>>Active</option>
-                                                            <option value="Non-Active" <?= ($status == 'Non-Active') ? 'selected' : ''; ?>>Non-Active</option>
+                                                            <option value="Scheduled" <?= ($status == 'Scheduled') ? 'selected' : ''; ?>>Scheduled</option>
+                                                            <option value="Consideration" <?= ($status == 'Consideration') ? 'selected' : ''; ?>>Consideration</option>
+                                                            <option value="Junk" <?= ($status == 'Junk') ? 'selected' : ''; ?>>Junk</option>
+                                                            <option value="FCB - Future Call Back" <?= ($status == 'FCB - Future Call Back') ? 'selected' : ''; ?>>FCB - Future Call Back</option>
+                                                            <option value="Qualified" <?= ($status == 'Qualified') ? 'selected' : ''; ?>>Qualified</option>
+                                                            <option value="NI - Not Interested" <?= ($status == 'NI - Not Interested') ? 'selected' : ''; ?>>NI - Not Interested</option>
+                                                            <option value="Out Cover" <?= ($status == 'Out Cover') ? 'selected' : ''; ?>>Out Cover</option>
+                                                            <option value="Not Response" <?= ($status == 'Not Response') ? 'selected' : ''; ?>>Not Response</option>
+                                                            <option value="Pending" <?= ($status == 'Pending') ? 'selected' : ''; ?>>Pending</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -178,7 +185,7 @@ if (!$result) {
                                                         <label for="probability">Probability</label>
                                                         <select class="form-control" id="probability" name="probability">
                                                             <option value="">-- Select Probability --</option>
-                                                            <option value="Confirmed" <?= ($probability == 'Confirmed') ? 'selected' : ''; ?>>Confirmed</option>
+                                                            <option value="Converted" <?= ($probability == 'Converted') ? 'selected' : ''; ?>>Converted</option>
                                                             <option value="Pending" <?= ($probability == 'Pending') ? 'selected' : ''; ?>>Pending</option>
                                                             <option value="Cancel" <?= ($probability == 'Cancel') ? 'selected' : ''; ?>>Cancel</option>
                                                         </select>
@@ -218,7 +225,7 @@ if (!$result) {
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    <table id="example1" class="table table-bordered table-striped">
+                                    <table id="example1" class="table table-bordered table-striped" style="font-size: 12px !important;">
                                         <thead>
                                             <tr>
                                                 <th>Lead</th>
@@ -242,7 +249,7 @@ if (!$result) {
                                                     echo "<td>" . $row['Fullname'] . "</td>";
                                                     echo "<td>" . $row['Phonenumber'] . "</td>";
                                                     echo "<td>" . $row['Status'] . "</td>";
-                                                    if ($row['Probability'] === 'Confirmed') {
+                                                    if ($row['Probability'] === 'Converted') {
                                                         echo "<td><div class='badge badge-primary'>" . $row['Probability'] . "</div></td>";
                                                     } elseif ($row['Probability'] === 'Pending') {
                                                         echo "<td><div class='badge badge-warning'>" . $row['Probability'] . "</div></td>";
@@ -280,6 +287,9 @@ if (!$result) {
                                                         </a>
                                                         <a href="../controller/delete-new-lead.php/?id=<?= $row['Id'] ?>" class="btn btn-sm btn-danger">
                                                             <i class="fas fa-times"></i>
+                                                        </a>
+                                                        <a href="./detail/?id=<?= $row['Id'] ?>" class="btn btn-sm btn-secondary">
+                                                            <i class="fas fa-info"></i>
                                                         </a>
                                                     </td>
                                             <?php

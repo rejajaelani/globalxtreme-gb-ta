@@ -177,7 +177,7 @@ $result = mysqli_query($conn, $sql);
                                                         }
                                                     }
                                                     echo "<td><strong>Uknown</strong></td>";
-                                                    echo "<td>" . $row['last_update'] . "</td>";
+                                                    echo "<td>" . $row['created_at'] . "</td>";
                                                     $sql3 = "SELECT * FROM pengguna WHERE Id = " . $row['sales_representativ'];
                                                     $result3 = mysqli_query($conn, $sql3);
                                                     if ($result3->num_rows > 0) {
@@ -187,7 +187,7 @@ $result = mysqli_query($conn, $sql);
                                                     }
                                             ?>
                                                     <td>
-                                                        <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                                        <a href="../controller/delete-prospect.php?id=<?= $row['Id'] ?>" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
                                                         <a href="./edit-data?id=<?= $row['Id'] ?>" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
                                                     </td>
                                             <?php

@@ -24,6 +24,7 @@ if (isset($_GET['id'])) {
     echo "Parameter ID tidak ditemukan.";
     exit;
 }
+$status = $row['Status'];
 ?>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -45,7 +46,7 @@ if (isset($_GET['id'])) {
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-12">
-                            <h1 class="m-0">Edit Data Pengguna</h1>
+                            <h1 class="m-0">Edit Data New Lead</h1>
                         </div><!-- /.col -->
                         <div class="col-12">
                             <ol class="breadcrumb">
@@ -139,8 +140,15 @@ if (isset($_GET['id'])) {
                                             <div class="col-sm-10">
                                                 <select class="form-control" id="status" name="status">
                                                     <option style="display: none;">-- Select Status --</option>
-                                                    <option <?php echo $row['Status'] == "Active" ? "selected" : ""; ?>>Active</option>
-                                                    <option <?php echo $row['Status'] == "Non-Active" ? "selected" : ""; ?>>Non-Active</option>
+                                                    <option value="Scheduled" <?= ($status == 'Scheduled') ? 'selected' : ''; ?>>Scheduled</option>
+                                                    <option value="Consideration" <?= ($status == 'Consideration') ? 'selected' : ''; ?>>Consideration</option>
+                                                    <option value="Junk" <?= ($status == 'Junk') ? 'selected' : ''; ?>>Junk</option>
+                                                    <option value="FCB - Future Call Back" <?= ($status == 'FCB - Future Call Back') ? 'selected' : ''; ?>>FCB - Future Call Back</option>
+                                                    <option value="Qualified" <?= ($status == 'Qualified') ? 'selected' : ''; ?>>Qualified</option>
+                                                    <option value="NI - Not Interested" <?= ($status == 'NI - Not Interested') ? 'selected' : ''; ?>>NI - Not Interested</option>
+                                                    <option value="Out Cover" <?= ($status == 'Out Cover') ? 'selected' : ''; ?>>Out Cover</option>
+                                                    <option value="Not Response" <?= ($status == 'Not Response') ? 'selected' : ''; ?>>Not Response</option>
+                                                    <option value="Pending" <?= ($status == 'Pending') ? 'selected' : ''; ?>>Pending</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -149,7 +157,7 @@ if (isset($_GET['id'])) {
                                             <div class="col-sm-10">
                                                 <select class="form-control" id="probability" name="probability">
                                                     <option style="display: none;">-- Select Probability --</option>
-                                                    <option <?php echo $row['Probability'] == "Confirmed" ? "selected" : ""; ?>>Confirmed</option>
+                                                    <option <?php echo $row['Probability'] == "Converted" ? "selected" : ""; ?>>Converted</option>
                                                     <option <?php echo $row['Probability'] == "Pending" ? "selected" : ""; ?>>Pending</option>
                                                     <option <?php echo $row['Probability'] == "Cancel" ? "selected" : ""; ?>>Cancel</option>
                                                 </select>

@@ -14,5 +14,3 @@ if (!$conn) {
 
 // Test Koneksi Berhasil
 // echo "Koneksi Berhasil";
-
-?>

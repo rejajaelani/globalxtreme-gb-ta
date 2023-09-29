@@ -112,8 +112,15 @@
                                             <div class="col-sm-10">
                                                 <select class="form-control" id="status" name="status">
                                                     <option style="display: none;">-- Select Status --</option>
-                                                    <option>Active</option>
-                                                    <option>Non-Active</option>
+                                                    <option>Scheduled</option>
+                                                    <option>Consideration</option>
+                                                    <option>Junk</option>
+                                                    <option>FCB - Future Call Back</option>
+                                                    <option>Qualified</option>
+                                                    <option>NI - Not Interested</option>
+                                                    <option>Out Cover</option>
+                                                    <option>Not Response</option>
+                                                    <option>Pending</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -122,7 +129,7 @@
                                             <div class="col-sm-10">
                                                 <select class="form-control" id="probability" name="probability">
                                                     <option style="display: none;">-- Select Probability --</option>
-                                                    <option>Confirmed</option>
+                                                    <option>Converted</option>
                                                     <option>Pending</option>
                                                     <option>Cancel</option>
                                                 </select>

@@ -22,7 +22,7 @@ if (mysqli_num_rows($result) > 0) {
     // Data ditemukan, verifikasi password
     $row = mysqli_fetch_assoc($result);
     $hashed_password = $row['Password'];
-    
+
     if (password_verify($password, $hashed_password)) {
         // Password cocok, login berhasil
         // Lakukan registrasi identifikasi login dan register session
@@ -32,7 +32,7 @@ if (mysqli_num_rows($result) > 0) {
         $dateNow = date("Y-m-d H:i:s");
 
         $_SESSION['login_status'] = $token_login;
-        
+
         // Tambahkan tanda kutip pada variabel $dateNow
         $is_login = "UPDATE pengguna SET is_login = " . $_SESSION['login_status'] . ", Last_login = '" . $dateNow . "' WHERE Email = '$email'";
         $result = mysqli_query($conn, $is_login);
@@ -45,11 +45,13 @@ if (mysqli_num_rows($result) > 0) {
         }
     } else {
         // Password tidak cocok
-        echo "Password salah.";
+        header("Location: ../?msg=Email Atau Password Invalid");
+        exit;
     }
 } else {
     // User dengan email yang dimasukkan tidak ditemukan
-    echo "User tidak ditemukan.";
+    header("Location: ../?msg=Email Atau Password Invalid");
+    exit;
 }
 
 // Memastikan $_SESSION['level'] diatur
@@ -59,4 +61,3 @@ if (!isset($_SESSION['level'])) {
 
 // Menutup koneksi ke database
 mysqli_close($conn);
-?>
