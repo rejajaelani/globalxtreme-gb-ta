@@ -22,7 +22,7 @@
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item menu-close">
+          <li class="nav-item menu-close" style="<?= ($levelIs_login == 3) ? 'display: none' : ''; ?>">
             <a href="#" class="nav-link text-dark" style="font-size: 18px;">
               <i class="fas fa-chart-bar"></i>
               <p>
@@ -30,7 +30,7 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">   
+            <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="./" class="nav-link text-dark">
                   <i class="far fa-circle nav-icon"></i>
@@ -80,7 +80,7 @@
               <p>Config App</p>
             </a>
           </li>
-          <li class="nav-item menu-close">
+          <li class="nav-item menu-close" style="<?= ($levelIs_login == 3) ? 'display: none' : ''; ?>">
             <a href="#" class="nav-link text-dark" style="font-size: 18px;">
               <i class="fas fa-file"></i>
               <p>

@@ -30,7 +30,11 @@ $sql = "SELECT * FROM new_lead";
 
 // Inisialisasi variabel pencarian
 $where = array();
-$sales_src = isset($_GET['sales-src']) ? $_GET['sales-src'] : '';
+if ($levelIs_login == 3) {
+    $sales_src = $idIs_login;
+} else {
+    $sales_src = isset($_GET['sales-src']) ? $_GET['sales-src'] : '';
+}
 $status = isset($_GET['status']) ? $_GET['status'] : '';
 $probability = isset($_GET['probability']) ? $_GET['probability'] : '';
 $source = isset($_GET['source']) ? $_GET['source'] : '';
@@ -138,7 +142,7 @@ if (!$result) {
                                         <form method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                                             <div class=" row">
                                                 <div class="col-12">
-                                                    <div class="form-group">
+                                                    <div class="form-group" style="<?= ($levelIs_login == 3) ? 'display: none' : ''; ?>">
                                                         <label for="sales-src">Search By Sales</label>
                                                         <select class="form-control" id="sales-src" name="sales-src">
                                                             <option value="">-- Select Sales --</option>

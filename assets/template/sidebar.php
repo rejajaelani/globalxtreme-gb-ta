@@ -22,7 +22,7 @@
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item menu-close">
+          <li class="nav-item menu-close" style="<?= ($levelIs_login == 3) ? 'display: none' : ''; ?>">
             <a href="#" class="nav-link text-dark" style="font-size: 18px;">
               <i class="fas fa-chart-bar"></i>
               <p>
@@ -80,7 +80,7 @@
               <p>Config App</p>
             </a>
           </li>
-          <li class="nav-item menu-close">
+          <li class="nav-item menu-close" style="<?= ($levelIs_login == 3) ? 'display: none' : ''; ?>">
             <a href="#" class="nav-link text-dark" style="font-size: 18px;">
               <i class="fas fa-file"></i>
               <p>

@@ -35,7 +35,6 @@ if ($resultIs_login->num_rows > 0) {
     $idIs_login = $rowIs_login['Id'];
     $foto = $rowIs_login['Foto'];
     $levelIs_login = $rowIs_login['Level'];
-
   }
 } else {
   echo "Tidak ada data yang ditemukan.";

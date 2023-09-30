@@ -1,3 +1,26 @@
+@media (max-width: 1090px) {
+    /* body {
+        display: none !important;
+    }  */
+    body::after {
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 24px;
+        color: rgba(0, 0, 0, 0.601);
+        content: 'The application is only for 1090px screens and above';
+        width: 100%;
+        height: 100%;
+        background-color: #1AB394;
+        z-index: 999999;
+    }
+}
+
 .nav-item a p {
     font-family:"Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
 }

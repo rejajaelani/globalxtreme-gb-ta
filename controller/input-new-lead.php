@@ -14,7 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $probability = $_POST["probability"];
     $source = $_POST["source"];
     $media = $_POST["media"];
-    $last_update = date("Y-m-d");
+    date_default_timezone_set('Asia/Makassar');
+    $last_update = date("Y-m-d h:i:s");
     $asigned_to = 00;
 
     // Inisialisasi variabel

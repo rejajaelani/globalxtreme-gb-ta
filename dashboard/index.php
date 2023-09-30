@@ -8,7 +8,11 @@ $sql00 = "SELECT * FROM prospect";
 // Inisialisasi variabel pencarian
 $where = array();
 date_default_timezone_set('Asia/Makassar');
-$sales_src = isset($_GET['sales-src']) ? $_GET['sales-src'] : '';
+if ($levelIs_login == 3) {
+  $sales_src = $idIs_login;
+} else {
+  $sales_src = isset($_GET['sales-src']) ? $_GET['sales-src'] : '';
+}
 $tahun_src = isset($_GET['tahun-src']) ? $_GET['tahun-src'] : date('Y');
 $status = isset($_GET['status']) ? $_GET['status'] : '';
 
@@ -24,6 +28,9 @@ if (!empty($status)) {
 if (!empty($where)) {
   $sql00 .= " WHERE " . implode(" AND ", $where);
 } else {
+  // if ($levelIs_login == 3) {
+  //   $sql00 .= " WHERE sales_representativ = " . $idIs_login;
+  // }
   $sql00;
 }
 
@@ -105,7 +112,7 @@ if (!$result00) {
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-6 col-sm-12">
+            <div class="col-lg-6 col-sm-12" style="<?= ($levelIs_login == 3) ? 'display: none' : ''; ?>">
               <div class="card">
                 <div class="card-header border-0">
                   <p class="text-secondary m-0">Filter Data</p>
@@ -201,45 +208,38 @@ if (!$result00) {
 
             // echo "Tercapai = " . number_format($tercapai); // Menampilkan nilai tercapai setelah loop
 
-            if ($nama_pengguna == '') {
             ?>
-              <div class="col-lg-6 col-sm-12">
-                <p class="badge badge-warning">Belum Ada Data!!</p>
-              </div>
-            <?php } else {
-
-            ?>
-              <div class="col-lg-6 col-sm-12">
-                <div class="card">
-                  <div class="card-header border-0">
-                    <?php
-                    if ($sales_src === "") { ?>
-                      <p class="text-secondary m-0">Target Capaian Sales A/N : All</p>
-                    <?php } else { ?>
-                      <p class="text-secondary m-0">Target Capaian Sales A/N : <?= $nama_pengguna ?></p>
-                    <?php } ?>
+            <div class="<?= ($levelIs_login == 3) ? 'col-lg-12' : 'col-lg-6'; ?> col-sm-12">
+              <div class="card">
+                <div class="card-header border-0">
+                  <?php
+                  if ($sales_src === "") { ?>
+                    <p class="text-secondary m-0">Target Capaian Sales A/N : All</p>
+                  <?php } else { ?>
+                    <p class="text-secondary m-0">Target Capaian Sales A/N : <?= $nama_pengguna ?></p>
+                  <?php } ?>
+                </div>
+                <div class="card-body">
+                  <div class="ket" style="display: flex;justify-content: space-between;">
+                    <p class="badge badge-warning">Tercapai : Rp. <?= number_format($tercapai) ?></p>
+                    <p class="badge badge-success">Target : Rp. <?= number_format($target) ?></p>
                   </div>
-                  <div class="card-body">
-                    <div class="ket" style="display: flex;justify-content: space-between;">
-                      <p class="badge badge-warning">Tercapai : Rp. <?= number_format($tercapai) ?></p>
-                      <p class="badge badge-success">Target : Rp. <?= number_format($target) ?></p>
+                  <?php
+                  if ($tercapai === $target) {
+                  ?>
+                    <div class="progress rounded">
+                      <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <?php
-                    if ($tercapai === $target) {
-                    ?>
-                      <div class="progress rounded">
-                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    <?php
-                    } else {
-                    ?>
-                      <div class="progress rounded">
-                        <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: <?= $percent ?>%" aria-valuenow="<?= $percent ?>" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    <?php } ?>
-                  </div>
+                  <?php
+                  } else {
+                  ?>
+                    <div class="progress rounded">
+                      <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: <?= $percent ?>%" aria-valuenow="<?= $percent ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  <?php } ?>
                 </div>
               </div>
+            </div>
           </div>
           <!-- /.row -->
           <div class="row">
@@ -278,7 +278,6 @@ if (!$result00) {
             </div>
             <!-- /.col -->
           </div>
-        <?php } ?>
 
         </div><!-- /.container-fluid -->
       </section>

@@ -124,17 +124,28 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <label for="probability" class="col-sm-2 col-form-label">Probability</label>
-                                            <div class="col-sm-10">
-                                                <select class="form-control" id="probability" name="probability">
-                                                    <option style="display: none;">-- Select Probability --</option>
-                                                    <option>Converted</option>
-                                                    <option>Pending</option>
-                                                    <option>Cancel</option>
-                                                </select>
+                                        <?php
+                                        if ($levelIs_login == 3) {
+                                        ?>
+                                            <div class="form-group row">
+                                                <label for="probability" class="col-sm-2 col-form-label">Probability</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="probability" name="probability" value="Pending" readonly>
+                                                </div>
                                             </div>
-                                        </div>
+                                        <?php } else { ?>
+                                            <div class="form-group row">
+                                                <label for="probability" class="col-sm-2 col-form-label">Probability</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control" id="probability" name="probability">
+                                                        <option style="display: none;">-- Select Probability --</option>
+                                                        <option>Converted</option>
+                                                        <option>Pending</option>
+                                                        <option>Cancel</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
                                         <div class="form-group row">
                                             <label for="source" class="col-sm-2 col-form-label">Source</label>
                                             <div class="col-sm-10">
