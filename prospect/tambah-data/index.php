@@ -77,8 +77,8 @@
                                         <div class="form-group">
                                             <select class="form-control" id="customer-type" name="customer-type">
                                                 <option value="">-- Select Customer Type --</option>
-                                                <option>1</option>
-                                                <option>2</option>
+                                                <option>Residential</option>
+                                                <option>Company</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -189,10 +189,8 @@
                                                     <label for="type-general">Type</label>
                                                     <select class="form-control" id="type-general" name="type-general">
                                                         <option value="">-- Select Type --</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
+                                                        <option>Residential</option>
+                                                        <option>Company</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -270,20 +268,24 @@
                                                     <label for="building-type">Building Type</label>
                                                     <select class="form-control" id="building-type" name="building-type">
                                                         <option value="">-- Select Building Type --</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
+                                                        <option>House</option>
+                                                        <option>Office House</option>
+                                                        <option>Villa</option>
+                                                        <option>Workplace</option>
+                                                        <option>Office</option>
+                                                        <option>Hotel</option>
+                                                        <option>Factory</option>
+                                                        <option>Others</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="property-owner-type">Property Owner Type</label>
                                                     <select class="form-control" id="property-owner-type" name="property-owner-type">
                                                         <option value="">-- Select Property Owner Type --</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
+                                                        <option>Sole Owner</option>
+                                                        <option>Rent Tenancy</option>
+                                                        <option>Joint Tenancy</option>
+                                                        <option>Community</option>
                                                     </select>
                                                 </div>
                                             </div>
