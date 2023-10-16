@@ -3,6 +3,8 @@ session_start();
 
 include "../controller/KoneksiController.php"; // Pastikan Anda memasukkan file yang benar
 
+include "../assets/delMsg.php";
+
 $sql = "SELECT * FROM pengguna WHERE is_login = " . $_SESSION['login_status'];
 
 $result = mysqli_query($conn, $sql);
@@ -30,7 +32,6 @@ if ($resultIs_login->num_rows > 0) {
     $idIs_login = $rowIs_login['Id'];
     $foto = $rowIs_login['Foto'];
     $levelIs_login = $rowIs_login['Level'];
-
   }
 } else {
   echo "Tidak ada data yang ditemukan.";
@@ -83,6 +84,42 @@ if ($resultIs_login->num_rows > 0) {
       <div class="content-header">
         <div class="container-fluid">
           <div class="row mb-2">
+            <?php
+            if (!empty($_SESSION['msg'])) {
+            ?>
+              <div class="col-12">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <strong>Message!</strong> <?= $_SESSION['msg']['key'] ?>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </div>
+            <?php } ?>
+            <?php
+            if (!empty($_SESSION['msg-w'])) {
+            ?>
+              <div class="col-12">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong>Message!</strong> <?= $_SESSION['msg-w']['key'] ?>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </div>
+            <?php } ?>
+            <?php
+            if (!empty($_SESSION['msg-f'])) {
+            ?>
+              <div class="col-12">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <strong>Message!</strong> <?= $_SESSION['msg-f']['key'] ?>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </div>
+            <?php } ?>
             <div class="col-12">
               <h1 class="m-0">Data Packages</h1>
             </div><!-- /.col -->
@@ -193,6 +230,8 @@ if ($resultIs_login->num_rows > 0) {
   <!-- Data Table -->
   <script src="../assets/dataTable.min.js"></script>
   <script src="../assets/dataTable.bootstrap4.min.js"></script>
+  <!-- Bootstrap JavaScript -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <!-- AdminLTE App -->
   <script src="../assets/dist/js/adminlte.js"></script>
   <!-- AdminLTE for demo purposes -->

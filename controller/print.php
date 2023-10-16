@@ -2,6 +2,31 @@
 
 include "./KoneksiController.php";
 
+session_start();
+
+$sql = "SELECT * FROM pengguna WHERE is_login = " . $_SESSION['login_status'];
+
+$result = mysqli_query($conn, $sql);
+
+if (!$result) {
+    // Query tidak berhasil
+    die("Error: " . mysqli_error($conn));
+}
+
+if (mysqli_num_rows($result) == 0) {
+    // Pengguna tidak memiliki akses yang valid, arahkan kembali ke halaman login atau halaman lain yang sesuai
+    header("Location: ../");
+    exit; // Pastikan untuk menghentikan eksekusi kode setelah pengalihan
+} else {
+    $row = mysqli_fetch_assoc($result);
+    $email = $row['Email'];
+    $name = $row['Nama'];
+    $idIs_login = $row['Id'];
+    $foto = $row['Foto'];
+    $levelIs_login = $row['Level'];
+}
+
+
 // Inisialisasi variabel SQL
 $type = isset($_POST['type']) ? $_POST['type'] : '';
 if ($type == 'New Lead') {
@@ -78,6 +103,19 @@ if (!$result) {
     die("Error: " . mysqli_error($conn));
 }
 
+if ($levelIs_login == 3 && $sales_src == "") {
+    $_SESSION['msg-f'] = [
+        'key' => 'Gagal mendapatkan data print!',
+        'timestamp' => time()
+    ];
+    if ($type == "New Lead") {
+        header("Location: ../laporan/new-lead");
+        exit;
+    } else {
+        header("Location: ../laporan/prospect");
+        exit;
+    }
+}
 
 ?>
 <!DOCTYPE html>

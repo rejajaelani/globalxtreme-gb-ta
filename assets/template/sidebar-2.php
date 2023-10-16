@@ -80,7 +80,7 @@
               <p>Config App</p>
             </a>
           </li>
-          <li class="nav-item menu-close" style="<?= ($levelIs_login == 3) ? 'display: none' : ''; ?>">
+          <li class="nav-item menu-close">
             <a href="#" class="nav-link text-dark" style="font-size: 18px;">
               <i class="fas fa-file"></i>
               <p>

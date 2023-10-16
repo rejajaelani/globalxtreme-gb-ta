@@ -1,5 +1,10 @@
 <?php include "../../assets/template/header-2.php" ?>
 
+<?php
+// Inisialisasi variabel SQL
+$sql = "SELECT * FROM tb_user";
+?>
+
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 

@@ -1,6 +1,8 @@
 <?php
 include "./KoneksiController.php";
 
+session_start();
+
 function deleteUserData($id)
 {
     global $conn; // Menggunakan koneksi yang sudah dibuat di KoneksiController.php
@@ -28,9 +30,18 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $id = $_GET["id"]; // Mengambil ID pengguna yang akan dihapus
 
     if (deleteUserData($id)) {
+        $_SESSION['msg'] = [
+            'key' => 'Data procpect berhasil didelete',
+            'timestamp' => time()
+        ];
         header("Location: ../prospect/");
         exit;
     } else {
-        echo "Terjadi kesalahan saat menghapus data pengguna.";
+        $_SESSION['msg-f'] = [
+            'key' => 'Terjadi kesalahan saat menghapus data prospect : ' . mysqli_error($conn),
+            'timestamp' => time()
+        ];
+        header("Location: ../prospect/");
+        exit;
     }
 }

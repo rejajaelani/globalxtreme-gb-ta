@@ -2,6 +2,8 @@
 // Include koneksi database
 include_once("./KoneksiController.php");
 
+session_start();
+
 // Inisialisasi variabel untuk menyimpan pesan kesalahan
 $errorMsg = "";
 
@@ -54,7 +56,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = mysqli_query($conn, $sql);
 
     if (!$result) {
-        die("Gagal menjalankan query: " . mysqli_error($conn));
+        $_SESSION['msg-f'] = [
+            'key' => 'Gagal mendapatkan data: ' . mysqli_error($conn),
+            'timestamp' => time()
+        ];
+        header("Location: ../prospect");
+        exit;
     }
 
     $row = mysqli_fetch_assoc($result);
@@ -91,7 +98,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = $conn->prepare($sql);
 
         if (!$stmt) {
-            die("Gagal menyiapkan pernyataan SQL: " . $conn->error);
+            $_SESSION['msg-f'] = [
+                'key' => 'Gagal menyiapkan pernyataan SQL: ' . mysqli_error($conn),
+                'timestamp' => time()
+            ];
+            header("Location: ../prospect");
+            exit;
         }
 
         // Bind parameter dengan tipe data yang sesuai
@@ -135,7 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($stmt->execute()) {
             // Data berhasil disimpan ke database
-            echo '<div class="alert alert-success">Data berhasil disimpan.</div>';
+            // echo '<div class="alert alert-success">Data berhasil disimpan.</div>';
 
             // Hapus foto lama jika ada
             if (!empty($id_card_foto_name_rand)) {
@@ -158,11 +170,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             move_uploaded_file($passport_foto_tmp, "../images/passport/" . $passport_foto_name_rand);
 
             // Jika tidak ada kesalahan, arahkan ke halaman sukses
+            $_SESSION['msg'] = [
+                'key' => 'Data prospect berhasil diinput',
+                'timestamp' => time()
+            ];
             header("Location: ../prospect");
             exit;
         } else {
             // Gagal menyimpan data ke database
-            echo '<div class="alert alert-danger">Terjadi kesalahan saat menyimpan data: ' . $stmt->error . '</div>';
+            $_SESSION['msg-f'] = [
+                'key' => 'Terjadi kesalahan saat menyimpan data: ' . $stmt->error,
+                'timestamp' => time()
+            ];
+            header("Location: ../prospect");
+            exit;
         }
 
         // Tutup statement
@@ -173,7 +194,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 
-// Jika terdapat pesan kesalahan, tampilkan pesan kesalahan
-if (!empty($errorMsg)) {
-    echo '<div class="alert alert-danger">' . $errorMsg . '</div>';
-}
+// // Jika terdapat pesan kesalahan, tampilkan pesan kesalahan
+// if (!empty($errorMsg)) {
+//     echo '<div class="alert alert-danger">' . $errorMsg . '</div>';
+// }

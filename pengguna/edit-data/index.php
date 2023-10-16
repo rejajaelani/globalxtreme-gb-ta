@@ -51,45 +51,49 @@
                                     if ($result->num_rows > 0) {
                                         $row = $result->fetch_assoc();
                                     ?>
-                                    <form action="../../controller/edit-pengguna.php" method="post" enctype="multipart/form-data">
-                                        <input type="hidden" name="editUserId" value="<?= $editUserId ?>">
-                                        <div class="form-group">
-                                            <label for="name">Nama</label>
-                                            <input type="text" class="form-control" id="name" name="name" value="<?= $row['Nama'] ?>" placeholder="Nama..." required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="username">Username</label>
-                                            <input type="text" class="form-control" id="username" name="username" value="<?= $row['Username'] ?>" placeholder="Username..." required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="password">Password</label>
-                                            <input type="password" class="form-control" id="password" name="password" placeholder="Password...">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Email address</label>
-                                            <input type="email" class="form-control" id="email" name="email" value="<?= $row['Email'] ?>" placeholder="Email..." required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="level">Level</label>
-                                            <select class="form-control" id="level" name="level">
-                                                <option value="1" <?= ($row['Level'] == 1) ? 'selected' : '' ?>>Admin</option>
-                                                <option value="2" <?= ($row['Level'] == 2) ? 'selected' : '' ?>>Supervisor</option>
-                                                <option value="3" <?= ($row['Level'] == 3) ? 'selected' : '' ?>>Sales</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="status">Status</label>
-                                            <select class="form-control" id="status" name="status">
-                                                <option value="1" <?= ($row['Status'] == 1) ? 'selected' : '' ?>>Aktif</option>
-                                                <option value="0" <?= ($row['Status'] == 0) ? 'selected' : '' ?>>Non-Aktif</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="image">Foto</label>
-                                            <input type="file" class="form-control-file" id="image" name="image" accept="image/*">
-                                        </div>
-                                        <button type="submit" class="btn bg-custom-lgreen" style="color: #FFFF !important;">Simpan Data</button>
-                                    </form>
+                                        <form action="../../controller/edit-pengguna.php" method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="editUserId" value="<?= $editUserId ?>">
+                                            <div class="form-group">
+                                                <label for="name">Nama</label>
+                                                <input type="text" class="form-control" id="name" name="name" value="<?= $row['Nama'] ?>" placeholder="Nama..." required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="username">Username</label>
+                                                <input type="text" class="form-control" id="username" name="username" value="<?= $row['Username'] ?>" placeholder="Username..." required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password">Password</label>
+                                                <input type="password" class="form-control" id="password" name="password" placeholder="Password...">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Email address</label>
+                                                <input type="email" class="form-control" id="email" name="email" value="<?= $row['Email'] ?>" placeholder="Email..." required>
+                                            </div>
+                                            <?php
+                                            if ($levelIs_login == 1) {
+                                            ?>
+                                                <div class="form-group">
+                                                    <label for="level">Level</label>
+                                                    <select class="form-control" id="level" name="level">
+                                                        <option value="1" <?= ($row['Level'] == 1) ? 'selected' : '' ?>>Admin</option>
+                                                        <option value="2" <?= ($row['Level'] == 2) ? 'selected' : '' ?>>Super Admin</option>
+                                                        <option value="3" <?= ($row['Level'] == 3) ? 'selected' : '' ?>>Sales</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="status">Status</label>
+                                                    <select class="form-control" id="status" name="status">
+                                                        <option value="1" <?= ($row['Status'] == 1) ? 'selected' : '' ?>>Aktif</option>
+                                                        <option value="0" <?= ($row['Status'] == 0) ? 'selected' : '' ?>>Non-Aktif</option>
+                                                    </select>
+                                                </div>
+                                            <?php } ?>
+                                            <div class="form-group">
+                                                <label for="image">Foto</label>
+                                                <input type="file" class="form-control-file" id="image" name="image" accept="image/*">
+                                            </div>
+                                            <button type="submit" class="btn bg-custom-lgreen" style="color: #FFFF !important;">Simpan Data</button>
+                                        </form>
                                     <?php } ?>
                                 </div>
                             </div>

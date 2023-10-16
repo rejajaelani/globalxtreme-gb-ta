@@ -64,7 +64,7 @@
                       <select class="form-control" id="level" name="level">
                         <option style="display: none;">-- Pilih Level --</option>
                         <option value="1">Admin</option>
-                        <option value="2">Supervisor</option>
+                        <option value="2">Super Admin</option>
                         <option value="3">Sales</option>
                       </select>
                     </div>
@@ -101,4 +101,4 @@
     </script>
     <!-- /.Script -->
 
-<?php include "../../assets/template/footer-end-2.php" ?>
+    <?php include "../../assets/template/footer-end-2.php" ?>

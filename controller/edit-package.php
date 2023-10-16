@@ -1,6 +1,8 @@
 <?php
 include "./KoneksiController.php";
 
+session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $editId = $_POST["packageId"];
     $name = $_POST["name"];
@@ -18,16 +20,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("ssssi", $jenis, $name, $decs, $harga, $editId);
 
         if ($stmt->execute()) {
+            $_SESSION['msg'] = [
+                'key' => 'Data package berhasil diupdate',
+                'timestamp' => time()
+            ];
             header("Location: ../package/");
             exit;
         } else {
-            echo "Terjadi kesalahan saat mengupdate data ke database: " . mysqli_error($conn);
+            $_SESSION['msg-f'] = [
+                'key' => 'Terjadi kesalahan saat mengupdate data ke database: ' . mysqli_error($conn),
+                'timestamp' => time()
+            ];
+            header("Location: ../package/");
+            exit;
         }
         $stmt->close();
     } else {
-        echo "Terjadi kesalahan dalam persiapan pernyataan SQL: " . mysqli_error($conn);
+        $_SESSION['msg-f'] = [
+            'key' => 'Terjadi kesalahan dalam persiapan pernyataan SQL: ' . mysqli_error($conn),
+            'timestamp' => time()
+        ];
+        header("Location: ../package/");
+        exit;
     }
 
     $conn->close();
 }
-?>

@@ -1,6 +1,8 @@
 <?php
 include "./KoneksiController.php";
 
+session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $id = $_GET["id"]; // ID data yang akan dihapus
 
@@ -18,22 +20,45 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             if ($stmt) {
                 $stmt->bind_param("i", $id);
                 if ($stmt->execute()) {
+                    $_SESSION['msg'] = [
+                        'key' => 'Berhasil menambahkan jenis package',
+                        'timestamp' => time()
+                    ];
                     header("Location: ../../jenis-package/");
                     exit;
                 } else {
-                    echo "Terjadi kesalahan saat menghapus data dari database: " . mysqli_error($conn);
+                    $_SESSION['msg-f'] = [
+                        'key' => 'Terjadi kesalahan saat menghapus data dari database: ' . mysqli_error($conn),
+                        'timestamp' => time()
+                    ];
+                    header("Location: ../../jenis-package/");
+                    exit;
                 }
                 $stmt->close();
             } else {
-                echo "Terjadi kesalahan dalam persiapan pernyataan SQL: " . mysqli_error($conn);
+                $_SESSION['msg-f'] = [
+                    'key' => 'Terjadi kesalahan dalam persiapan pernyataan SQL: ' . mysqli_error($conn),
+                    'timestamp' => time()
+                ];
+                header("Location: ../../jenis-package/");
+                exit;
             }
-
         } else {
-            echo "Terjadi kesalahan saat menghapus data dari database: " . mysqli_error($conn);
+            $_SESSION['msg-f'] = [
+                'key' => 'Terjadi kesalahan saat menghapus data dari database: ' . mysqli_error($conn),
+                'timestamp' => time()
+            ];
+            header("Location: ../../jenis-package/");
+            exit;
         }
         $result->close();
     } else {
-        echo "Terjadi kesalahan dalam persiapan pernyataan SQL: " . mysqli_error($conn);
+        $_SESSION['msg-w'] = [
+            'key' => 'Terjadi kesalahan dalam persiapan pernyataan SQL: ' . mysqli_error($conn),
+            'timestamp' => time()
+        ];
+        header("Location: ../../jenis-package/");
+        exit;
     }
 
     $conn->close();

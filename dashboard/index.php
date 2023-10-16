@@ -90,7 +90,7 @@ if (!$result00) {
                                                       echo "Admin";
                                                       break;
                                                     case 2:
-                                                      echo "Supervisor";
+                                                      echo "Super Admin";
                                                       break;
                                                     case 3:
                                                       echo "Sales";

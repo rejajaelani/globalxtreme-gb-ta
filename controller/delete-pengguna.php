@@ -1,7 +1,10 @@
 <?php
 include "./KoneksiController.php";
 
-function deleteUserData($id) {
+session_start();
+
+function deleteUserData($id)
+{
     global $conn; // Menggunakan koneksi yang sudah dibuat di KoneksiController.php
 
     // Menggunakan prepared statement untuk menghindari SQL injection
@@ -27,10 +30,18 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $id = $_GET["id"]; // Mengambil ID pengguna yang akan dihapus
 
     if (deleteUserData($id)) {
+        $_SESSION['msg'] = [
+            'key' => 'Data pengguna berhasil didelete',
+            'timestamp' => time()
+        ];
         header("Location: ../../pengguna/");
         exit;
     } else {
-        echo "Terjadi kesalahan saat menghapus data pengguna.";
+        $_SESSION['msg-f'] = [
+            'key' => 'Terjadi kesalahan saat menghapus data pengguna : ' . mysqli_error($conn),
+            'timestamp' => time()
+        ];
+        header("Location: ../../pengguna/");
+        exit;
     }
 }
-?>

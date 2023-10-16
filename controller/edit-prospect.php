@@ -2,6 +2,8 @@
 // Include koneksi database
 include_once("./KoneksiController.php");
 
+session_start();
+
 // Inisialisasi variabel untuk menyimpan pesan kesalahan
 $errorMsg = "";
 
@@ -94,7 +96,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = mysqli_query($conn, $sql);
 
         if (!$stmt) {
-            die("Gagal menyiapkan pernyataan SQL: " . mysqli_error($conn));
+            $_SESSION['msg-f'] = [
+                'key' => 'Gagal menyiapkan pernyataan SQL: ' . mysqli_error($conn),
+                'timestamp' => time()
+            ];
+            header("Location: ../prospect");
+            exit;
         }
 
         if ($stmt) {
@@ -122,11 +129,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             move_uploaded_file($passport_foto_tmp, "../images/passport/" . $passport_foto_name_rand);
 
             // Jika tidak ada kesalahan, arahkan ke halaman sukses
+            $_SESSION['msg'] = [
+                'key' => 'Data prospect berhasil diupdate',
+                'timestamp' => time()
+            ];
             header("Location: ../prospect");
             exit;
         } else {
             // Gagal menyimpan data ke database
-            echo '<div class="alert alert-danger">Terjadi kesalahan saat mengubah data: ' . mysqli_error($conn) . '</div>';
+            $_SESSION['msg-f'] = [
+                'key' => 'Terjadi kesalahan saat mengubah data: ' . mysqli_error($conn),
+                'timestamp' => time()
+            ];
+            header("Location: ../prospect");
+            exit;
         }
     }
 
@@ -134,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_close($conn);
 }
 
-// Jika terdapat pesan kesalahan, tampilkan pesan kesalahan
-if (!empty($errorMsg)) {
-    echo '<div class="alert alert-danger">' . $errorMsg . '</div>';
-}
+// // Jika terdapat pesan kesalahan, tampilkan pesan kesalahan
+// if (!empty($errorMsg)) {
+//     echo '<div class="alert alert-danger">' . $errorMsg . '</div>';
+// }

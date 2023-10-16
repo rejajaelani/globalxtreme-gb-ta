@@ -1,6 +1,8 @@
 <?php
 include "./KoneksiController.php";
 
+session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
     $username = $_POST["username"];
@@ -40,25 +42,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if ($stmt) {
                     $stmt->bind_param("sssssss", $name, $username, $password_hash, $level, $uniqueFileName, $status, $email);
                     if ($stmt->execute()) {
+                        $_SESSION['msg'] = [
+                            'key' => 'Data pengguna berhasil diinput',
+                            'timestamp' => time()
+                        ];
                         header("Location: ../pengguna/");
                         exit;
                     } else {
-                        echo "Terjadi kesalahan saat menyimpan data ke database: " . mysqli_error($conn);
+                        $_SESSION['msg-f'] = [
+                            'key' => 'Terjadi kesalahan saat menyimpan data ke database: ' . mysqli_error($conn),
+                            'timestamp' => time()
+                        ];
+                        header("Location: ../pengguna/");
+                        exit;
                     }
                     $stmt->close();
                 } else {
-                    echo "Terjadi kesalahan dalam persiapan pernyataan SQL: " . mysqli_error($conn);
+                    $_SESSION['msg-f'] = [
+                        'key' => 'Terjadi kesalahan dalam persiapan pernyataan SQL: ' . mysqli_error($conn),
+                        'timestamp' => time()
+                    ];
+                    header("Location: ../pengguna/");
+                    exit;
                 }
 
                 $conn->close();
             } else {
-                echo "Terjadi kesalahan saat mengunggah file.";
+                $_SESSION['msg-f'] = [
+                    'key' => 'Terjadi kesalahan saat mengunggah file: ' . mysqli_error($conn),
+                    'timestamp' => time()
+                ];
+                header("Location: ../pengguna/");
+                exit;
             }
         } else {
-            echo "Terjadi kesalahan saat mengunggah file.";
+            $_SESSION['msg-f'] = [
+                'key' => 'Terjadi kesalahan saat mengunggah file: ' . mysqli_error($conn),
+                'timestamp' => time()
+            ];
+            header("Location: ../pengguna/");
+            exit;
         }
     } else {
-        echo "Format file tidak didukung. Silakan unggah file gambar (jpg, jpeg, png, gif).";
+        $_SESSION['msg-f'] = [
+            'key' => 'Format file tidak didukung. Silakan unggah file gambar (jpg, jpeg, png, gif) - ' . mysqli_error($conn),
+            'timestamp' => time()
+        ];
+        header("Location: ../pengguna/");
+        exit;
     }
 }
-?>

@@ -1,6 +1,8 @@
 <?php
 include "./KoneksiController.php";
 
+session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fullname = $_POST["fullname"];
     $address = $_POST["address"];
@@ -56,20 +58,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($insertStmt) {
                 $insertStmt->bind_param("sissssssssssssss", $id_newlead, $id_pengguna, $fullname, $address, $phonenumber, $email, $companyname, $companyaddress, $companyphonenumber, $companyemail, $status, $probability, $source, $media, $asigned_to, $last_update);
                 if ($insertStmt->execute()) {
+                    $_SESSION['msg'] = [
+                        'key' => 'Data new lead berhasil diinput',
+                        'timestamp' => time()
+                    ];
                     header("Location: ../new-lead/");
                     exit;
                 } else {
-                    echo "Terjadi kesalahan saat menyimpan data ke database: " . mysqli_error($conn);
+                    $_SESSION['msg-f'] = [
+                        'key' => 'Terjadi kesalahan saat menyimpan data ke database: ' . mysqli_error($conn),
+                        'timestamp' => time()
+                    ];
+                    header("Location: ../new-lead/");
+                    exit;
                 }
                 $insertStmt->close();
             } else {
-                echo "Terjadi kesalahan dalam persiapan pernyataan SQL: " . mysqli_error($conn);
+                $_SESSION['msg-f'] = [
+                    'key' => 'Terjadi kesalahan dalam persiapan pernyataan SQL: ' . mysqli_error($conn),
+                    'timestamp' => time()
+                ];
+                header("Location: ../new-lead/");
+                exit;
             }
         } else {
-            echo "ID pengguna yang dikirimkan tidak valid.";
+            $_SESSION['msg-w'] = [
+                'key' => 'ID pengguna yang dikirimkan tidak valid',
+                'timestamp' => time()
+            ];
+            header("Location: ../new-lead/");
+            exit;
         }
     } else {
-        echo "Terjadi kesalahan dalam persiapan pernyataan SQL: " . mysqli_error($conn);
+        $_SESSION['msg-f'] = [
+            'key' => 'Terjadi kesalahan dalam persiapan pernyataan SQL: ' . mysqli_error($conn),
+            'timestamp' => time()
+        ];
+        header("Location: ../new-lead/");
+        exit;
     }
 
     $conn->close();
