@@ -53,3 +53,25 @@
     align-items: center;
     justify-content: center;
 }
+
+/* Untuk Chrome dan Safari */
+/* Menghilangkan tampilan default scrollbar */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+/* Track (background) */
+::-webkit-scrollbar-track {
+    background: transparent; /* Warna latar belakang transparan */
+}
+
+/* Thumb (bar) */
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3); /* Warna transparan thumb */
+    border-radius: 6px;
+}
+
+/* Hovered Thumb (bar ketika dihover) */
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.4); /* Warna transparan thumb ketika dihover */
+}

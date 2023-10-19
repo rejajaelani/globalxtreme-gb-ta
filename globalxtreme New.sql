@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2023 at 02:40 AM
+-- Generation Time: Oct 19, 2023 at 06:48 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.24
 
@@ -113,8 +113,8 @@ CREATE TABLE `pengguna` (
 --
 
 INSERT INTO `pengguna` (`Id`, `Nama`, `Username`, `Password`, `Level`, `Foto`, `Status`, `Email`, `sales_from`, `is_login`, `Last_login`) VALUES
-(8, 'Admin Test', 'admin', '$2y$10$POXgL.zlyG/dL.1pS3YPc.oN/j/qhfWZiMfmnNUGlP.g2p8wyTPbe', '1', 'image_652c083dd2a9e.png', 1, 'admin@gmail.com', NULL, 0, '2023-10-15 23:42:09'),
-(9, 'Sales Test', 'sales', '$2y$10$zt4DjGcHzb5qi4v1MIBrd.iPDgP7kAn8JtW27XVDBrQ937AtmXv5G', '3', 'image_652c08923834b.png', 1, 'sales@gmail.com', NULL, 0, '2023-10-15 23:46:31'),
+(8, 'Admin Test', 'admin', '$2y$10$POXgL.zlyG/dL.1pS3YPc.oN/j/qhfWZiMfmnNUGlP.g2p8wyTPbe', '1', 'image_652c083dd2a9e.png', 1, 'admin@gmail.com', NULL, 387, '2023-10-20 00:47:11'),
+(9, 'Sales', 'sales', '$2y$10$zt4DjGcHzb5qi4v1MIBrd.iPDgP7kAn8JtW27XVDBrQ937AtmXv5G', '3', 'image_652c08923834b.png', 1, 'sales@gmail.com', NULL, 0, '2023-10-20 00:46:55'),
 (10, 'Super Admin', 'superadmin', '$2y$10$PNfkROIOx7czBVKKVhG3RevJ5wnpIwW.SXaUv91U.Tc9lFzCcmY5W', '2', 'image_652c08dfe7b99.png', 1, 'superadmin@gmail.com', NULL, 0, '2023-10-15 23:44:31');
 
 -- --------------------------------------------------------
