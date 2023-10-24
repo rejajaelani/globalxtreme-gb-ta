@@ -82,9 +82,9 @@ if (isset($_POST['id_newlead'])) {
                                     <div class="row">
                                         <div class="col-12">
                                             <form action="../../controller/input-notes.php" method="post">
-                                                <input type="hidden" name="id_newlead" id="id_newlead" value="<?= $id ?>">
-                                                <input type="hidden" name="type" id="type" value="<?= $type ?>">
-                                                <textarea class="form-control" name="notes" id="notes" rows="10"></textarea>
+                                                <input type="hidden" name="id_newlead" id="id_newlead" value="<?= $id ?>" required>
+                                                <input type="hidden" name="type" id="type" value="<?= $type ?>" required>
+                                                <textarea class="form-control" name="notes" id="notes" rows="10" required></textarea>
                                                 <button class="btn btn-outline-info mt-3">Tambah</button>
                                             </form>
                                         </div>

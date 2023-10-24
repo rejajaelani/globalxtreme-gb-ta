@@ -66,8 +66,8 @@ $status = $row['Status'];
                     <div class="row">
                         <div class="col-12">
                             <form action="../../controller/edit-new-lead.php" method="post">
-                                <input type="hidden" name="id_pengguna" id="id_pengguna" value="<?= $row['id_pengguna'] ?>">
-                                <input type="hidden" name="id_new_lead" id="id_new_lead" value="<?= $row['Id'] ?>">
+                                <input type="hidden" name="id_pengguna" id="id_pengguna" value="<?= $row['id_pengguna'] ?>" required>
+                                <input type="hidden" name="id_new_lead" id="id_new_lead" value="<?= $row['Id'] ?>" required>
                                 <div class="card">
                                     <div class="card-header text-center border-0">
                                         <h5 class="mt-3">Contact Information</h5>
@@ -76,25 +76,25 @@ $status = $row['Status'];
                                         <div class="form-group row">
                                             <label for="fullname" class="col-sm-2 col-form-label">Full Name</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="fullname" name="fullname" value="<?= $row['Fullname'] ?>">
+                                                <input type="text" class="form-control" id="fullname" name="fullname" value="<?= $row['Fullname'] ?>" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="address" class="col-sm-2 col-form-label">Address</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="address" name="address" value="<?= $row['Address'] ?>">
+                                                <input type="text" class="form-control" id="address" name="address" value="<?= $row['Address'] ?>" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="phonenumber" class="col-sm-2 col-form-label">Phone Number</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="phonenumber" name="phonenumber" value="<?= $row['Phonenumber'] ?>">
+                                                <input type="text" class="form-control" id="phonenumber" name="phonenumber" value="<?= $row['Phonenumber'] ?>" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="email" class="col-sm-2 col-form-label">Email</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="email" name="email" value="<?= $row['Email'] ?>">
+                                                <input type="text" class="form-control" id="email" name="email" value="<?= $row['Email'] ?>" required>
                                             </div>
                                         </div>
                                     </div>
@@ -107,25 +107,25 @@ $status = $row['Status'];
                                         <div class="form-group row">
                                             <label for="companyname" class="col-sm-2 col-form-label">Company Name</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="companyname" name="companyname" value="<?= $row['Companyname'] ?>">
+                                                <input type="text" class="form-control" id="companyname" name="companyname" value="<?= $row['Companyname'] ?>" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="companyaddress" class="col-sm-2 col-form-label">Company Address</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="companyaddress" name="companyaddress" value="<?= $row['Companyaddress'] ?>">
+                                                <input type="text" class="form-control" id="companyaddress" name="companyaddress" value="<?= $row['Companyaddress'] ?>" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="companyphonenumber" class="col-sm-2 col-form-label">Company Phone Number</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="companyphonenumber" name="companyphonenumber" value="<?= $row['Companyphonenumber'] ?>">
+                                                <input type="text" class="form-control" id="companyphonenumber" name="companyphonenumber" value="<?= $row['Companyphonenumber'] ?>" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="companyemail" class="col-sm-2 col-form-label">Company Email</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="companyemail" name="companyemail" value="<?= $row['Companyemail'] ?>">
+                                                <input type="text" class="form-control" id="companyemail" name="companyemail" value="<?= $row['Companyemail'] ?>" required>
                                             </div>
                                         </div>
                                     </div>
@@ -138,7 +138,7 @@ $status = $row['Status'];
                                         <div class="form-group row">
                                             <label for="status" class="col-sm-2 col-form-label">Status</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control" id="status" name="status">
+                                                <select class="form-control" id="status" name="status" required>
                                                     <option style="display: none;">-- Select Status --</option>
                                                     <option value="Scheduled" <?= ($status == 'Scheduled') ? 'selected' : ''; ?>>Scheduled</option>
                                                     <option value="Consideration" <?= ($status == 'Consideration') ? 'selected' : ''; ?>>Consideration</option>
@@ -155,7 +155,7 @@ $status = $row['Status'];
                                         <div class="form-group row">
                                             <label for="probability" class="col-sm-2 col-form-label">Probability</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control" id="probability" name="probability">
+                                                <select class="form-control" id="probability" name="probability" required>
                                                     <option style="display: none;">-- Select Probability --</option>
                                                     <option <?php echo $row['Probability'] == "Converted" ? "selected" : ""; ?>>Converted</option>
                                                     <option <?php echo $row['Probability'] == "Pending" ? "selected" : ""; ?>>Pending</option>
@@ -166,7 +166,7 @@ $status = $row['Status'];
                                         <div class="form-group row">
                                             <label for="source" class="col-sm-2 col-form-label">Source</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control" id="source" name="source">
+                                                <select class="form-control" id="source" name="source" required>
                                                     <option style="display: none;">-- Select Source --</option>
                                                     <option <?php echo $row['source'] == "Inbound-Walk in" ? "selected" : ""; ?>>Inbound-Walk in</option>
                                                     <option <?php echo $row['source'] == "Inbound-Call" ? "selected" : ""; ?>>Inbound-Call</option>
@@ -176,7 +176,7 @@ $status = $row['Status'];
                                         <div class="form-group row">
                                             <label for="media" class="col-sm-2 col-form-label">Media</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control" id="media" name="media">
+                                                <select class="form-control" id="media" name="media" required>
                                                     <option style="display: none;">-- Select Media --</option>
                                                     <option <?php echo $row['media'] == "Walk in" ? "selected" : ""; ?>>Walk in</option>
                                                     <option <?php echo $row['media'] == "Call" ? "selected" : ""; ?>>Call</option>

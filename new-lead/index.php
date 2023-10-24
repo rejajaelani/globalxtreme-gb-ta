@@ -238,8 +238,15 @@ if (!$result) {
                                                         <label for="source">Source</label>
                                                         <select class="form-control" id="source" name="source">
                                                             <option value="">-- Select Source --</option>
-                                                            <option value="Inbound-Walk in" <?= ($source == 'Inbound-Walk in') ? 'selected' : ''; ?>>Inbound-Walk in</option>
-                                                            <option value="Inbound-Call" <?= ($source == 'Inbound-Call') ? 'selected' : ''; ?>>Inbound-Call</option>
+                                                            <option value="Outbound" <?= ($source == 'Outbound') ? 'selected' : ''; ?>>Outbound</option>
+                                                            <option value="Inbound - Tawk To" <?= ($source == 'Inbound - Tawk To') ? 'selected' : ''; ?>>Inbound - Tawk To</option>
+                                                            <option value="Inbound - WA Center" <?= ($source == 'Inbound - WA Center') ? 'selected' : ''; ?>>Inbound - WA Center</option>
+                                                            <option value="Inbound - Call" <?= ($source == 'Inbound - Call') ? 'selected' : ''; ?>>Inbound - Call</option>
+                                                            <option value="Inbound - Walk in" <?= ($source == 'Inbound - Walk in') ? 'selected' : ''; ?>>Inbound - Walk in</option>
+                                                            <option value="Customer Support" <?= ($source == 'Customer Support') ? 'selected' : ''; ?>>Customer Support</option>
+                                                            <option value="Sales" <?= ($source == 'Sales') ? 'selected' : ''; ?>>Sales</option>
+                                                            <option value="Other" <?= ($source == 'Other') ? 'selected' : ''; ?>>Other</option>
+
                                                         </select>
                                                     </div>
                                                 </div>
@@ -248,8 +255,15 @@ if (!$result) {
                                                         <label for="media">Media</label>
                                                         <select class="form-control" id="media" name="media">
                                                             <option value="">-- Select Media --</option>
-                                                            <option value="Walk in" <?= ($media == 'Walk in') ? 'selected' : ''; ?>>Walk in</option>
+                                                            <option value="Outbound" <?= ($media == 'Outbound') ? 'selected' : ''; ?>>Outbound</option>
+                                                            <option value="WA Center" <?= ($media == 'WA Center') ? 'selected' : ''; ?>>WA Center</option>
                                                             <option value="Call" <?= ($media == 'Call') ? 'selected' : ''; ?>>Call</option>
+                                                            <option value="Website" <?= ($media == 'Website') ? 'selected' : ''; ?>>Website</option>
+                                                            <option value="Email" <?= ($media == 'Email') ? 'selected' : ''; ?>>Email</option>
+                                                            <option value="Walk In" <?= ($media == 'Walk In') ? 'selected' : ''; ?>>Walk In</option>
+                                                            <option value="Sales" <?= ($media == 'Sales') ? 'selected' : ''; ?>>Sales</option>
+                                                            <option value="Other" <?= ($media == 'Other') ? 'selected' : ''; ?>>Other</option>
+                                                            <option value="Digital Platform" <?= ($media == 'Digital Platform') ? 'selected' : ''; ?>>Digital Platform</option>
                                                         </select>
                                                     </div>
                                                 </div>

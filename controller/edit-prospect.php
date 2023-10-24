@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validasi data yang harus diisi
     $required_fields = array(
         $id_lead, $customer_type, $notes_customer_type, $first_name, $last_name, $gender, $birthday, $hometown,
-        $current_address, $current_city, $area, $nationality, $type_general, $mobile_phone, $id_card_no, $passport_no,
+        $current_address, $current_city, $area, $nationality, $type_general, $mobile_phone, $id_card_no,
         $street_name, $building_name, $building_number, $building_type, $property_owner_type, $latitude, $longitude,
         $location_nickname, $package_id, $id_pengguna, $sales_rep, $lead_tele
     );

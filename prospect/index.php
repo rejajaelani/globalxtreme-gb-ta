@@ -151,12 +151,12 @@ $result = mysqli_query($conn, $sql);
                             </div>
                         <?php } ?>
                         <div class="col-12">
-                            <h1 class="m-0">Data New Lead</h1>
+                            <h1 class="m-0">Data Prospect</h1>
                         </div><!-- /.col -->
                         <div class="col-12">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">Data Customer</li>
-                                <li class="breadcrumb-item active">New Lead</li>
+                                <li class="breadcrumb-item active">Data Prospect</li>
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
@@ -233,7 +233,7 @@ $result = mysqli_query($conn, $sql);
                                                 }
                                                 $no++; // Tingkatkan nomor baris setiap kali iterasi
                                             } else {
-                                                echo "<tr><td colspan='9'>Tidak ada data new lead.</td></tr>";
+                                                echo "<tr><td colspan='9'>Tidak ada data prospect.</td></tr>";
                                             }
 
                                             // Tutup koneksi

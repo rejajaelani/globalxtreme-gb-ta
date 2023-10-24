@@ -104,13 +104,13 @@ if (!$result) {
                             </div>
                         <?php } ?>
                         <div class="col-12">
-                            <h1 class="m-0">Tambah Data Prospect</h1>
+                            <h1 class="m-0">Edit Data Prospect</h1>
                         </div><!-- /.col -->
                         <div class="col-12">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">Data Master</li>
-                                <li class="breadcrumb-item"><a href="../">Prospect</a></li>
-                                <li class="breadcrumb-item active">Tambah Data</li>
+                                <li class="breadcrumb-item"><a href="../">Data Prospect</a></li>
+                                <li class="breadcrumb-item active">Edit Data</li>
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
@@ -124,15 +124,15 @@ if (!$result) {
                     <div class="row">
                         <div class="col-12">
                             <form action="../../controller/edit-prospect.php" method="post" enctype="multipart/form-data">
-                                <input type="hidden" name="id-pengguna" id="id-pengguna" value="<?= $idIs_login ?>">
-                                <input type="hidden" name="id-prospect-edit" id="id-prospect-edit" value="<?= $row['Id'] ?>">
+                                <input type="hidden" name="id-pengguna" id="id-pengguna" value="<?= $idIs_login ?>" required>
+                                <input type="hidden" name="id-prospect-edit" id="id-prospect-edit" value="<?= $row['Id'] ?>" required>
                                 <div class="card">
                                     <div class="card-header border-0">
                                         <h5 class="m-0"><i class="fas fa-users"></i> Lead</h5>
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <select class="form-control" id="id_lead" name="id_lead">
+                                            <select class="form-control" id="id_lead" name="id_lead" required>
                                                 <option value="">-- Select Lead --</option>
                                                 <?php
                                                 // Query SQL untuk mengambil data pengguna
@@ -161,16 +161,15 @@ if (!$result) {
                                     <div class="card-body">
                                         <label for="customer-type">Prospect Type Customer</label>
                                         <div class="form-group">
-                                            <select class="form-control" id="customer-type" name="customer-type">
+                                            <select class="form-control" id="customer-type" name="customer-type" required>
                                                 <option value="">-- Select Customer Type --</option>
-                                                <option <?= ($row['Prospect_type_cust'] == 1) ? 'selected' : ''; ?>>1</option>
-                                                <option <?= ($row['Prospect_type_cust'] == 2) ? 'selected' : ''; ?>>2</option>
-                                                <option <?= ($row['Prospect_type_cust'] == 3) ? 'selected' : ''; ?>>3</option>
+                                                <option <?= ($row['Prospect_type_cust'] == 'Residential') ? 'selected' : ''; ?>>Residential</option>
+                                                <option <?= ($row['Prospect_type_cust'] == 'Company') ? 'selected' : ''; ?>>Company</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="notes-customer-type">Notes</label>
-                                            <textarea class="form-control" id="notes-customer-type" name="notes-customer-type" rows="3"><?= $notes_customer_type ?></textarea>
+                                            <textarea class="form-control" id="notes-customer-type" name="notes-customer-type" rows="3" required><?= $notes_customer_type ?></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -183,30 +182,30 @@ if (!$result) {
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="first-name">Given Name</label>
-                                                    <input type="text" class="form-control" id="first-name" name="first-name" value="<?= $first_name ?>" placeholder="First Name...">
+                                                    <input type="text" class="form-control" id="first-name" name="first-name" value="<?= $first_name ?>" placeholder="First Name..." required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="last-name">Surname</label>
-                                                    <input type="text" class="form-control" id="last-name" name="last-name" value="<?= $last_name ?>" placeholder="Last Name...">
+                                                    <input type="text" class="form-control" id="last-name" name="last-name" value="<?= $last_name ?>" placeholder="Last Name..." required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="gender">Gender</label>
-                                                    <select class="form-control" id="gender" name="gender">
+                                                    <select class="form-control" id="gender" name="gender" required>
                                                         <option <?= ($row['Gender'] == 'Male') ? 'selected' : ''; ?>>Male</option>
                                                         <option <?= ($row['Gender'] == 'Female') ? 'selected' : ''; ?>>Female</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="religion">Religion</label>
-                                                    <input type="text" class="form-control" id="religion" name="religion" placeholder="-" value="<?= $row['Religion'] ?>">
+                                                    <input type="text" class="form-control" id="religion" name="religion" placeholder="-" value="<?= $row['Religion'] ?>" required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="birthday">Birthday</label>
-                                                    <input type="date" class="form-control" id="birthday" name="birthday" value="<?= $row['Birthday'] ?>">
+                                                    <input type="date" class="form-control" id="birthday" name="birthday" value="<?= $row['Birthday'] ?>" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -214,21 +213,21 @@ if (!$result) {
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="hometown">Hometown</label>
-                                                    <input type="text" class="form-control" id="hometown" name="hometown" placeholder="Hometown..." value="<?= $row['Hometown'] ?>">
+                                                    <input type="text" class="form-control" id="hometown" name="hometown" placeholder="Hometown..." value="<?= $row['Hometown'] ?>" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="current-address">Current Address</label>
-                                                    <input type="text" class="form-control" id="current-address" name="current-address" placeholder="Current Address..." value="<?= $row['Curaddress'] ?>">
+                                                    <input type="text" class="form-control" id="current-address" name="current-address" placeholder="Current Address..." value="<?= $row['Curaddress'] ?>" required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="current-city">Current City</label>
-                                                    <input type="text" class="form-control" id="current-city" name="current-city" placeholder="Current City..." value="<?= $row['Curcity'] ?>">
+                                                    <input type="text" class="form-control" id="current-city" name="current-city" placeholder="Current City..." value="<?= $row['Curcity'] ?>" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="area">Area</label>
-                                                    <input type="text" class="form-control" id="area" name="area" placeholder="Area..." value="<?= $row['Area'] ?>">
+                                                    <input type="text" class="form-control" id="area" name="area" placeholder="Area..." value="<?= $row['Area'] ?>" required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-6 col-sm-12">
@@ -260,7 +259,7 @@ if (!$result) {
                                                     sort($commonNames);
 
                                                     // Buat input select dengan nama umum yang sudah diurutkan
-                                                    echo '<select class="form-control" id="nationality" name="nationality">';
+                                                    echo '<select class="form-control" id="nationality" name="nationality" required>';
                                                     echo '<option value="">-- Select Nationality --</option>';
                                                     foreach ($commonNames as $name) { ?>
                                                         <option <?= ($row['Nationality'] == $name) ? 'selected' : ''; ?>><?= $name ?></option>
@@ -275,14 +274,10 @@ if (!$result) {
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="type-general">Type</label>
-                                                    <select class="form-control" id="type-general" name="type-general">
+                                                    <select class="form-control" id="type-general" name="type-general" required>
                                                         <option value="">-- Select Type --</option>
-                                                        <option <?= ($row['Type'] == 1) ? 'selected' : ''; ?>>1</option>
-                                                        <option <?= ($row['Type'] == 2) ? 'selected' : ''; ?>>2</option>
-                                                        <option <?= ($row['Type'] == 3) ? 'selected' : ''; ?>>3</option>
-                                                        <option <?= ($row['Type'] == 4) ? 'selected' : ''; ?>>4</option>
-                                                        <option <?= ($row['Type'] == 5) ? 'selected' : ''; ?>>5</option>
-                                                        <option <?= ($row['Type'] == 6) ? 'selected' : ''; ?>>6</option>
+                                                        <option <?= ($row['Type'] == 'Residential') ? 'selected' : ''; ?>>Residential</option>
+                                                        <option <?= ($row['Type'] == 'Company') ? 'selected' : ''; ?>>Company</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -298,21 +293,21 @@ if (!$result) {
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="mobile-phone">Mobile</label>
-                                                    <input type="text" class="form-control" id="mobile-phone" name="mobile-phone" placeholder="Mobile Phone Number..." value="<?= $row['Mobile'] ?>">
+                                                    <input type="text" class="form-control" id="mobile-phone" name="mobile-phone" placeholder="Mobile Phone Number..." value="<?= $row['Mobile'] ?>" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="home-phone">Home</label>
-                                                    <input type="text" class="form-control" id="home-phone" name="home-phone" placeholder="Home Phone Number..." value="<?= $row['home_number'] ?>">
+                                                    <input type="text" class="form-control" id="home-phone" name="home-phone" placeholder="Home Phone Number..." value="<?= $row['home_number'] ?>" required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="id-card-no">Id Card No.</label>
-                                                    <input type="number" class="form-control" id="id-card-no" name="id-card-no" placeholder="No Id Card..." value="<?= $row['Id_card_no'] ?>">
+                                                    <input type="number" class="form-control" id="id-card-no" name="id-card-no" placeholder="No Id Card..." value="<?= $row['Id_card_no'] ?>" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="id-card-foto">Id Card Photo</label>
-                                                    <input type="file" class="form-control-file border rounded p-1" id="id-card-foto" name="id-card-foto">
+                                                    <input type="file" class="form-control-file border rounded p-1" id="id-card-foto" name="id-card-foto" required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-6 col-sm-12">
@@ -338,19 +333,19 @@ if (!$result) {
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="street-name">Street Name</label>
-                                                    <input type="text" class="form-control" id="street-name" name="street-name" placeholder="Street Name..." value="<?= $row['Streetname'] ?>">
+                                                    <input type="text" class="form-control" id="street-name" name="street-name" placeholder="Street Name..." value="<?= $row['Streetname'] ?>" required>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-8">
                                                         <div class="form-group">
                                                             <label for="building-name">Building Name</label>
-                                                            <input type="text" class="form-control" id="building-name" name="building-name" placeholder="Building Name..." value="<?= $row['Building_name'] ?>">
+                                                            <input type="text" class="form-control" id="building-name" name="building-name" placeholder="Building Name..." value="<?= $row['Building_name'] ?>" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-4">
                                                         <div class="form-group">
                                                             <label for="building-number">No.</label>
-                                                            <input type="number" class="form-control" id="building-number" name="building-number" placeholder="No..." value="<?= $row['No'] ?>">
+                                                            <input type="number" class="form-control" id="building-number" name="building-number" placeholder="No..." value="<?= $row['No'] ?>" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -358,26 +353,26 @@ if (!$result) {
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="building-type">Building Type</label>
-                                                    <select class="form-control" id="building-type" name="building-type">
+                                                    <select class="form-control" id="building-type" name="building-type" required>
                                                         <option value="">-- Select Building Type --</option>
-                                                        <option <?= ($row['Building_type'] == 1) ? 'selected' : ''; ?>>1</option>
-                                                        <option <?= ($row['Building_type'] == 2) ? 'selected' : ''; ?>>2</option>
-                                                        <option <?= ($row['Building_type'] == 3) ? 'selected' : ''; ?>>3</option>
-                                                        <option <?= ($row['Building_type'] == 4) ? 'selected' : ''; ?>>4</option>
-                                                        <option <?= ($row['Building_type'] == 5) ? 'selected' : ''; ?>>5</option>
-                                                        <option <?= ($row['Building_type'] == 6) ? 'selected' : ''; ?>>6</option>
+                                                        <option <?= ($row['Building_type'] == 'House') ? 'selected' : ''; ?>>House</option>
+                                                        <option <?= ($row['Building_type'] == 'Office House') ? 'selected' : ''; ?>>Office House</option>
+                                                        <option <?= ($row['Building_type'] == 'Villa') ? 'selected' : ''; ?>>Villa</option>
+                                                        <option <?= ($row['Building_type'] == 'Workplace') ? 'selected' : ''; ?>>Workplace</option>
+                                                        <option <?= ($row['Building_type'] == 'Office') ? 'selected' : ''; ?>>Office</option>
+                                                        <option <?= ($row['Building_type'] == 'Hotel') ? 'selected' : ''; ?>>Hotel</option>
+                                                        <option <?= ($row['Building_type'] == 'Factory') ? 'selected' : ''; ?>>Factory</option>
+                                                        <option <?= ($row['Building_type'] == 'Others') ? 'selected' : ''; ?>>Others</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="property-owner-type">Property Owner Type</label>
-                                                    <select class="form-control" id="property-owner-type" name="property-owner-type">
+                                                    <select class="form-control" id="property-owner-type" name="property-owner-type" required>
                                                         <option value="">-- Select Property Owner Type --</option>
-                                                        <option <?= ($row['Property_ownership_type'] == 1) ? 'selected' : ''; ?>>1</option>
-                                                        <option <?= ($row['Property_ownership_type'] == 2) ? 'selected' : ''; ?>>2</option>
-                                                        <option <?= ($row['Property_ownership_type'] == 3) ? 'selected' : ''; ?>>3</option>
-                                                        <option <?= ($row['Property_ownership_type'] == 4) ? 'selected' : ''; ?>>4</option>
-                                                        <option <?= ($row['Property_ownership_type'] == 5) ? 'selected' : ''; ?>>5</option>
-                                                        <option <?= ($row['Property_ownership_type'] == 6) ? 'selected' : ''; ?>>6</option>
+                                                        <option <?= ($row['Building_type'] == 'Sole Owner') ? 'selected' : ''; ?>>Sole Owner</option>
+                                                        <option <?= ($row['Building_type'] == 'Rent Tenancy') ? 'selected' : ''; ?>>Rent Tenancy</option>
+                                                        <option <?= ($row['Building_type'] == 'Joint Tenancy') ? 'selected' : ''; ?>>Joint Tenancy</option>
+                                                        <option <?= ($row['Building_type'] == 'Community') ? 'selected' : ''; ?>>Community</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -386,13 +381,13 @@ if (!$result) {
                                                     <div class="col-6">
                                                         <div class="form-group">
                                                             <label for="latitude">Latitude</label>
-                                                            <input type="text" class="form-control" id="latitude" name="latitude" placeholder="Latitude..." value="<?= $row['latitude'] ?>">
+                                                            <input type="text" class="form-control" id="latitude" name="latitude" placeholder="Latitude..." value="<?= $row['latitude'] ?>" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-6">
                                                         <div class="form-group">
                                                             <label for="longitude">Longitude</label>
-                                                            <input type="text" class="form-control" id="longitude" name="longitude" placeholder="Longitude..." value="<?= $row['longitude'] ?>">
+                                                            <input type="text" class="form-control" id="longitude" name="longitude" placeholder="Longitude..." value="<?= $row['longitude'] ?>" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -407,7 +402,7 @@ if (!$result) {
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="location-nickname">Location Nickname</label>
-                                            <input type="text" class="form-control" id="location-nickname" name="location-nickname" aria-describedby="nicknameHelp" placeholder="Nickname..." value="<?= $row['Location'] ?>">
+                                            <input type="text" class="form-control" id="location-nickname" name="location-nickname" aria-describedby="nicknameHelp" placeholder="Nickname..." value="<?= $row['Location'] ?>" required>
                                             <small id="nicknameHelp" class="form-text text-muted"><strong>Location Nickname</strong> is a familiar name to be use by customers to refer to their specific service location. Leave empty if it's not provided</small>
                                         </div>
                                     </div>
@@ -419,7 +414,7 @@ if (!$result) {
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="package-id">Package</label>
-                                            <select class="form-control" id="package-id" name="package-id">
+                                            <select class="form-control" id="package-id" name="package-id" required>
                                                 <option value="">-- Select Package --</option>
                                                 <?php
                                                 $sql2 = "SELECT * FROM packages";
@@ -457,7 +452,7 @@ if (!$result) {
                                             <div class="col-lg-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="sales-rep">Sales Representativ</label>
-                                                    <select class="form-control" id="sales-rep" name="sales-rep">
+                                                    <select class="form-control" id="sales-rep" name="sales-rep" required>
                                                         <option value="">-- Select Name --</option>
                                                         <?php
                                                         // Query SQL untuk mengambil data pengguna
@@ -481,7 +476,7 @@ if (!$result) {
                                             <div class="col-lg-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="lead-tele">Lead Telemarketing</label>
-                                                    <select class="form-control" id="lead-tele" name="lead-tele">
+                                                    <select class="form-control" id="lead-tele" name="lead-tele" required>
                                                         <option value="">-- Select Name --</option>
                                                         <?php
                                                         // Query SQL untuk mengambil data pengguna
@@ -512,7 +507,7 @@ if (!$result) {
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="general-notes-all">Notes</label>
-                                            <textarea class="form-control" id="general-notes-all" name="general-notes-all" rows="5"><?= $row['General_note'] ?></textarea>
+                                            <textarea class="form-control" id="general-notes-all" name="general-notes-all" rows="5" required><?= $row['General_note'] ?></textarea>
                                         </div>
                                     </div>
                                 </div>

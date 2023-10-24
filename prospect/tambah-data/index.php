@@ -3,6 +3,19 @@
 <?php
 // Inisialisasi variabel SQL
 $sql = "SELECT * FROM tb_user";
+
+// Cek Data New Lead
+$sqlCek = "SELECT * FROM new_lead";
+$resultCek = mysqli_query($conn, $sqlCek);
+if ($resultCek->num_rows == 0) {
+    $_SESSION['msg-f'] = [
+        'key' => 'Tolong tambahkan data new lead terlebih dahulu',
+        'timestamp' => time()
+    ];
+    header("Location: ../");
+    exit;
+}
+
 ?>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -29,7 +42,7 @@ $sql = "SELECT * FROM tb_user";
                         <div class="col-12">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">Data Master</li>
-                                <li class="breadcrumb-item"><a href="../">Prospect</a></li>
+                                <li class="breadcrumb-item"><a href="../">Data Prospect</a></li>
                                 <li class="breadcrumb-item active">Tambah Data</li>
                             </ol>
                         </div><!-- /.col -->
@@ -51,7 +64,7 @@ $sql = "SELECT * FROM tb_user";
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <select class="form-control" id="id_lead" name="id_lead">
+                                            <select class="form-control" id="id_lead" name="id_lead" required>
                                                 <option value="">-- Select Lead --</option>
                                                 <?php
                                                 // Query SQL untuk mengambil data pengguna
@@ -80,7 +93,7 @@ $sql = "SELECT * FROM tb_user";
                                     <div class="card-body">
                                         <label for="customer-type">Prospect Type Customer</label>
                                         <div class="form-group">
-                                            <select class="form-control" id="customer-type" name="customer-type">
+                                            <select class="form-control" id="customer-type" name="customer-type" required>
                                                 <option value="">-- Select Customer Type --</option>
                                                 <option>Residential</option>
                                                 <option>Company</option>
@@ -88,7 +101,7 @@ $sql = "SELECT * FROM tb_user";
                                         </div>
                                         <div class="form-group">
                                             <label for="notes-customer-type">Notes</label>
-                                            <textarea class="form-control" id="notes-customer-type" name="notes-customer-type" rows="3"></textarea>
+                                            <textarea class="form-control" id="notes-customer-type" name="notes-customer-type" rows="3" required></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -101,30 +114,30 @@ $sql = "SELECT * FROM tb_user";
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="first-name">Given Name</label>
-                                                    <input type="text" class="form-control" id="first-name" name="first-name" placeholder="First Name...">
+                                                    <input type="text" class="form-control" id="first-name" name="first-name" placeholder="First Name..." required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="last-name">Surname</label>
-                                                    <input type="text" class="form-control" id="last-name" name="last-name" placeholder="Last Name...">
+                                                    <input type="text" class="form-control" id="last-name" name="last-name" placeholder="Last Name..." required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="gender">Gender</label>
-                                                    <select class="form-control" id="gender" name="gender">
+                                                    <select class="form-control" id="gender" name="gender" required>
                                                         <option>Male</option>
                                                         <option>Female</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="religion">Religion</label>
-                                                    <input type="text" class="form-control" id="religion" name="religion" placeholder="-">
+                                                    <input type="text" class="form-control" id="religion" name="religion" placeholder="-" required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="birthday">Birthday</label>
-                                                    <input type="date" class="form-control" id="birthday" name="birthday">
+                                                    <input type="date" class="form-control" id="birthday" name="birthday" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -132,21 +145,21 @@ $sql = "SELECT * FROM tb_user";
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="hometown">Hometown</label>
-                                                    <input type="text" class="form-control" id="hometown" name="hometown" placeholder="Hometown...">
+                                                    <input type="text" class="form-control" id="hometown" name="hometown" placeholder="Hometown..." required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="current-address">Current Address</label>
-                                                    <input type="text" class="form-control" id="current-address" name="current-address" placeholder="Current Address...">
+                                                    <input type="text" class="form-control" id="current-address" name="current-address" placeholder="Current Address..." required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="current-city">Current City</label>
-                                                    <input type="text" class="form-control" id="current-city" name="current-city" placeholder="Current City...">
+                                                    <input type="text" class="form-control" id="current-city" name="current-city" placeholder="Current City..." required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="area">Area</label>
-                                                    <input type="text" class="form-control" id="area" name="area" placeholder="Area...">
+                                                    <input type="text" class="form-control" id="area" name="area" placeholder="Area..." required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-6 col-sm-12">
@@ -178,7 +191,7 @@ $sql = "SELECT * FROM tb_user";
                                                     sort($commonNames);
 
                                                     // Buat input select dengan nama umum yang sudah diurutkan
-                                                    echo '<select class="form-control" id="nationality" name="nationality">';
+                                                    echo '<select class="form-control" id="nationality" name="nationality" required>';
                                                     echo '<option value="">-- Select Nationality --</option>';
                                                     foreach ($commonNames as $name) {
                                                         echo '<option value="' . $name . '">' . $name . '</option>';
@@ -192,7 +205,7 @@ $sql = "SELECT * FROM tb_user";
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="type-general">Type</label>
-                                                    <select class="form-control" id="type-general" name="type-general">
+                                                    <select class="form-control" id="type-general" name="type-general" required>
                                                         <option value="">-- Select Type --</option>
                                                         <option>Residential</option>
                                                         <option>Company</option>
@@ -211,21 +224,21 @@ $sql = "SELECT * FROM tb_user";
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="mobile-phone">Mobile</label>
-                                                    <input type="text" class="form-control" id="mobile-phone" name="mobile-phone" placeholder="Mobile Phone Number...">
+                                                    <input type="text" class="form-control" id="mobile-phone" name="mobile-phone" placeholder="Mobile Phone Number..." required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="home-phone">Home</label>
-                                                    <input type="text" class="form-control" id="home-phone" name="home-phone" placeholder="Home Phone Number...">
+                                                    <input type="text" class="form-control" id="home-phone" name="home-phone" placeholder="Home Phone Number..." required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="id-card-no">Id Card No.</label>
-                                                    <input type="number" class="form-control" id="id-card-no" name="id-card-no" placeholder="No Id Card...">
+                                                    <input type="number" class="form-control" id="id-card-no" name="id-card-no" placeholder="No Id Card..." required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="id-card-foto">Id Card Photo</label>
-                                                    <input type="file" class="form-control-file border rounded p-1" id="id-card-foto" name="id-card-foto">
+                                                    <input type="file" class="form-control-file border rounded p-1" id="id-card-foto" name="id-card-foto" required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-6 col-sm-12">
@@ -251,19 +264,19 @@ $sql = "SELECT * FROM tb_user";
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="street-name">Street Name</label>
-                                                    <input type="text" class="form-control" id="street-name" name="street-name" placeholder="Street Name...">
+                                                    <input type="text" class="form-control" id="street-name" name="street-name" placeholder="Street Name..." required>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-8">
                                                         <div class="form-group">
                                                             <label for="building-name">Building Name</label>
-                                                            <input type="text" class="form-control" id="building-name" name="building-name" placeholder="Building Name...">
+                                                            <input type="text" class="form-control" id="building-name" name="building-name" placeholder="Building Name..." required>
                                                         </div>
                                                     </div>
                                                     <div class="col-4">
                                                         <div class="form-group">
                                                             <label for="building-number">No.</label>
-                                                            <input type="number" class="form-control" id="building-number" name="building-number" placeholder="No...">
+                                                            <input type="number" class="form-control" id="building-number" name="building-number" placeholder="No..." required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -271,7 +284,7 @@ $sql = "SELECT * FROM tb_user";
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="building-type">Building Type</label>
-                                                    <select class="form-control" id="building-type" name="building-type">
+                                                    <select class="form-control" id="building-type" name="building-type" required>
                                                         <option value="">-- Select Building Type --</option>
                                                         <option>House</option>
                                                         <option>Office House</option>
@@ -285,7 +298,7 @@ $sql = "SELECT * FROM tb_user";
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="property-owner-type">Property Owner Type</label>
-                                                    <select class="form-control" id="property-owner-type" name="property-owner-type">
+                                                    <select class="form-control" id="property-owner-type" name="property-owner-type" required>
                                                         <option value="">-- Select Property Owner Type --</option>
                                                         <option>Sole Owner</option>
                                                         <option>Rent Tenancy</option>
@@ -299,13 +312,13 @@ $sql = "SELECT * FROM tb_user";
                                                     <div class="col-6">
                                                         <div class="form-group">
                                                             <label for="latitude">Latitude</label>
-                                                            <input type="text" class="form-control" id="latitude" name="latitude" placeholder="Latitude...">
+                                                            <input type="text" class="form-control" id="latitude" name="latitude" placeholder="Latitude..." required>
                                                         </div>
                                                     </div>
                                                     <div class="col-6">
                                                         <div class="form-group">
                                                             <label for="longitude">Longitude</label>
-                                                            <input type="text" class="form-control" id="longitude" name="longitude" placeholder="Longitude...">
+                                                            <input type="text" class="form-control" id="longitude" name="longitude" placeholder="Longitude..." required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -320,7 +333,7 @@ $sql = "SELECT * FROM tb_user";
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="location-nickname">Location Nickname</label>
-                                            <input type="text" class="form-control" id="location-nickname" name="location-nickname" aria-describedby="nicknameHelp" placeholder="Nickname...">
+                                            <input type="text" class="form-control" id="location-nickname" name="location-nickname" aria-describedby="nicknameHelp" placeholder="Nickname..." required>
                                             <small id="nicknameHelp" class="form-text text-muted"><strong>Location Nickname</strong> is a familiar name to be use by customers to refer to their specific service location. Leave empty if it's not provided</small>
                                         </div>
                                     </div>
@@ -332,7 +345,7 @@ $sql = "SELECT * FROM tb_user";
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="package-id">Package</label>
-                                            <select class="form-control" id="package-id" name="package-id">
+                                            <select class="form-control" id="package-id" name="package-id" required>
                                                 <option value="">-- Select Package --</option>
                                                 <?php
                                                 $sql2 = "SELECT * FROM packages";
@@ -370,7 +383,7 @@ $sql = "SELECT * FROM tb_user";
                                             <div class="col-lg-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="sales-rep">Sales Representativ</label>
-                                                    <select class="form-control" id="sales-rep" name="sales-rep">
+                                                    <select class="form-control" id="sales-rep" name="sales-rep" required>
                                                         <option value="">-- Select Name --</option>
                                                         <?php
                                                         // Query SQL untuk mengambil data pengguna
@@ -394,7 +407,7 @@ $sql = "SELECT * FROM tb_user";
                                             <div class="col-lg-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="lead-tele">Lead Telemarketing</label>
-                                                    <select class="form-control" id="lead-tele" name="lead-tele">
+                                                    <select class="form-control" id="lead-tele" name="lead-tele" required>
                                                         <option value="">-- Select Name --</option>
                                                         <?php
                                                         // Query SQL untuk mengambil data pengguna
@@ -425,7 +438,7 @@ $sql = "SELECT * FROM tb_user";
                                     <div class="card-body">
                                         <div class="form-group">
                                             <label for="general-notes-all">Notes</label>
-                                            <textarea class="form-control" id="general-notes-all" name="general-notes-all" rows="5"></textarea>
+                                            <textarea class="form-control" id="general-notes-all" name="general-notes-all" rows="5" required></textarea>
                                         </div>
                                     </div>
                                 </div>

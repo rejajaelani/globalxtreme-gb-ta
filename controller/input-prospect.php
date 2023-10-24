@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mobile_phone = $_POST["mobile-phone"];
     $home_phone = $_POST["home-phone"];
     $id_card_no = $_POST["id-card-no"];
-    $passport_no = $_POST["passport-no"];
+    $passport_no = isset($_POST["passport-no"]) && !empty($_POST["passport-no"]) ? $_POST["passport-no"] : 0;
     $street_name = $_POST["street-name"];
     $building_name = $_POST["building-name"];
     $building_number = $_POST["building-number"];
@@ -45,8 +45,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $id_card_foto_name = $_FILES["id-card-foto"]["name"];
     $id_card_foto_tmp = $_FILES["id-card-foto"]["tmp_name"];
-    $passport_foto_name = $_FILES["passport-foto"]["name"];
-    $passport_foto_tmp = $_FILES["passport-foto"]["tmp_name"];
+    if (isset($_FILES["passport-foto"]) && !empty($_FILES["passport-foto"]["name"])) {
+        $passport_foto_name = $_FILES["passport-foto"]["name"];
+        $passport_foto_tmp = $_FILES["passport-foto"]["tmp_name"];
+    } else {
+        $passport_foto_name = ""; // Mengisi dengan string kosong jika tidak ada file passport foto yang dikirimkan
+        $passport_foto_tmp = ""; // Juga mengisi dengan string kosong
+    }
+
 
     // Inisialisasi variabel
     $id_prospect = '';
@@ -79,12 +85,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $id_card_foto_name_rand = generateRandomFileName($id_card_foto_name);
-    $passport_foto_name_rand = generateRandomFileName($passport_foto_name);
+    if ($passport_foto_name == "") {
+        $passport_foto_name_rand = "-";
+    } else {
+        $passport_foto_name_rand = generateRandomFileName($passport_foto_name);
+    }
 
     // Validasi data yang harus diisi
     $required_fields = array(
         $id_lead, $customer_type, $notes_customer_type, $first_name, $last_name, $gender, $birthday, $hometown,
-        $current_address, $current_city, $area, $nationality, $type_general, $mobile_phone, $id_card_no, $passport_no,
+        $current_address, $current_city, $area, $nationality, $type_general, $mobile_phone, $id_card_no,
         $street_name, $building_name, $building_number, $building_type, $property_owner_type, $latitude, $longitude,
         $location_nickname, $package_id, $id_pengguna, $sales_rep, $lead_tele
     );

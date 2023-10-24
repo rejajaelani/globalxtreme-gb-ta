@@ -75,7 +75,7 @@
                     <div class="row">
                         <div class="col-12">
                             <form action="../../controller/input-new-lead.php" method="post">
-                                <input type="hidden" name="id_pengguna" id="id_pengguna" value="<?= $idIs_login ?>">
+                                <input type="hidden" name="id_pengguna" id="id_pengguna" value="<?= $idIs_login ?>" required>
                                 <div class="card">
                                     <div class="card-header text-center border-0">
                                         <h5 class="mt-3">Contact Information</h5>
@@ -84,25 +84,25 @@
                                         <div class="form-group row">
                                             <label for="fullname" class="col-sm-2 col-form-label">Full Name</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="fullname" name="fullname">
+                                                <input type="text" class="form-control" id="fullname" name="fullname" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="address" class="col-sm-2 col-form-label">Address</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="address" name="address">
+                                                <input type="text" class="form-control" id="address" name="address" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="phonenumber" class="col-sm-2 col-form-label">Phone Number</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="phonenumber" name="phonenumber">
+                                                <input type="text" class="form-control" id="phonenumber" name="phonenumber" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="email" class="col-sm-2 col-form-label">Email</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="email" name="email">
+                                                <input type="text" class="form-control" id="email" name="email" required>
                                             </div>
                                         </div>
                                     </div>
@@ -115,25 +115,25 @@
                                         <div class="form-group row">
                                             <label for="companyname" class="col-sm-2 col-form-label">Company Name</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="companyname" name="companyname">
+                                                <input type="text" class="form-control" id="companyname" name="companyname" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="companyaddress" class="col-sm-2 col-form-label">Company Address</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="companyaddress" name="companyaddress">
+                                                <input type="text" class="form-control" id="companyaddress" name="companyaddress" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="companyphonenumber" class="col-sm-2 col-form-label">Company Phone Number</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="companyphonenumber" name="companyphonenumber">
+                                                <input type="text" class="form-control" id="companyphonenumber" name="companyphonenumber" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="companyemail" class="col-sm-2 col-form-label">Company Email</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="companyemail" name="companyemail">
+                                                <input type="text" class="form-control" id="companyemail" name="companyemail" required>
                                             </div>
                                         </div>
                                     </div>
@@ -146,7 +146,7 @@
                                         <div class="form-group row">
                                             <label for="status" class="col-sm-2 col-form-label">Status</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control" id="status" name="status">
+                                                <select class="form-control" id="status" name="status" required>
                                                     <option style="display: none;">-- Select Status --</option>
                                                     <option>Scheduled</option>
                                                     <option>Consideration</option>
@@ -174,7 +174,7 @@
                                         <div class="form-group row">
                                             <label for="probability" class="col-sm-2 col-form-label">Probability</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control" id="probability" name="probability">
+                                                <select class="form-control" id="probability" name="probability" required>
                                                     <option style="display: none;">-- Select Probability --</option>
                                                     <option>Converted</option>
                                                     <option>Pending</option>
@@ -187,26 +187,33 @@
                                         <div class="form-group row">
                                             <label for="source" class="col-sm-2 col-form-label">Source</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control" id="source" name="source">
+                                                <select class="form-control" id="source" name="source" required>
                                                     <option style="display: none;">-- Select Source --</option>
                                                     <option>Outbound</option>
                                                     <option>Inbound - Tawk To</option>
                                                     <option>Inbound - WA Center</option>
+                                                    <option>Inbound - Call</option>
                                                     <option>Inbound - Walk in</option>
                                                     <option>Customer Support</option>
+                                                    <option>Sales</option>
                                                     <option>Other</option>
+
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="media" class="col-sm-2 col-form-label">Media</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control" id="media" name="media">
+                                                <select class="form-control" id="media" name="media" required>
                                                     <option style="display: none;">-- Select Media --</option>
+                                                    <option>Outbound</option>
                                                     <option>WA Center</option>
                                                     <option>Call</option>
                                                     <option>Website</option>
                                                     <option>Email</option>
+                                                    <option>Walk In</option>
+                                                    <option>Sales</option>
+                                                    <option>Other</option>
                                                     <option>Digital Platform</option>
                                                 </select>
                                             </div>
