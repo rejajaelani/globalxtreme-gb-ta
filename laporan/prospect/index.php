@@ -28,13 +28,21 @@ if (mysqli_num_rows($result) == 0) {
 }
 
 // Inisialisasi variabel SQL
-$sql = "SELECT * FROM prospect";
+if ($levelIs_login == 3) {
+    $sql = "SELECT * FROM prospect ps JOIN new_lead nl ON ps.Id_newlead = nl.Id WHERE ps.sales_representativ = " . $idIs_login;
+} else {
+    $sql = "SELECT * FROM prospect ps JOIN new_lead nl ON ps.Id_newlead = nl.Id";
+}
 
 // Inisialisasi variabel pencarian
 $where = array();
-$sales_src = isset($_GET['sales-src']) ? $_GET['sales-src'] : '';
+if ($levelIs_login == 3) {
+    $sales_src = isset($_GET['sales-src']) ? $_GET['sales-src'] : $idIs_login;
+} else {
+    $sales_src = isset($_GET['sales-src']) ? $_GET['sales-src'] : '';
+}
 $status = isset($_GET['status']) ? $_GET['status'] : '';
-// $probability = isset($_GET['probability']) ? $_GET['probability'] : '';
+$probability = isset($_GET['probability']) ? $_GET['probability'] : '';
 $tgl_start = isset($_GET['tgl-start']) ? $_GET['tgl-start'] : '';
 $tgl_end = isset($_GET['tgl-end']) ? $_GET['tgl-end'] : '';
 
@@ -45,28 +53,32 @@ date_default_timezone_set('Asia/Makassar');
 $tgl_now = date("Y-m-d");
 
 if (!empty($sales_src)) {
-    $where[] = "sales_representativ = " . $sales_src;
+    $where[] = "ps.sales_representativ = " . $sales_src;
 }
 
-// if (!empty($probability)) {
-//     $where[] = "Probability LIKE '%" . $probability . "%'";
-// }
+if (!empty($status)) {
+    $where[] = "nl.Probability LIKE '%" . $status . "%'";
+}
 
 if (!empty($tgl_start) && !empty($tgl_end)) {
-    $where[] = "DATE(created_at) BETWEEN '" . $tgl_start . "' AND '" . $tgl_end . "'";
+    $where[] = "DATE(ps.created_at) BETWEEN '" . $tgl_start . "' AND '" . $tgl_end . "'";
 }
 
 if (!empty($tgl_start) && empty($tgl_end)) {
-    $where[] = "DATE(created_at) BETWEEN '" . $tgl_start . "' AND '" . $tgl_now . "'";
+    $where[] = "DATE(ps.created_at) BETWEEN '" . $tgl_start . "' AND '" . $tgl_now . "'";
 }
 
 if (empty($tgl_start) && !empty($tgl_end)) {
-    $where[] = "DATE(created_at) BETWEEN '" . $tgl_now . "' AND '" . $tgl_end . "'";
+    $where[] = "DATE(ps.created_at) BETWEEN '" . $tgl_now . "' AND '" . $tgl_end . "'";
 }
 
 // Gabungkan semua kondisi pencarian
 if (!empty($where)) {
-    $sql .= " WHERE " . implode(" AND ", $where);
+    if ($levelIs_login == 3) {
+        $sql .= " AND " . implode(" AND ", $where);
+    } else {
+        $sql .= " WHERE " . implode(" AND ", $where);
+    }
 }
 
 $result = mysqli_query($conn, $sql);
@@ -260,7 +272,7 @@ if (!$result) {
                                     </form>
                                     <form action="../../controller/print.php" method="post" target="_blank">
                                         <input type="hidden" name="sales-src" id="sales-src" value="<?= $sales_src ?>">
-                                        <input type="hidden" name="probability" id="probability" value="<?= $probability ?>">
+                                        <input type="hidden" name="probability" id="probability" value="<?= $status ?>">
                                         <input type="hidden" name="type" id="type" value="Prospect">
                                         <input type="hidden" name="tgl-start" id="tgl-start" value="<?= $tgl_start ?>">
                                         <input type="hidden" name="tgl-end" id="tgl-end" value="<?= $tgl_end ?>">
@@ -311,7 +323,7 @@ if (!$result) {
                                                             echo "<td><strong>" . $row2['Nama_Packages'] . "</strong></td>";
                                                         }
                                                     }
-                                                    echo "<td><strong>Uknown</strong></td>";
+                                                    echo "<td>" . $row['Probability'] . "</td>";
                                                     echo "<td>" . $row['created_at'] . "</td>";
                                                     $sql3 = "SELECT * FROM pengguna WHERE Id = " . $row['sales_representativ'];
                                                     $result3 = mysqli_query($conn, $sql3);

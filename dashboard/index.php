@@ -3,10 +3,12 @@
 <?php
 
 // Inisialisasi variabel SQL
-$sql00 = "SELECT * FROM prospect";
+$sql00 = "SELECT * FROM new_lead nl JOIN pengguna pg ON nl.id_pengguna = pg.Id";
+$sql01 = "SELECT * FROM new_lead nl JOIN prospect ps ON nl.Id = ps.Id_newlead";
 
 // Inisialisasi variabel pencarian
 $where = array();
+$where2 = array();
 date_default_timezone_set('Asia/Makassar');
 if ($levelIs_login == 3) {
   $sales_src = $idIs_login;
@@ -17,26 +19,36 @@ $tahun_src = isset($_GET['tahun-src']) ? $_GET['tahun-src'] : date('Y');
 $status = isset($_GET['status']) ? $_GET['status'] : '';
 
 if (!empty($sales_src)) {
-  $where[] = "sales_representativ = " . $sales_src;
+  $where[] = "nl.id_pengguna = " . $sales_src;
+  $where2[] = "nl.id_pengguna = " . $sales_src;
 }
 
 if (!empty($status)) {
-  $where[] = "Status = '" . $status . "'";
+  $where[] = "nl.Status = '" . $status . "'";
+  $where2[] = "nl.Status = '" . $status . "'";
 }
 
 // Gabungkan semua kondisi pencarian
 if (!empty($where)) {
   $sql00 .= " WHERE " . implode(" AND ", $where);
+  $sql01 .= " WHERE " . implode(" AND ", $where2);
 } else {
   // if ($levelIs_login == 3) {
   //   $sql00 .= " WHERE sales_representativ = " . $idIs_login;
   // }
   $sql00;
+  $sql01;
 }
 
 $result00 = mysqli_query($conn, $sql00);
+$result01 = mysqli_query($conn, $sql01);
 
 if (!$result00) {
+  // Query tidak berhasil
+  die("Error: " . mysqli_error($conn));
+}
+
+if (!$result01) {
   // Query tidak berhasil
   die("Error: " . mysqli_error($conn));
 }
@@ -175,9 +187,9 @@ if (!$result00) {
             $nama_pengguna = '';
 
             $tercapai = 0; // Inisialisasi variabel tercapai di luar loop
-            while ($data = mysqli_fetch_assoc($result00)) {
+            while ($data = mysqli_fetch_assoc($result01)) {
 
-              $sqlP = "SELECT * FROM pengguna WHERE Id = " . $data['sales_representativ'];
+              $sqlP = "SELECT * FROM pengguna WHERE Id = " . $data['id_pengguna'];
               $resultP = $conn->query($sqlP);
               if ($resultP) {
                 $rowP = $resultP->fetch_assoc();
@@ -289,7 +301,7 @@ if (!$result00) {
     <!-- Script Here -->
     <?php
 
-    $sql = "SELECT * FROM prospect WHERE YEAR(created_at) = " . $tahun_src;
+    $sql = "SELECT * FROM new_lead WHERE YEAR(created_at) = " . $tahun_src;
     $result = mysqli_query($conn, $sql);
 
     $namaBulanE = array(

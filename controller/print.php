@@ -26,26 +26,21 @@ if (mysqli_num_rows($result) == 0) {
     $levelIs_login = $row['Level'];
 }
 
+var_dump($_POST['sales-src']);
 
 // Inisialisasi variabel SQL
 $type = isset($_POST['type']) ? $_POST['type'] : '';
 if ($type == 'New Lead') {
     $sql = "SELECT * FROM new_lead";
 } else {
-    $sql = "SELECT * FROM prospect";
+    $sql = "SELECT * FROM prospect ps JOIN new_lead nl ON ps.Id_newlead = nl.Id";
 }
 
 // Inisialisasi variabel pencarian
 $where = array();
 $sales_src = isset($_POST['sales-src']) ? $_POST['sales-src'] : '';
 $status = isset($_POST['status']) ? $_POST['status'] : '';
-if ($type == 'New Lead') {
-    $probability = isset($_POST['probability']) ? $_POST['probability'] : '';
-    $status = '';
-} else {
-    $probability = '';
-    $status = isset($_POST['status']) ? $_POST['status'] : '';
-}
+$probability = isset($_POST['probability']) ? $_POST['probability'] : '';
 $tgl_start = isset($_POST['tgl-start']) ? $_POST['tgl-start'] : '';
 $tgl_end = isset($_POST['tgl-end']) ? $_POST['tgl-end'] : '';
 
@@ -74,21 +69,34 @@ if ($type == 'New Lead') {
     }
 } else {
     if (!empty($status)) {
-        $where[] = "Status LIKE '%" . $status . "%'";
+        $where[] = "ps.Probability LIKE '%" . $status . "%'";
     }
 }
 
+if ($type == 'New Lead') {
+    if (!empty($tgl_start) && !empty($tgl_end)) {
+        $where[] = "DATE(created_at) BETWEEN '" . $tgl_start . "' AND '" . $tgl_end . "'";
+    }
 
-if (!empty($tgl_start) && !empty($tgl_end)) {
-    $where[] = "DATE(created_at) BETWEEN '" . $tgl_start . "' AND '" . $tgl_end . "'";
-}
+    if (!empty($tgl_start) && empty($tgl_end)) {
+        $where[] = "DATE(created_at) BETWEEN '" . $tgl_start . "' AND '" . $tgl_now . "'";
+    }
 
-if (!empty($tgl_start) && empty($tgl_end)) {
-    $where[] = "DATE(created_at) BETWEEN '" . $tgl_start . "' AND '" . $tgl_now . "'";
-}
+    if (empty($tgl_start) && !empty($tgl_end)) {
+        $where[] = "DATE(created_at) BETWEEN '" . $tgl_now . "' AND '" . $tgl_end . "'";
+    }
+} else {
+    if (!empty($tgl_start) && !empty($tgl_end)) {
+        $where[] = "DATE(ps.created_at) BETWEEN '" . $tgl_start . "' AND '" . $tgl_end . "'";
+    }
 
-if (empty($tgl_start) && !empty($tgl_end)) {
-    $where[] = "DATE(created_at) BETWEEN '" . $tgl_now . "' AND '" . $tgl_end . "'";
+    if (!empty($tgl_start) && empty($tgl_end)) {
+        $where[] = "DATE(ps.created_at) BETWEEN '" . $tgl_start . "' AND '" . $tgl_now . "'";
+    }
+
+    if (empty($tgl_start) && !empty($tgl_end)) {
+        $where[] = "DATE(ps.created_at) BETWEEN '" . $tgl_now . "' AND '" . $tgl_end . "'";
+    }
 }
 
 // Gabungkan semua kondisi pencarian
@@ -103,19 +111,19 @@ if (!$result) {
     die("Error: " . mysqli_error($conn));
 }
 
-if ($levelIs_login == 3 && $sales_src == "") {
-    $_SESSION['msg-f'] = [
-        'key' => 'Gagal mendapatkan data print!',
-        'timestamp' => time()
-    ];
-    if ($type == "New Lead") {
-        header("Location: ../laporan/new-lead");
-        exit;
-    } else {
-        header("Location: ../laporan/prospect");
-        exit;
-    }
-}
+// if ($sales_src == "") {
+//     $_SESSION['msg-f'] = [
+//         'key' => 'Gagal mendapatkan data print!',
+//         'timestamp' => time()
+//     ];
+//     if ($type == "New Lead") {
+//         header("Location: ../laporan/new-lead");
+//         exit;
+//     } else {
+//         header("Location: ../laporan/prospect");
+//         exit;
+//     }
+// }
 
 ?>
 <!DOCTYPE html>

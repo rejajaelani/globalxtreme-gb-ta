@@ -28,7 +28,7 @@ if (mysqli_num_rows($result) == 0) {
 }
 
 // Inisialisasi variabel SQL
-$sql = "SELECT * FROM prospect";
+$sql = "SELECT * FROM prospect ps JOIN new_lead nl ON ps.Id_newlead = nl.Id";
 
 // Inisialisasi variabel pencarian
 // $where = array();
@@ -214,7 +214,7 @@ $result = mysqli_query($conn, $sql);
                                                             echo "<td><strong>" . $row2['Nama_Packages'] . "</strong></td>";
                                                         }
                                                     }
-                                                    echo "<td><strong>Uknown</strong></td>";
+                                                    echo "<td>" . $row['Probability'] . "</td>";
                                                     echo "<td>" . $row['created_at'] . "</td>";
                                                     $sql3 = "SELECT * FROM pengguna WHERE Id = " . $row['sales_representativ'];
                                                     $result3 = mysqli_query($conn, $sql3);

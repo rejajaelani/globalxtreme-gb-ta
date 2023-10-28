@@ -87,6 +87,9 @@
                                                         <option value="0" <?= ($row['Status'] == 0) ? 'selected' : '' ?>>Non-Aktif</option>
                                                     </select>
                                                 </div>
+                                            <?php } else { ?>
+                                                <input type="hidden" name="level" id="level" value="<?= $row['Level'] ?>">
+                                                <input type="hidden" name="status" id="status" value="<?= $row['Status'] ?>">
                                             <?php } ?>
                                             <div class="form-group">
                                                 <label for="image">Foto</label>

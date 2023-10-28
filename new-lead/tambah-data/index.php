@@ -115,25 +115,25 @@
                                         <div class="form-group row">
                                             <label for="companyname" class="col-sm-2 col-form-label">Company Name</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="companyname" name="companyname" required>
+                                                <input type="text" class="form-control" id="companyname" name="companyname">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="companyaddress" class="col-sm-2 col-form-label">Company Address</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="companyaddress" name="companyaddress" required>
+                                                <input type="text" class="form-control" id="companyaddress" name="companyaddress">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="companyphonenumber" class="col-sm-2 col-form-label">Company Phone Number</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="companyphonenumber" name="companyphonenumber" required>
+                                                <input type="text" class="form-control" id="companyphonenumber" name="companyphonenumber">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="companyemail" class="col-sm-2 col-form-label">Company Email</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="companyemail" name="companyemail" required>
+                                                <input type="text" class="form-control" id="companyemail" name="companyemail">
                                             </div>
                                         </div>
                                     </div>

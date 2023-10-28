@@ -179,6 +179,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             move_uploaded_file($id_card_foto_tmp, "../images/id-card/" . $id_card_foto_name_rand);
             move_uploaded_file($passport_foto_tmp, "../images/passport/" . $passport_foto_name_rand);
 
+            $sqlConverted = "UPDATE new_lead SET Probability = 'Converted' WHERE Id = '$id_lead'";
+            $resultConverted = mysqli_query($conn, $sqlConverted);
+            if (!$resultConverted) {
+                $_SESSION['msg-f'] = [
+                    'key' => 'Terjadi kesalahan saat mengconvert data new lead',
+                    'timestamp' => time()
+                ];
+                header("Location: ../prospect");
+                exit;
+            }
+
             // Jika tidak ada kesalahan, arahkan ke halaman sukses
             $_SESSION['msg'] = [
                 'key' => 'Data prospect berhasil diinput',

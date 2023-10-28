@@ -28,11 +28,19 @@ if (mysqli_num_rows($result) == 0) {
 }
 
 // Inisialisasi variabel SQL
-$sql = "SELECT * FROM new_lead";
+if ($levelIs_login == 3) {
+    $sql = "SELECT * FROM new_lead WHERE id_pengguna = " . $idIs_login;
+} else {
+    $sql = "SELECT * FROM new_lead";
+}
 
 // Inisialisasi variabel pencarian
 $where = array();
-$sales_src = isset($_GET['sales-src']) ? $_GET['sales-src'] : '';
+if ($levelIs_login == 3) {
+    $sales_src = isset($_GET['sales-src']) ? $_GET['sales-src'] : $idIs_login;
+} else {
+    $sales_src = isset($_GET['sales-src']) ? $_GET['sales-src'] : '';
+}
 $status = isset($_GET['status']) ? $_GET['status'] : '';
 $probability = isset($_GET['probability']) ? $_GET['probability'] : '';
 $tgl_start = isset($_GET['tgl-start']) ? $_GET['tgl-start'] : '';
@@ -66,7 +74,11 @@ if (empty($tgl_start) && !empty($tgl_end)) {
 
 // Gabungkan semua kondisi pencarian
 if (!empty($where)) {
-    $sql .= " WHERE " . implode(" AND ", $where);
+    if ($levelIs_login == 3) {
+        $sql .= " AND " . implode(" AND ", $where);
+    } else {
+        $sql .= " WHERE " . implode(" AND ", $where);
+    }
 }
 
 $result = mysqli_query($conn, $sql);

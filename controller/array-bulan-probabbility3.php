@@ -4,10 +4,14 @@ $bulan3 = array();
 
 // Loop melalui bulan-bulan
 for ($bulan = 1; $bulan <= 12; $bulan++) {
-    $sql = "SELECT COUNT(*) AS total FROM prospect p INNER JOIN new_lead nl ON p.Id_newlead = nl.Id WHERE MONTH(p.created_at) = $bulan AND nl.Probability = 'Converted'";
+    $sql = "SELECT COUNT(*) AS total FROM new_lead WHERE MONTH(created_at) = $bulan AND Probability = 'Converted'";
 
     if (!empty($sales_src)) {
-        $sql .= " AND p.sales_representativ = $sales_src";
+        $sql .= " AND id_pengguna = $sales_src";
+    }
+
+    if (!empty($status)) {
+        $sql .= " AND Status = '" . $status . "'";
     }
 
     $result = mysqli_query($conn, $sql);
