@@ -7,6 +7,8 @@ include "../../assets/delMsg.php";
 
 $sql = "SELECT * FROM pengguna WHERE is_login = " . $_SESSION['login_status'];
 
+$type = 2;
+
 $result = mysqli_query($conn, $sql);
 
 if (!$result) {
@@ -29,9 +31,9 @@ if (mysqli_num_rows($result) == 0) {
 
 // Inisialisasi variabel SQL
 if ($levelIs_login == 3) {
-    $sql = "SELECT * FROM prospect ps JOIN new_lead nl ON ps.Id_newlead = nl.Id WHERE ps.sales_representativ = " . $idIs_login;
+    $sql = "SELECT ps.*, nl.Probability FROM prospect ps JOIN new_lead nl ON ps.Id_newlead = nl.Id WHERE ps.sales_representativ = " . $idIs_login;
 } else {
-    $sql = "SELECT * FROM prospect ps JOIN new_lead nl ON ps.Id_newlead = nl.Id";
+    $sql = "SELECT ps.*, nl.Probability FROM prospect ps JOIN new_lead nl ON ps.Id_newlead = nl.Id";
 }
 
 // Inisialisasi variabel pencarian
@@ -195,34 +197,13 @@ if (!$result) {
                                     <form method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                                         <div class=" row">
                                             <div class="col-4">
-                                                <div class="form-group" style="<?= ($levelIs_login == 3) ? 'display: none' : ''; ?>">
+                                                <div class="form-group">
                                                     <label for="sales-src">Select Sales</label>
-                                                    <select class="form-control" id="sales-src" name="sales-src">
+                                                    <select class="form-control" id="sales-src" name="sales-src" <?= ($levelIs_login == 3) ? 'disabled' : ''; ?>>
                                                         <option value="">-- Select Sales --</option>
                                                         <?php
                                                         // Query SQL untuk mengambil data pengguna
                                                         $sql2 = "SELECT * FROM pengguna";
-                                                        $result2 = $conn->query($sql2);
-
-                                                        if ($result2->num_rows > 0) {
-                                                            while ($row2 = $result2->fetch_assoc()) {
-                                                        ?>
-                                                                <option value="<?= $row2['Id'] ?>" <?= ($sales_src == $row2['Id']) ? 'selected' : ''; ?>><?= $row2['Nama'] ?></option>
-                                                        <?php
-                                                            }
-                                                        } else {
-                                                            echo "Parameter ID tidak ditemukan.";
-                                                            exit;
-                                                        }
-                                                        ?>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group" style="<?= ($levelIs_login != 3) ? 'display: none' : ''; ?>">
-                                                    <label for="sales-src">Select Sales</label>
-                                                    <select class="form-control" id="sales-src" name="sales-src">
-                                                        <?php
-                                                        // Query SQL untuk mengambil data pengguna
-                                                        $sql2 = "SELECT * FROM pengguna WHERE Id = " . $idIs_login;
                                                         $result2 = $conn->query($sql2);
 
                                                         if ($result2->num_rows > 0) {
@@ -303,7 +284,6 @@ if (!$result) {
                                                 <th>STATUS</th>
                                                 <th>DATE CREATED</th>
                                                 <th>SALES</th>
-                                                <th>ACTION</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -323,7 +303,13 @@ if (!$result) {
                                                             echo "<td><strong>" . $row2['Nama_Packages'] . "</strong></td>";
                                                         }
                                                     }
-                                                    echo "<td>" . $row['Probability'] . "</td>";
+                                                    if ($row['Probability'] === 'Converted') {
+                                                        echo "<td><div class='badge badge-primary'>" . $row['Probability'] . "</div></td>";
+                                                    } elseif ($row['Probability'] === 'Pending') {
+                                                        echo "<td><div class='badge badge-warning'>" . $row['Probability'] . "</div></td>";
+                                                    } elseif ($row['Probability'] === 'Cancel') {
+                                                        echo "<td><div class='badge badge-danger'>" . $row['Probability'] . "</div></td>";
+                                                    }
                                                     echo "<td>" . $row['created_at'] . "</td>";
                                                     $sql3 = "SELECT * FROM pengguna WHERE Id = " . $row['sales_representativ'];
                                                     $result3 = mysqli_query($conn, $sql3);
@@ -332,12 +318,6 @@ if (!$result) {
                                                             echo "<td><strong>" . $row3['Nama'] . "</strong><br>" . $row3['sales_from'] . "</td>";
                                                         }
                                                     }
-                                            ?>
-                                                    <td>
-                                                        <a href="../controller/delete-prospect.php?id=<?= $row['Id'] ?>" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                                        <a href="./edit-data?id=<?= $row['Id'] ?>" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
-                                                    </td>
-                                            <?php
                                                     echo "</tr>";
                                                 }
                                                 $no++; // Tingkatkan nomor baris setiap kali iterasi

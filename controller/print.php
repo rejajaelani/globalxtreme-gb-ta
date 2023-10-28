@@ -26,14 +26,14 @@ if (mysqli_num_rows($result) == 0) {
     $levelIs_login = $row['Level'];
 }
 
-var_dump($_POST['sales-src']);
+// var_dump($_POST['sales-src']);
 
 // Inisialisasi variabel SQL
 $type = isset($_POST['type']) ? $_POST['type'] : '';
 if ($type == 'New Lead') {
     $sql = "SELECT * FROM new_lead";
 } else {
-    $sql = "SELECT * FROM prospect ps JOIN new_lead nl ON ps.Id_newlead = nl.Id";
+    $sql = "SELECT ps.*, nl.Probability FROM prospect ps JOIN new_lead nl ON ps.Id_newlead = nl.Id";
 }
 
 // Inisialisasi variabel pencarian
@@ -250,21 +250,21 @@ if (!$result) {
                             $fullname = $row['Givenname'] . $row['Surname'];
                             echo "<tr>";
                             echo "<td>" . $row['Id'] . "</td>";
-                            echo "<td><strong>" . $fullname . "</strong><br>" . $row['Curaddress'] . "</td>";
+                            echo "<td>" . $fullname . "<br>" . $row['Curaddress'] . "</td>";
                             $sql2 = "SELECT * FROM packages WHERE Id = " . $row['Id_packages'];
                             $result2 = mysqli_query($conn, $sql2);
                             if ($result2->num_rows > 0) {
                                 while ($row2 = $result2->fetch_assoc()) {
-                                    echo "<td><strong>" . $row2['Nama_Packages'] . "</strong></td>";
+                                    echo "<td>" . $row2['Nama_Packages'] . "</td>";
                                 }
                             }
-                            echo "<td><strong>Uknown</strong></td>";
+                            echo "<td>" . $row['Probability'] . "</td>";
                             echo "<td>" . $row['created_at'] . "</td>";
                             $sql3 = "SELECT * FROM pengguna WHERE Id = " . $row['sales_representativ'];
                             $result3 = mysqli_query($conn, $sql3);
                             if ($result3->num_rows > 0) {
                                 while ($row3 = $result3->fetch_assoc()) {
-                                    echo "<td><strong>" . $row3['Nama'] . "</strong><br>" . $row3['sales_from'] . "</td>";
+                                    echo "<td>" . $row3['Nama'] . "<br>" . $row3['sales_from'] . "</td>";
                                 }
                             }
 

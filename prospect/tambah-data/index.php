@@ -4,6 +4,8 @@
 // Inisialisasi variabel SQL
 $sql = "SELECT * FROM tb_user";
 
+$type = 2;
+
 // Cek Data New Lead
 $sqlCek = "SELECT * FROM new_lead";
 $resultCek = mysqli_query($conn, $sqlCek);
@@ -68,7 +70,11 @@ if ($resultCek->num_rows == 0) {
                                                 <option value="">-- Select Lead --</option>
                                                 <?php
                                                 // Query SQL untuk mengambil data pengguna
-                                                $sql2 = "SELECT * FROM new_lead";
+                                                if ($levelIs_login == 3) {
+                                                    $sql2 = "SELECT * FROM new_lead WHERE id_pengguna = " . $idIs_login;
+                                                } else {
+                                                    $sql2 = "SELECT * FROM new_lead";
+                                                }
                                                 $result2 = $conn->query($sql2);
 
                                                 if ($result2->num_rows > 0) {
@@ -383,11 +389,17 @@ if ($resultCek->num_rows == 0) {
                                             <div class="col-lg-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="sales-rep">Sales Representativ</label>
-                                                    <select class="form-control" id="sales-rep" name="sales-rep" required>
-                                                        <option value="">-- Select Name --</option>
+                                                    <select class="form-control" id="sales-rep" name="sales-rep" required <?= ($levelIs_login == 3) ? "disabled" : "" ?>>
+                                                        <?php if ($levelIs_login != 3) { ?>
+                                                            <option value="">-- Select Name --</option>
+                                                        <?php } ?>
                                                         <?php
                                                         // Query SQL untuk mengambil data pengguna
-                                                        $sql2 = "SELECT * FROM pengguna";
+                                                        if ($levelIs_login == 3) {
+                                                            $sql2 = "SELECT * FROM pengguna WHERE Id = " . $idIs_login;
+                                                        } else {
+                                                            $sql2 = "SELECT * FROM pengguna";
+                                                        }
                                                         $result2 = $conn->query($sql2);
 
                                                         if ($result2->num_rows > 0) {

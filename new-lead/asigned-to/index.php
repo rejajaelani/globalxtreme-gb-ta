@@ -1,6 +1,9 @@
 <?php include "../../assets/template/header-2.php" ?>
 
 <?php
+
+$type = 2;
+
 // Periksa apakah parameter ID dari data yang akan diubah telah dikirimkan
 if (isset($_GET['id'])) {
     $id = $_GET['id'];

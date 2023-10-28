@@ -1,6 +1,8 @@
 <?php include "../../assets/template/header-2.php" ?>
 
 <?php
+
+$type = 2;
 // Periksa apakah parameter ID dari data yang akan diubah telah dikirimkan
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -165,8 +167,14 @@ $status = $row['Status'];
                                                 <div class="col-sm-10">
                                                     <select class="form-control" id="source" name="source" required>
                                                         <option style="display: none;">-- Select Source --</option>
-                                                        <option <?php echo $row['source'] == "Inbound-Walk in" ? "selected" : ""; ?>>Inbound-Walk in</option>
-                                                        <option <?php echo $row['source'] == "Inbound-Call" ? "selected" : ""; ?>>Inbound-Call</option>
+                                                        <option <?php echo $row['source'] == "Outbound" ? "selected" : ""; ?>>Outbound</option>
+                                                        <option <?php echo $row['source'] == "Inbound - Tawk To" ? "selected" : ""; ?>>Inbound - Tawk To</option>
+                                                        <option <?php echo $row['source'] == "Inbound - WA Center" ? "selected" : ""; ?>>Inbound - WA Center</option>
+                                                        <option <?php echo $row['source'] == "Inbound - Call" ? "selected" : ""; ?>>Inbound - Call</option>
+                                                        <option <?php echo $row['source'] == "Inbound - Walk in" ? "selected" : ""; ?>>Inbound - Walk in</option>
+                                                        <option <?php echo $row['source'] == "Customer Support" ? "selected" : ""; ?>>Customer Support</option>
+                                                        <option <?php echo $row['source'] == "Sales" ? "selected" : ""; ?>>Sales</option>
+                                                        <option <?php echo $row['source'] == "Other" ? "selected" : ""; ?>>Other</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -175,8 +183,15 @@ $status = $row['Status'];
                                                 <div class="col-sm-10">
                                                     <select class="form-control" id="media" name="media" required>
                                                         <option style="display: none;">-- Select Media --</option>
-                                                        <option <?php echo $row['media'] == "Walk in" ? "selected" : ""; ?>>Walk in</option>
+                                                        <option <?php echo $row['media'] == "Outbound" ? "selected" : ""; ?>>Outbound</option>
+                                                        <option <?php echo $row['media'] == "WA Center" ? "selected" : ""; ?>>WA Center</option>
                                                         <option <?php echo $row['media'] == "Call" ? "selected" : ""; ?>>Call</option>
+                                                        <option <?php echo $row['media'] == "Website" ? "selected" : ""; ?>>Website</option>
+                                                        <option <?php echo $row['media'] == "Email" ? "selected" : ""; ?>>Email</option>
+                                                        <option <?php echo $row['media'] == "Walk In" ? "selected" : ""; ?>>Walk In</option>
+                                                        <option <?php echo $row['media'] == "Sales" ? "selected" : ""; ?>>Sales</option>
+                                                        <option <?php echo $row['media'] == "Other" ? "selected" : ""; ?>>Other</option>
+                                                        <option <?php echo $row['media'] == "Digital Platform" ? "selected" : ""; ?>>Digital Platform</option>
                                                     </select>
                                                 </div>
                                             </div>

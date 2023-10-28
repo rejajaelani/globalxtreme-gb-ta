@@ -7,6 +7,8 @@ include "../../assets/delMsg.php";
 
 $sql = "SELECT * FROM pengguna WHERE is_login = " . $_SESSION['login_status'];
 
+$type = 2;
+
 $result = mysqli_query($conn, $sql);
 
 if (!$result) {
@@ -195,9 +197,9 @@ if (!$result) {
                                     <form method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                                         <div class=" row">
                                             <div class="col-4">
-                                                <div class="form-group" style="<?= ($levelIs_login == 3) ? 'display: none' : ''; ?>">
+                                                <div class="form-group">
                                                     <label for="sales-src">Select Sales</label>
-                                                    <select class="form-control" id="sales-src" name="sales-src">
+                                                    <select class="form-control" id="sales-src" name="sales-src" <?= ($levelIs_login == 3) ? 'disabled' : ''; ?>>
                                                         <option value="">-- Select Sales --</option>
                                                         <?php
                                                         // Query SQL untuk mengambil data pengguna
@@ -217,9 +219,9 @@ if (!$result) {
                                                         ?>
                                                     </select>
                                                 </div>
-                                                <div class="form-group" style="<?= ($levelIs_login != 3) ? 'display: none' : ''; ?>">
+                                                <!-- <div class="form-group" style="<?= ($levelIs_login != 3) ? 'display: none' : ''; ?>">
                                                     <label for="sales-src">Select Sales</label>
-                                                    <select class="form-control" id="sales-src" name="sales-src">
+                                                    <select class="form-control" id="sales-src" name="sales-src" <?= ($levelIs_login != 3) ? 'disabled' : ''; ?>>
                                                         <?php
                                                         // Query SQL untuk mengambil data pengguna
                                                         $sql2 = "SELECT * FROM pengguna WHERE Id = " . $idIs_login;
@@ -237,7 +239,7 @@ if (!$result) {
                                                         }
                                                         ?>
                                                     </select>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <div class="col-4"></div>
                                             <div class="col-4">
@@ -314,7 +316,7 @@ if (!$result) {
                                                 // Output data pengguna ke dalam tabel
                                                 while ($row = $result->fetch_assoc()) {
                                                     echo "<tr>";
-                                                    echo "<td>" . $row['Fullname'] . "</td>";
+                                                    echo "<td>" . $row['Id'] . "</td>";
                                                     echo "<td>" . $row['Phonenumber'] . "</td>";
                                                     echo "<td>" . $row['Status'] . "</td>";
                                                     if ($row['Probability'] === 'Converted') {

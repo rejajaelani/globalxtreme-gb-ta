@@ -4,7 +4,9 @@
 $id = $_GET['id'];
 $id = mysqli_real_escape_string($conn, $id);
 
-$sql = "SELECT * FROM prospect WHERE Id = '$id'";
+$type = 2;
+
+$sql = "SELECT ps.*, nl.Probability FROM prospect ps JOIN new_lead nl ON ps.Id_newlead = nl.Id WHERE ps.Id = '$id'";
 $result = mysqli_query($conn, $sql);
 
 if (!$result) {
@@ -307,7 +309,7 @@ if (!$result) {
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="id-card-foto">Id Card Photo</label>
-                                                    <input type="file" class="form-control-file border rounded p-1" id="id-card-foto" name="id-card-foto" required>
+                                                    <input type="file" class="form-control-file border rounded p-1" id="id-card-foto" name="id-card-foto">
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-6 col-sm-12">
@@ -369,10 +371,10 @@ if (!$result) {
                                                     <label for="property-owner-type">Property Owner Type</label>
                                                     <select class="form-control" id="property-owner-type" name="property-owner-type" required>
                                                         <option value="">-- Select Property Owner Type --</option>
-                                                        <option <?= ($row['Building_type'] == 'Sole Owner') ? 'selected' : ''; ?>>Sole Owner</option>
-                                                        <option <?= ($row['Building_type'] == 'Rent Tenancy') ? 'selected' : ''; ?>>Rent Tenancy</option>
-                                                        <option <?= ($row['Building_type'] == 'Joint Tenancy') ? 'selected' : ''; ?>>Joint Tenancy</option>
-                                                        <option <?= ($row['Building_type'] == 'Community') ? 'selected' : ''; ?>>Community</option>
+                                                        <option <?= ($row['Property_ownership_type'] == 'Sole Owner') ? 'selected' : ''; ?>>Sole Owner</option>
+                                                        <option <?= ($row['Property_ownership_type'] == 'Rent Tenancy') ? 'selected' : ''; ?>>Rent Tenancy</option>
+                                                        <option <?= ($row['Property_ownership_type'] == 'Joint Tenancy') ? 'selected' : ''; ?>>Joint Tenancy</option>
+                                                        <option <?= ($row['Property_ownership_type'] == 'Community') ? 'selected' : ''; ?>>Community</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -452,7 +454,7 @@ if (!$result) {
                                             <div class="col-lg-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="sales-rep">Sales Representativ</label>
-                                                    <select class="form-control" id="sales-rep" name="sales-rep" required>
+                                                    <select class="form-control" id="sales-rep" name="sales-rep" required <?= ($levelIs_login == 3) ? "disabled" : "" ?>>
                                                         <option value="">-- Select Name --</option>
                                                         <?php
                                                         // Query SQL untuk mengambil data pengguna

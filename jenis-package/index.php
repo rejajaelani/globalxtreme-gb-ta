@@ -5,6 +5,8 @@ include "../controller/KoneksiController.php"; // Pastikan Anda memasukkan file 
 
 include "../assets/delMsg.php";
 
+$type = 1;
+
 $sql = "SELECT * FROM pengguna WHERE is_login = " . $_SESSION['login_status'];
 
 $result = mysqli_query($conn, $sql);

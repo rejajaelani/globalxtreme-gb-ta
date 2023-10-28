@@ -2,6 +2,8 @@
 
 <?php
 
+$type = 2;
+
 include "../../assets/delMsg.php";
 
 // Periksa apakah parameter ID dari data yang akan diubah telah dikirimkan

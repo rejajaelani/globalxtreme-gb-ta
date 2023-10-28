@@ -5,6 +5,8 @@ include "../controller/KoneksiController.php"; // Pastikan Anda memasukkan file 
 
 include "../assets/delMsg.php";
 
+$type = 1;
+
 $sql = "SELECT * FROM pengguna WHERE is_login = " . $_SESSION['login_status'];
 
 $result = mysqli_query($conn, $sql);
@@ -28,7 +30,11 @@ if (mysqli_num_rows($result) == 0) {
 }
 
 // Inisialisasi variabel SQL
-$sql = "SELECT * FROM prospect ps JOIN new_lead nl ON ps.Id_newlead = nl.Id";
+if ($levelIs_login == 3) {
+    $sql = "SELECT ps.*, nl.Probability FROM prospect ps JOIN new_lead nl ON ps.Id_newlead = nl.Id WHERE ps.sales_representativ = " . $idIs_login;
+} else {
+    $sql = "SELECT ps.*, nl.Probability FROM prospect ps JOIN new_lead nl ON ps.Id_newlead = nl.Id";
+}
 
 // Inisialisasi variabel pencarian
 // $where = array();
@@ -214,7 +220,13 @@ $result = mysqli_query($conn, $sql);
                                                             echo "<td><strong>" . $row2['Nama_Packages'] . "</strong></td>";
                                                         }
                                                     }
-                                                    echo "<td>" . $row['Probability'] . "</td>";
+                                                    if ($row['Probability'] === 'Converted') {
+                                                        echo "<td><div class='badge badge-primary'>" . $row['Probability'] . "</div></td>";
+                                                    } elseif ($row['Probability'] === 'Pending') {
+                                                        echo "<td><div class='badge badge-warning'>" . $row['Probability'] . "</div></td>";
+                                                    } elseif ($row['Probability'] === 'Cancel') {
+                                                        echo "<td><div class='badge badge-danger'>" . $row['Probability'] . "</div></td>";
+                                                    }
                                                     echo "<td>" . $row['created_at'] . "</td>";
                                                     $sql3 = "SELECT * FROM pengguna WHERE Id = " . $row['sales_representativ'];
                                                     $result3 = mysqli_query($conn, $sql3);

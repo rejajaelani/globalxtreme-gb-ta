@@ -1,5 +1,7 @@
 <?php include "../../assets/template/header-2.php" ?>
 
+<?php $type = 2; ?>
+
 <body class="hold-transition sidebar-mini layout-fixed">
   <div class="wrapper">
 
@@ -69,4 +71,4 @@
     </script>
     <!-- /.Script -->
 
-<?php include "../../assets/template/footer-end-2.php" ?>
+    <?php include "../../assets/template/footer-end-2.php" ?>

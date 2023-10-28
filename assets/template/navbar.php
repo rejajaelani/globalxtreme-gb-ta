@@ -40,7 +40,7 @@
           <span class="badge badge-info">Online</span></a>
       </li>
       <li class="nav-item">
-        <form action="../controller/LogoutController.php" method="post">
+        <form action="<?= ($type == 2) ? "../../" : "../" ?>controller/LogoutController.php" method="post">
           <input type="hidden" name="email" id="email" value="<?= $email ?>">
           <button class="btn text-white" style="background-color: #1AB394 !important;"><i class="fas fa-sign-out-alt text-danger"></i> Log out</button>
         </form>

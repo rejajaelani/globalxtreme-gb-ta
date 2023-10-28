@@ -1,24 +1,26 @@
 <?php
 include "../../assets/template/header-2.php";
 
+$type = 2;
+
 // Periksa apakah ID jenis package yang akan di-edit disediakan
 if (isset($_GET['id'])) {
-    $jenisId = $_GET['id'];
+  $jenisId = $_GET['id'];
 
-    // Query database untuk mendapatkan data jenis package berdasarkan ID
-    $sql = "SELECT * FROM jenis WHERE Id = $jenisId";
-    $result = $conn->query($sql);
+  // Query database untuk mendapatkan data jenis package berdasarkan ID
+  $sql = "SELECT * FROM jenis WHERE Id = $jenisId";
+  $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $jenisName = $row['Nama_jenis'];
-    } else {
-        echo "Data tidak ditemukan.";
-        exit;
-    }
-} else {
-    echo "ID jenis package tidak diberikan.";
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $jenisName = $row['Nama_jenis'];
+  } else {
+    echo "Data tidak ditemukan.";
     exit;
+  }
+} else {
+  echo "ID jenis package tidak diberikan.";
+  exit;
 }
 ?>
 
@@ -94,4 +96,4 @@ if (isset($_GET['id'])) {
     </script>
     <!-- /.Script -->
 
-<?php include "../../assets/template/footer-end-2.php" ?>
+    <?php include "../../assets/template/footer-end-2.php" ?>

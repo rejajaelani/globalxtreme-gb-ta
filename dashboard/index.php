@@ -2,6 +2,8 @@
 
 <?php
 
+$type = 1;
+
 // Inisialisasi variabel SQL
 $sql00 = "SELECT * FROM new_lead nl JOIN pengguna pg ON nl.id_pengguna = pg.Id";
 $sql01 = "SELECT * FROM new_lead nl JOIN prospect ps ON nl.Id = ps.Id_newlead";
