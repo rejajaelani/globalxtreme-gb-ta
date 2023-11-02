@@ -2,32 +2,55 @@
 
 <?php
 
+$type = 1;
+
 // Inisialisasi variabel SQL
-$sql00 = "SELECT * FROM prospect";
+$sql00 = "SELECT * FROM new_lead nl JOIN pengguna pg ON nl.id_pengguna = pg.Id";
+$sql01 = "SELECT * FROM new_lead nl JOIN prospect ps ON nl.Id = ps.Id_newlead";
 
 // Inisialisasi variabel pencarian
 $where = array();
-$sales_src = isset($_GET['sales-src']) ? $_GET['sales-src'] : '';
+$where2 = array();
+date_default_timezone_set('Asia/Makassar');
+if ($levelIs_login == 3) {
+  $sales_src = $idIs_login;
+} else {
+  $sales_src = isset($_GET['sales-src']) ? $_GET['sales-src'] : '';
+}
+$tahun_src = isset($_GET['tahun-src']) ? $_GET['tahun-src'] : date('Y');
 $status = isset($_GET['status']) ? $_GET['status'] : '';
 
 if (!empty($sales_src)) {
-  $where[] = "Id_pengguna = " . $sales_src;
+  $where[] = "nl.id_pengguna = " . $sales_src;
+  $where2[] = "nl.id_pengguna = " . $sales_src;
 }
 
 if (!empty($status)) {
-  $where[] = "Status = '" . $status . "'";
+  $where[] = "nl.Status = '" . $status . "'";
+  $where2[] = "nl.Status = '" . $status . "'";
 }
 
 // Gabungkan semua kondisi pencarian
 if (!empty($where)) {
   $sql00 .= " WHERE " . implode(" AND ", $where);
+  $sql01 .= " WHERE " . implode(" AND ", $where2);
 } else {
-  $sql00 .= " WHERE sales_representativ = " . 0;
+  // if ($levelIs_login == 3) {
+  //   $sql00 .= " WHERE sales_representativ = " . $idIs_login;
+  // }
+  $sql00;
+  $sql01;
 }
 
 $result00 = mysqli_query($conn, $sql00);
+$result01 = mysqli_query($conn, $sql01);
 
 if (!$result00) {
+  // Query tidak berhasil
+  die("Error: " . mysqli_error($conn));
+}
+
+if (!$result01) {
   // Query tidak berhasil
   die("Error: " . mysqli_error($conn));
 }
@@ -81,7 +104,7 @@ if (!$result00) {
                                                       echo "Admin";
                                                       break;
                                                     case 2:
-                                                      echo "Supervisor";
+                                                      echo "Super Admin";
                                                       break;
                                                     case 3:
                                                       echo "Sales";
@@ -103,7 +126,7 @@ if (!$result00) {
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-6 col-sm-12">
+            <div class="col-lg-6 col-sm-12" style="<?= ($levelIs_login == 3) ? 'display: none' : ''; ?>">
               <div class="card">
                 <div class="card-header border-0">
                   <p class="text-secondary m-0">Filter Data</p>
@@ -153,7 +176,8 @@ if (!$result00) {
                         </div>
                       </div>
                       <div class="col-4">
-                        <button class="btn bg-custom-lgreen mt-4 text-white" style="width: 100%;">Tampilkan</button>
+                        <button class="btn bg-custom-lgreen mt-4 text-white">Tampilkan</button>
+                        <a href="./" class="btn btn-secondary mt-4 text-white"><i class="fas fa-sync-alt"></i></a>
                       </div>
                     </div>
                   </form>
@@ -163,10 +187,11 @@ if (!$result00) {
             <!-- Tampilkan data prospek sesuai dengan filter di sini -->
             <?php
             $nama_pengguna = '';
-            $tercapai = 0; // Inisialisasi variabel tercapai di luar loop
-            while ($data = mysqli_fetch_assoc($result00)) {
 
-              $sqlP = "SELECT * FROM pengguna WHERE Id = " . $data['sales_representativ'];
+            $tercapai = 0; // Inisialisasi variabel tercapai di luar loop
+            while ($data = mysqli_fetch_assoc($result01)) {
+
+              $sqlP = "SELECT * FROM pengguna WHERE Id = " . $data['id_pengguna'];
               $resultP = $conn->query($sqlP);
               if ($resultP) {
                 $rowP = $resultP->fetch_assoc();
@@ -188,45 +213,47 @@ if (!$result00) {
 
 
             }
-            $target = 10000000;
+            if ($sales_src === "") {
+              $target = 100000000;
+            } else {
+              $target = 10000000;
+            }
             $percent = ($tercapai / $target) * 100;
 
             // echo "Tercapai = " . number_format($tercapai); // Menampilkan nilai tercapai setelah loop
 
-            if ($nama_pengguna == '') {
             ?>
-              <div class="col-lg-6 col-sm-12">
-                <p class="badge badge-warning">Belum Ada Data!!</p>
-              </div>
-            <?php } else {
-
-            ?>
-              <div class="col-lg-6 col-sm-12">
-                <div class="card">
-                  <div class="card-header border-0">
+            <div class="<?= ($levelIs_login == 3) ? 'col-lg-12' : 'col-lg-6'; ?> col-sm-12">
+              <div class="card">
+                <div class="card-header border-0">
+                  <?php
+                  if ($sales_src === "") { ?>
+                    <p class="text-secondary m-0">Target Capaian Sales A/N : All</p>
+                  <?php } else { ?>
                     <p class="text-secondary m-0">Target Capaian Sales A/N : <?= $nama_pengguna ?></p>
+                  <?php } ?>
+                </div>
+                <div class="card-body">
+                  <div class="ket" style="display: flex;justify-content: space-between;">
+                    <p class="badge badge-warning">Tercapai : Rp. <?= number_format($tercapai) ?></p>
+                    <p class="badge badge-success">Target : Rp. <?= number_format($target) ?></p>
                   </div>
-                  <div class="card-body">
-                    <div class="ket" style="display: flex;justify-content: space-between;">
-                      <p class="badge badge-warning">Tercapai : Rp. <?= number_format($tercapai) ?></p>
-                      <p class="badge badge-success">Target : Rp. <?= number_format($target) ?></p>
+                  <?php
+                  if ($tercapai === $target) {
+                  ?>
+                    <div class="progress rounded">
+                      <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <?php
-                    if ($tercapai === $target) {
-                    ?>
-                      <div class="progress rounded">
-                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    <?php
-                    } else {
-                    ?>
-                      <div class="progress rounded">
-                        <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: <?= $percent ?>%" aria-valuenow="<?= $percent ?>" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    <?php } ?>
-                  </div>
+                  <?php
+                  } else {
+                  ?>
+                    <div class="progress rounded">
+                      <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: <?= $percent ?>%" aria-valuenow="<?= $percent ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  <?php } ?>
                 </div>
               </div>
+            </div>
           </div>
           <!-- /.row -->
           <div class="row">
@@ -236,13 +263,14 @@ if (!$result00) {
                 <div class="card-header">
                   <div class="row">
                     <div class="col-lg-4 col-md-6 col-sm-8">
-                      <form action="#">
+                      <form method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                         <div class="form-group row">
                           <div class="col">
-                            <select class="form-control form-control-sm">
-                              <option>2023</option>
-                              <option>2022</option>
-                              <option>2021</option>
+                            <select class="form-control form-control-sm" name="tahun-src">
+                              <option <?= ($tahun_src == 2023) ? 'selected' : ''; ?>>2023</option>
+                              <option <?= ($tahun_src == 2024) ? 'selected' : ''; ?>>2024</option>
+                              <option <?= ($tahun_src == 2025) ? 'selected' : ''; ?>>2025</option>
+                              <option <?= ($tahun_src == 2026) ? 'selected' : ''; ?>>2026</option>
                             </select>
                           </div>
                           <div class="col">
@@ -264,7 +292,6 @@ if (!$result00) {
             </div>
             <!-- /.col -->
           </div>
-        <?php } ?>
 
         </div><!-- /.container-fluid -->
       </section>
@@ -274,36 +301,87 @@ if (!$result00) {
 
     <?php include "../assets/template/footer.php" ?>
     <!-- Script Here -->
+    <?php
+
+    $sql = "SELECT * FROM new_lead WHERE YEAR(created_at) = " . $tahun_src;
+    $result = mysqli_query($conn, $sql);
+
+    $namaBulanE = array(
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    );
+
+    // Periksa apakah ada hasil data
+    if (mysqli_num_rows($result) > 0) {
+
+      include "../controller/array-bulan-probabbility1.php";
+      include "../controller/array-bulan-probabbility2.php";
+      include "../controller/array-bulan-probabbility3.php";
+
+      foreach ($bulan1 as $namaBulan => $jumlah) {
+        // Tambahkan jumlah ke array jumlahArray
+        $cancelArray[] = $jumlah;
+      }
+
+      foreach ($bulan2 as $namaBulan => $jumlah) {
+        // Tambahkan jumlah ke array jumlahArray
+        $pendingArray[] = $jumlah;
+      }
+
+      foreach ($bulan3 as $namaBulan => $jumlah) {
+        // Tambahkan jumlah ke array jumlahArray
+        $convertedArray[] = $jumlah;
+      }
+    } else {
+      // Tidak ada data yang cocok
+      $cancelArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      $pendingArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      $convertedArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    }
+
+
+    $namaBulanArrayJSON = json_encode($namaBulanE);
+    $cancelArrayJSON = json_encode($cancelArray);
+    $pendingArrayJSON = json_encode($pendingArray);
+    $convertedArrayJSON = json_encode($convertedArray);
+
+
+    // $juma = array_sum($cancelArray) + array_sum($pendingArray) + array_sum($convertedArray);
+
+    // var_dump($namaBulanArray);
+    // echo "<br/>";
+    // var_dump($jumlahArray);
+
+    ?>
     <script>
       $(function() {
         /* ChartJS
          * -------
          * Here we will create a few charts using ChartJS
          */
-
         // BAR CHART DATA
         var barChartData = {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+          labels: <?= $namaBulanArrayJSON ?>,
           datasets: [{
               label: 'Cancel',
               backgroundColor: '#DC3545',
               borderColor: '#DC3545',
               borderWidth: 1,
-              data: [28, 48, 40, 19, 86, 27, 90, 40, 19, 86, 27, 90]
+              data: <?= $cancelArrayJSON ?>
             },
             {
               label: 'Converted',
               backgroundColor: '#1AB394',
               borderColor: '#1AB394',
               borderWidth: 1,
-              data: [27, 90, 40, 28, 48, 40, 65, 59, 80, 81, 56, 55]
+              data: <?= $convertedArrayJSON ?>
             },
             {
               label: 'Pending',
               backgroundColor: 'rgba(210, 214, 222, 1)',
               borderColor: 'rgba(210, 214, 222, 1)',
               borderWidth: 1,
-              data: [65, 59, 80, 81, 56, 55, 40, 40, 19, 86, 27, 100]
+              data: <?= $pendingArrayJSON ?>
             }
           ]
         };
