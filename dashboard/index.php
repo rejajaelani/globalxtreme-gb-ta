@@ -1,6 +1,9 @@
 <?php include "../assets/template/header.php" ?>
 
 <?php
+
+$type = 1;
+
 include "../controller/KoneksiController.php";
 
 if (isset($_SESSION['login_status']) && $_SESSION['login_status'] == true) {
@@ -37,6 +40,10 @@ if (isset($_SESSION['login_status']) && $_SESSION['login_status'] == true) {
 
     $tahun_src = isset($_GET['tahun-src']) ? $_GET['tahun-src'] : date('Y');
     $probability = isset($_GET['probability']) ? $_GET['probability'] : '';
+    $tgl_start = isset($_GET['tgl-start']) ? $_GET['tgl-start'] : '';
+    $tgl_end = isset($_GET['tgl-end']) ? $_GET['tgl-end'] : '';
+    date_default_timezone_set('Asia/Makassar');
+    $tgl_now = date("Y-m-d");
 
     if (!empty($sales_src)) {
       //$where[] = "nl.id_pengguna = " . $sales_src;
@@ -151,7 +158,7 @@ if (isset($_SESSION['login_status']) && $_SESSION['login_status'] == true) {
                 <div class="card-body">
                   <form method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <div class="row">
-                      <div class="col-5">
+                      <div class="col-3">
                         <div class="form-group">
                           <label for="sales-src">Sales</label>
                           <select class="form-control" id="sales-src" name="sales-src">
@@ -175,7 +182,7 @@ if (isset($_SESSION['login_status']) && $_SESSION['login_status'] == true) {
                           </select>
                         </div>
                       </div>
-                      <div class="col-5">
+                      <div class="col-3">
                         <div class="form-group">
                           <label for="probability">Probability</label>
                           <select class="form-control" id="probability" name="probability">
@@ -200,6 +207,18 @@ if (isset($_SESSION['login_status']) && $_SESSION['login_status'] == true) {
                             <option value="Pending" <?= ($status == 'Pending') ? 'selected' : ''; ?>>Pending</option>
                           </select>
                         </div> -->
+                      </div>
+                      <div class="col-2">
+                        <div class="form-group">
+                          <label for="tgl-start">From Date</label>
+                          <input type="date" class="form-control" id="tgl-start" name="tgl-start" <?= ($tgl_start == "") ? "" : "value='" . $tgl_start . "'" ?>>
+                        </div>
+                      </div>
+                      <div class="col-2">
+                        <div class="form-group">
+                          <label for="tgl-end">Until Date</label>
+                          <input type="date" class="form-control" id="tgl-end" name="tgl-end" <?= ($tgl_end == "") ? "" : "value='" . $tgl_end . "'" ?>>
+                        </div>
                       </div>
                       <div class="col-2">
                         <div class="form-group">
@@ -242,7 +261,22 @@ if (isset($_SESSION['login_status']) && $_SESSION['login_status'] == true) {
                       <div class="hargaCount mt-4">
                         <?php
                         $nama_pengguna = '';
+                        $where4 = array();
                         $sql01 = "SELECT * FROM new_lead nl JOIN prospect ps ON nl.Id = ps.Id_newlead WHERE nl.id_pengguna = " . $row['Id'];
+                        if ($probability == "Converted" || empty($probability)) {
+                          if (!empty($tgl_start) && !empty($tgl_end)) {
+                            $where4[] = "DATE(nl.created_at) BETWEEN '" . $tgl_start . "' AND '" . $tgl_end . "'";
+                          }
+                          if (!empty($tgl_start) && empty($tgl_end)) {
+                            $where4[] = "DATE(nl.created_at) BETWEEN '" . $tgl_start . "' AND '" . $tgl_now . "'";
+                          }
+                          if (empty($tgl_start) && !empty($tgl_end)) {
+                            $where4[] = "DATE(nl.created_at) BETWEEN '" . $tgl_now . "' AND '" . $tgl_end . "'";
+                          }
+                          if (!empty($where4)) {
+                            $sql01 .= " AND " . implode(" AND ", $where4);
+                          }
+                        }
                         $result01 = mysqli_query($conn, $sql01);
                         $tercapai = 0;
                         while ($data = mysqli_fetch_assoc($result01)) {
@@ -303,6 +337,15 @@ if (isset($_SESSION['login_status']) && $_SESSION['login_status'] == true) {
               $sqlNewlead = "SELECT * FROM new_lead WHERE id_pengguna = " . $row['Id'];
               if (!empty($probability)) {
                 $where3[] = "Probability = '" . $probability . "'";
+              }
+              if (!empty($tgl_start) && !empty($tgl_end)) {
+                $where3[] = "DATE(created_at) BETWEEN '" . $tgl_start . "' AND '" . $tgl_end . "'";
+              }
+              if (!empty($tgl_start) && empty($tgl_end)) {
+                $where3[] = "DATE(created_at) BETWEEN '" . $tgl_start . "' AND '" . $tgl_now . "'";
+              }
+              if (empty($tgl_start) && !empty($tgl_end)) {
+                $where3[] = "DATE(created_at) BETWEEN '" . $tgl_now . "' AND '" . $tgl_end . "'";
               }
               if (!empty($where3)) {
                 $sqlNewlead .= " AND " . implode(" AND ", $where3);
