@@ -17,6 +17,16 @@ if ($resultCek->num_rows == 0) {
     header("Location: ../");
     exit;
 }
+$sqlCek2 = "SELECT * FROM packages";
+$resultCek2 = mysqli_query($conn, $sqlCek2);
+if ($resultCek2->num_rows == 0) {
+    $_SESSION['msg-f'] = [
+        'key' => 'Data Package tidak ada',
+        'timestamp' => time()
+    ];
+    header("Location: ../");
+    exit;
+}
 
 ?>
 
@@ -389,7 +399,7 @@ if ($resultCek->num_rows == 0) {
                                             <div class="col-lg-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="sales-rep">Sales Representativ</label>
-                                                    <select class="form-control" id="sales-rep" name="sales-rep" required <?= ($levelIs_login == 3) ? "disabled" : "" ?>>
+                                                    <select class="form-control" id="sales-rep" name="sales-rep" required <?= ($levelIs_login == 3) ? "readonly" : "" ?>>
                                                         <?php if ($levelIs_login != 3) { ?>
                                                             <option value="">-- Select Name --</option>
                                                         <?php } ?>

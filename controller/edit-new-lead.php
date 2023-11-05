@@ -10,10 +10,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $address = $_POST["address"];
     $phonenumber = $_POST["phonenumber"];
     $email = $_POST["email"];
-    $companyname = $_POST["companyname"];
-    $companyaddress = $_POST["companyaddress"];
-    $companyphonenumber = $_POST["companyphonenumber"];
-    $companyemail = $_POST["companyemail"];
+    $companyname = isset($_POST["companyname"]) ? $_POST["companyname"] : "-";
+    $companyaddress = isset($_POST["companyaddress"]) ? $_POST["companyaddress"] : "-";
+    $companyphonenumber = isset($_POST["companyphonenumber"]) ? $_POST["companyphonenumber"] : "-";
+    $companyemail = isset($_POST["companyemail"]) ? $_POST["companyemail"] : "-";
     $status = $_POST["status"];
     $probability = $_POST["probability"];
     $source = $_POST["source"];

@@ -52,8 +52,8 @@
                     </div>
                     <div class="form-group">
                       <label for="jenis">Jenis</label>
-                      <select class="form-control" id="jenis" name="jenis">
-                        <option style="display: none;">-- Pilih Jenis Packagae --</option>
+                      <select class="form-control" id="jenis" name="jenis" required>
+                        <option style="display: none;">-- Pilih Jenis Package --</option>
                         <?php
                         $sql = "SELECT * FROM jenis";
                         $result = $conn->query($sql);
@@ -72,7 +72,8 @@
                     </div>
                     <div class="form-group">
                       <label for="decs">Deskripsi</label>
-                      <textarea class="form-control" id="decs" name="decs" rows="3"></textarea>
+                      <textarea class="form-control" id="decs" name="decs" rows="3" required></textarea>
+                      <small id="decs" class="form-text text-muted">*jika tidak ada deskripsi isikan "-"</small>
                     </div>
                     <button class="btn bg-custom-lgreen" style="color: #FFFF !important;">Simpan Data</button>
                   </form>

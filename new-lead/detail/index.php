@@ -15,7 +15,7 @@ if (isset($_GET['id'])) {
     $selectStmt = $conn->prepare($selectSql);
 
     if ($selectStmt) {
-        $selectStmt->bind_param("i", $id);
+        $selectStmt->bind_param("s", $id);
         $selectStmt->execute();
         $result = $selectStmt->get_result();
         $row = $result->fetch_assoc();
@@ -334,6 +334,7 @@ if (isset($_GET['id'])) {
                                     } ?>
                                 </div>
                             </div>
+                            <a href="../" class="btn btn-secondary btn-sm mb-4"><i class="fas fa-chevron-left"></i> Kembali</a>
                         </div>
                     </div>
                 </div>

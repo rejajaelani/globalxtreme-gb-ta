@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 19, 2023 at 06:48 PM
+-- Generation Time: Nov 05, 2023 at 05:42 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.24
 
@@ -31,15 +31,6 @@ CREATE TABLE `jenis` (
   `Id` int(11) NOT NULL,
   `Nama_jenis` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `jenis`
---
-
-INSERT INTO `jenis` (`Id`, `Nama_jenis`) VALUES
-(3, 'Donat'),
-(5, 'Mie Ayam'),
-(6, 'Bakso Edit');
 
 -- --------------------------------------------------------
 
@@ -81,13 +72,6 @@ CREATE TABLE `packages` (
   `Harga_jual` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `packages`
---
-
-INSERT INTO `packages` (`Id`, `Id_jenis`, `Nama_Packages`, `Deskripsi`, `Harga_jual`) VALUES
-(4, 5, 'Diskon 50% Edit', '-', 1000000);
-
 -- --------------------------------------------------------
 
 --
@@ -113,9 +97,9 @@ CREATE TABLE `pengguna` (
 --
 
 INSERT INTO `pengguna` (`Id`, `Nama`, `Username`, `Password`, `Level`, `Foto`, `Status`, `Email`, `sales_from`, `is_login`, `Last_login`) VALUES
-(8, 'Admin Test', 'admin', '$2y$10$POXgL.zlyG/dL.1pS3YPc.oN/j/qhfWZiMfmnNUGlP.g2p8wyTPbe', '1', 'image_652c083dd2a9e.png', 1, 'admin@gmail.com', NULL, 387, '2023-10-20 00:47:11'),
-(9, 'Sales', 'sales', '$2y$10$zt4DjGcHzb5qi4v1MIBrd.iPDgP7kAn8JtW27XVDBrQ937AtmXv5G', '3', 'image_652c08923834b.png', 1, 'sales@gmail.com', NULL, 0, '2023-10-20 00:46:55'),
-(10, 'Super Admin', 'superadmin', '$2y$10$PNfkROIOx7czBVKKVhG3RevJ5wnpIwW.SXaUv91U.Tc9lFzCcmY5W', '2', 'image_652c08dfe7b99.png', 1, 'superadmin@gmail.com', NULL, 0, '2023-10-15 23:44:31');
+(8, 'Admin', 'admin', '$2y$10$MARJV/kBSTaXy0vsKnT9Yu3Z7GSX0bUdLOLByfCp4CE9JtNQPlwRC', '1', 'image_6547b40774a91.jpg', 1, 'admin@gmail.com', NULL, 0, '2023-11-06 00:25:35'),
+(12, 'Sales', 'sales', '$2y$10$DCSPAk9BIT0EBPd2OOUhGupEPXbRRNiKiK1gKecc.cXmLntGTXifS', '3', 'image_6547b4bc4964a.jpg', 1, 'sales@gmail.com', NULL, 0, '2023-11-06 00:15:43'),
+(13, 'Super Admin', 'superadmin', '$2y$10$KTNf/dcMbm14DSramXVzheLG8fC1erRTMewGPg438pzObJrjUAdgK', '2', 'image_6547b519d5d43.jpg', 1, 'superadmin@gmail.com', NULL, 0, '2023-11-05 23:32:16');
 
 -- --------------------------------------------------------
 
@@ -211,7 +195,6 @@ ALTER TABLE `pengguna`
 --
 ALTER TABLE `prospect`
   ADD PRIMARY KEY (`Id`),
-  ADD KEY `Id_packages` (`Id_packages`),
   ADD KEY `Id_pengguna` (`Id_pengguna`),
   ADD KEY `fk_prospect_newLead` (`Id_newlead`);
 
@@ -230,19 +213,19 @@ ALTER TABLE `tb_notes_newlead`
 -- AUTO_INCREMENT for table `jenis`
 --
 ALTER TABLE `jenis`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `packages`
 --
 ALTER TABLE `packages`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `pengguna`
 --
 ALTER TABLE `pengguna`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tb_notes_newlead`
@@ -271,7 +254,6 @@ ALTER TABLE `packages`
 --
 ALTER TABLE `prospect`
   ADD CONSTRAINT `fk_prospect_newLead` FOREIGN KEY (`Id_newlead`) REFERENCES `new_lead` (`Id`),
-  ADD CONSTRAINT `prospect_ibfk_2` FOREIGN KEY (`Id_packages`) REFERENCES `packages` (`Id`),
   ADD CONSTRAINT `prospect_ibfk_3` FOREIGN KEY (`Id_pengguna`) REFERENCES `pengguna` (`Id`);
 
 --

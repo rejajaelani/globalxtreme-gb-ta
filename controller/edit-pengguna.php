@@ -66,6 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+
     // global $nama_foto;
     // var_dump($name_foto);
 
@@ -73,38 +74,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cekFoto = "SELECT Foto FROM pengguna WHERE Id = " . $editUserId;
     $resultCekFoto = mysqli_query($conn, $cekFoto);
     while ($cek = mysqli_fetch_assoc($resultCekFoto)) {
-        $oldPhotoPath = $uploadDirectory . $cek['Foto']; // Gantilah dengan path ke foto lama Anda
-        if (file_exists($oldPhotoPath)) {
-            if (unlink($oldPhotoPath)) {
-                $sql = "UPDATE pengguna SET Nama = '$name', Username = '$username', Password = '$password', Email = '$email', Level = '$level', Status = $status, Foto = '$name_foto' WHERE Id = " . $editUserId;
-                $result = mysqli_query($conn, $sql);
-                if ($result) {
-                    $_SESSION['msg'] = [
-                        'key' => 'Update data pengguna berhasil',
-                        'timestamp' => time()
-                    ];
-                    header("Location: ../pengguna/");
-                    exit;
-                } else {
-                    // echo 'Error : ' . mysqli_error($conn);
-                    $_SESSION['msg-f'] = [
-                        'key' => 'Error : ' . mysqli_error($conn),
-                        'timestamp' => time()
-                    ];
-                    header("Location: ../pengguna/");
-                    exit;
-                }
-            } else {
-                $_SESSION['msg-f'] = [
-                    'key' => 'Gagal menghapus foto lama',
-                    'timestamp' => time()
-                ];
-                header("Location: ../pengguna/");
-                exit;
-            }
+        if ($fileName != "") {
+            $oldPhotoPath = $uploadDirectory . $cek['Foto'];
+            file_exists($oldPhotoPath);
+            unlink($oldPhotoPath);
+        }
+        $sql = "UPDATE pengguna SET Nama = '$name', Username = '$username', Password = '$password', Email = '$email', Level = '$level', Status = $status, Foto = '$name_foto' WHERE Id = " . $editUserId;
+        $result = mysqli_query($conn, $sql);
+        if ($result) {
+            $_SESSION['msg'] = [
+                'key' => 'Update data pengguna berhasil',
+                'timestamp' => time()
+            ];
+            header("Location: ../pengguna/");
+            exit;
         } else {
+            // echo 'Error : ' . mysqli_error($conn);
             $_SESSION['msg-f'] = [
-                'key' => 'Foto lama tidak ditemukan',
+                'key' => 'Error : ' . mysqli_error($conn),
                 'timestamp' => time()
             ];
             header("Location: ../pengguna/");

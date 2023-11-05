@@ -144,7 +144,7 @@ if ($resultIs_login->num_rows > 0) {
               <div class="card">
                 <div class="card-header bg-white">
                   <a href="tambah-data/" class="btn bg-custom-lgreen mt-2 mb-2" style="color: #FFFF !important;">
-                    <i class="fas fa-plus"></i> Tambah Jenis Packagae
+                    <i class="fas fa-plus"></i> Tambah Jenis Package
                   </a>
                   <h3 class="card-title text-center" style="width: 100%;">Data Jenis Package</h3>
                 </div>

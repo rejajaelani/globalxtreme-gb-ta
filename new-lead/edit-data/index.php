@@ -106,25 +106,25 @@ $status = $row['Status'];
                                             <div class="form-group row">
                                                 <label for="companyname" class="col-sm-2 col-form-label">Company Name</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="companyname" name="companyname" value="<?= $row['Companyname'] ?>" required>
+                                                    <input type="text" class="form-control" id="companyname" name="companyname" value="<?= $row['Companyname'] ?>">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="companyaddress" class="col-sm-2 col-form-label">Company Address</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="companyaddress" name="companyaddress" value="<?= $row['Companyaddress'] ?>" required>
+                                                    <input type="text" class="form-control" id="companyaddress" name="companyaddress" value="<?= $row['Companyaddress'] ?>">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="companyphonenumber" class="col-sm-2 col-form-label">Company Phone Number</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="companyphonenumber" name="companyphonenumber" value="<?= $row['Companyphonenumber'] ?>" required>
+                                                    <input type="text" class="form-control" id="companyphonenumber" name="companyphonenumber" value="<?= $row['Companyphonenumber'] ?>">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="companyemail" class="col-sm-2 col-form-label">Company Email</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" id="companyemail" name="companyemail" value="<?= $row['Companyemail'] ?>" required>
+                                                    <input type="text" class="form-control" id="companyemail" name="companyemail" value="<?= $row['Companyemail'] ?>">
                                                 </div>
                                             </div>
                                         </div>

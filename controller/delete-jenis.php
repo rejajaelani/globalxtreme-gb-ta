@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 $stmt->bind_param("i", $id);
                 if ($stmt->execute()) {
                     $_SESSION['msg'] = [
-                        'key' => 'Berhasil menambahkan jenis package',
+                        'key' => 'Berhasil menghapus jenis package',
                         'timestamp' => time()
                     ];
                     header("Location: ../../jenis-package/");

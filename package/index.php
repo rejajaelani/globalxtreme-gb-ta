@@ -180,7 +180,7 @@ if ($resultIs_login->num_rows > 0) {
                             <a href="edit-data/?id=<?= $row['Id'] ?>" class="btn btn-primary">
                               <i class="fas fa-edit"></i> Edit
                             </a>
-                            <a href="../controller/delete-pengguna.php/?id=<?= $row['Id'] ?>" class="btn btn-danger">
+                            <a href="../controller/delete-package.php/?id=<?= $row['Id'] ?>" class="btn btn-danger">
                               <i class="fas fa-trash-alt"></i> Delete
                             </a>
                           </td>
