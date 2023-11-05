@@ -43,7 +43,6 @@ if ($levelIs_login == 3) {
 } else {
     $sales_src = isset($_GET['sales-src']) ? $_GET['sales-src'] : '';
 }
-$status = isset($_GET['status']) ? $_GET['status'] : '';
 $probability = isset($_GET['probability']) ? $_GET['probability'] : '';
 $tgl_start = isset($_GET['tgl-start']) ? $_GET['tgl-start'] : '';
 $tgl_end = isset($_GET['tgl-end']) ? $_GET['tgl-end'] : '';
@@ -58,8 +57,8 @@ if (!empty($sales_src)) {
     $where[] = "ps.sales_representativ = " . $sales_src;
 }
 
-if (!empty($status)) {
-    $where[] = "nl.Probability LIKE '%" . $status . "%'";
+if (!empty($probability)) {
+    $where[] = "nl.Probability LIKE '%" . $probability . "%'";
 }
 
 if (!empty($tgl_start) && !empty($tgl_end)) {
@@ -223,12 +222,12 @@ if (!$result) {
                                             <div class="col-4"></div>
                                             <div class="col-4">
                                                 <div class="form-group">
-                                                    <label for="status">Select Status</label>
-                                                    <select class="form-control" id="status" name="status">
-                                                        <option value="">-- Select Status --</option>
-                                                        <option value="Converted" <?= ($status == 'Converted') ? 'selected' : ''; ?>>Converted</option>
-                                                        <option value="Pending" <?= ($status == 'Pending') ? 'selected' : ''; ?>>Pending</option>
-                                                        <option value="Cancel" <?= ($status == 'Cancel') ? 'selected' : ''; ?>>Cancel</option>
+                                                    <label for="probability">Select Probability</label>
+                                                    <select class="form-control" id="probability" name="probability">
+                                                        <option value="">-- Select Probability --</option>
+                                                        <option value="Converted" <?= ($probability == 'Converted') ? 'selected' : ''; ?>>Converted</option>
+                                                        <option value="Pending" <?= ($probability == 'Pending') ? 'selected' : ''; ?>>Pending</option>
+                                                        <option value="Cancel" <?= ($probability == 'Cancel') ? 'selected' : ''; ?>>Cancel</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -253,7 +252,7 @@ if (!$result) {
                                     </form>
                                     <form action="../../controller/print.php" method="post" target="_blank">
                                         <input type="hidden" name="sales-src" id="sales-src" value="<?= $sales_src ?>">
-                                        <input type="hidden" name="probability" id="probability" value="<?= $status ?>">
+                                        <input type="hidden" name="probability" id="probability" value="<?= $probability ?>">
                                         <input type="hidden" name="type" id="type" value="Prospect">
                                         <input type="hidden" name="tgl-start" id="tgl-start" value="<?= $tgl_start ?>">
                                         <input type="hidden" name="tgl-end" id="tgl-end" value="<?= $tgl_end ?>">

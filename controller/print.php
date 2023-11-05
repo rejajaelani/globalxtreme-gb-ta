@@ -68,8 +68,8 @@ if ($type == 'New Lead') {
         $where[] = "Probability LIKE '%" . $probability . "%'";
     }
 } else {
-    if (!empty($status)) {
-        $where[] = "ps.Probability LIKE '%" . $status . "%'";
+    if (!empty($probability)) {
+        $where[] = "nl.Probability LIKE '%" . $probability . "%'";
     }
 }
 
@@ -272,7 +272,7 @@ if (!$result) {
                         }
                         $no++; // Tingkatkan nomor baris setiap kali iterasi
                     } else {
-                        echo "<tr><td colspan='9'>Tidak ada data new lead.</td></tr>";
+                        echo "<tr><td colspan='9'>Tidak ada data prospect.</td></tr>";
                     }
 
                     // Tutup koneksi
