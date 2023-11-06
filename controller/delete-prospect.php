@@ -13,7 +13,7 @@ function deleteUserData($id)
 
     if ($stmt) {
         // Mengikat parameter
-        $stmt->bind_param("i", $id);
+        $stmt->bind_param("s", $id);
 
         if ($stmt->execute()) {
             return true; // Data berhasil dihapus

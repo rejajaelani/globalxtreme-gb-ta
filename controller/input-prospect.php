@@ -63,6 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Inisialisasi variabel
     $id_prospect = '';
+    $detik = date('s');
 
     // Query untuk menghitung jumlah baris dalam tabel prospect
     $sql = "SELECT COUNT(*) as count FROM prospect";
@@ -81,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $count = $row['count'];
 
     // Membuat id_prospect yang unik
-    $id_prospect = 'PRO' . str_pad($count + 1, 4, '0', STR_PAD_LEFT); // Format 'PRO0001', 'PRO0002', dll.
+    $id_prospect = 'PRO' . str_pad($count + 1, 4, '0', STR_PAD_LEFT) . $detik; // Format 'PRO0001', 'PRO0002', dll.
 
     // Fungsi untuk menghasilkan nama acak untuk file
     function generateRandomFileName($file_name)
