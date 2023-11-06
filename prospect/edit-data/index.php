@@ -305,7 +305,7 @@ if (!$result) {
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="id-card-no">Id Card No.</label>
-                                                    <input type="number" class="form-control" id="id-card-no" name="id-card-no" placeholder="No Id Card..." value="<?= $row['Id_card_no'] ?>" required>
+                                                    <input type="number" class="form-control" id="id-card-no" name="id-card-no" placeholder="No Id Card..." value="<?= $row['Id_card_no'] ?>">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="id-card-foto">Id Card Photo</label>
@@ -454,7 +454,7 @@ if (!$result) {
                                             <div class="col-lg-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="sales-rep">Sales Representativ</label>
-                                                    <select class="form-control" id="sales-rep" name="sales-rep" required <?= ($levelIs_login == 3) ? "disabled" : "" ?>>
+                                                    <select class="form-control" id="sales-rep" name="sales-rep" required <?= ($levelIs_login == 3) ? "readonly" : "" ?>>
                                                         <option value="">-- Select Name --</option>
                                                         <?php
                                                         // Query SQL untuk mengambil data pengguna

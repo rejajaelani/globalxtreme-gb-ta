@@ -24,6 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_newlead = '';
 
     // Query untuk menghitung jumlah baris dalam tabel newlead
+
+    $detik = date('s');
+
     $sql = "SELECT COUNT(*) as count FROM new_lead";
     $result = mysqli_query($conn, $sql);
 
@@ -35,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $count = $row['count'];
 
     // Membuat id_newlead yang unik
-    $id_newlead = 'LD' . str_pad($count + 1, 4, '0', STR_PAD_LEFT); // Format 'LD0001', 'LD0002', dll.
+    $id_newlead = 'LD' . str_pad($count + 1, 4, '0', STR_PAD_LEFT) . $detik;
 
     $id_pengguna = $_POST["id_pengguna"];
 

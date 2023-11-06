@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $type_general = $_POST["type-general"];
     $mobile_phone = $_POST["mobile-phone"];
     $home_phone = $_POST["home-phone"];
-    $id_card_no = $_POST["id-card-no"];
+    $id_card_no = isset($_POST["id-card-no"]) && !empty($_POST["id-card-no"]) ? $_POST["id-card-no"] : 0;
     $passport_no = isset($_POST["passport-no"]) && !empty($_POST["passport-no"]) ? $_POST["passport-no"] : 0;
     $street_name = $_POST["street-name"];
     $building_name = $_POST["building-name"];
@@ -43,8 +43,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $lead_tele = $_POST["lead-tele"];
     $general_notes_all = $_POST["general-notes-all"];
 
-    $id_card_foto_name = $_FILES["id-card-foto"]["name"];
-    $id_card_foto_tmp = $_FILES["id-card-foto"]["tmp_name"];
+    // $id_card_foto_name = $_FILES["id-card-foto"]["name"];
+    // $id_card_foto_tmp = $_FILES["id-card-foto"]["tmp_name"];
+    if (isset($_FILES["id-card-foto"]) && !empty($_FILES["id-card-foto"]["name"])) {
+        $passport_foto_name = $_FILES["id-card-foto"]["name"];
+        $passport_foto_tmp = $_FILES["id-card-foto"]["tmp_name"];
+    } else {
+        $passport_foto_name = ""; // Mengisi dengan string kosong jika tidak ada file passport foto yang dikirimkan
+        $passport_foto_tmp = ""; // Juga mengisi dengan string kosong
+    }
     if (isset($_FILES["passport-foto"]) && !empty($_FILES["passport-foto"]["name"])) {
         $passport_foto_name = $_FILES["passport-foto"]["name"];
         $passport_foto_tmp = $_FILES["passport-foto"]["tmp_name"];

@@ -209,7 +209,7 @@ $result = mysqli_query($conn, $sql);
                                                 $no = 1; // Inisialisasi nomor baris
                                                 // Output data pengguna ke dalam tabel
                                                 while ($row = $result->fetch_assoc()) {
-                                                    $fullname = $row['Givenname'] . $row['Surname'];
+                                                    $fullname = $row['Givenname'] . " " . $row['Surname'];
                                                     echo "<tr>";
                                                     echo "<td>" . $row['Id'] . "</td>";
                                                     echo "<td><strong>" . $fullname . "</strong><br>" . $row['Curaddress'] . "</td>";

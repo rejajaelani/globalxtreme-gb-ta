@@ -250,11 +250,11 @@ if ($resultCek2->num_rows == 0) {
                                             <div class="col-lg-4 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label for="id-card-no">Id Card No.</label>
-                                                    <input type="number" class="form-control" id="id-card-no" name="id-card-no" placeholder="No Id Card..." required>
+                                                    <input type="number" class="form-control" id="id-card-no" name="id-card-no" placeholder="No Id Card...">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="id-card-foto">Id Card Photo</label>
-                                                    <input type="file" class="form-control-file border rounded p-1" id="id-card-foto" name="id-card-foto" required>
+                                                    <input type="file" class="form-control-file border rounded p-1" id="id-card-foto" name="id-card-foto">
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-6 col-sm-12">
