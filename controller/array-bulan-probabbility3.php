@@ -3,7 +3,7 @@
 $bulan3 = array();
 
 // Loop melalui bulan-bulan
-for ($bulan = 1; $bulan <= 12; $bulan++) {
+for ($bulan = 1; $bulan <= 11; $bulan++) {
     $sql = "SELECT COUNT(*) AS total FROM new_lead WHERE MONTH(created_at) = $bulan AND Probability = 'Converted'";
 
     if (!empty($sales_src)) {

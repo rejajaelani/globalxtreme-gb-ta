@@ -209,9 +209,20 @@ if ($levelIs_login == "3") {
                               <a href="edit-data/?id=<?= $row['Id'] ?>" class="btn btn-primary">
                                 <i class="fas fa-edit"></i> Edit
                               </a>
-                              <a href="../controller/delete-pengguna.php/?id=<?= $row['Id'] ?>" class="btn btn-danger">
-                                <i class="fas fa-trash-alt"></i> Delete
-                              </a>
+                              <?php
+                              if ($row["Status"] === "1") {
+                              ?>
+                                <a href="../controller/edit-status-pengguna.php/?id=<?= $row['Id'] ?>&status=1" class="btn btn-danger">
+                                  Non-Aktif
+                                </a>
+                              <?php
+                              } else {
+                              ?>
+                                <a href="../controller/edit-status-pengguna.php/?id=<?= $row['Id'] ?>&status=0" class="btn btn-success">
+                                  Aktif
+                                </a>
+                              <?php } ?>
+
                             </td>
                       <?php
                           }

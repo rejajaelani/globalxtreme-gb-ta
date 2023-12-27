@@ -25,7 +25,7 @@
                         </div><!-- /.col -->
                         <div class="col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Data Master</a></li>
+                                <li class="breadcrumb-item"><a href="../">Data Master</a></li>
                                 <li class="breadcrumb-item active">Edit Data</li>
                             </ol>
                         </div><!-- /.col -->
@@ -82,13 +82,13 @@
                                                         <option value="3" <?= ($row['Level'] == 3) ? 'selected' : '' ?>>Sales</option>
                                                     </select>
                                                 </div>
-                                                <div class="form-group">
+                                                <!-- <div class="form-group">
                                                     <label for="status">Status</label>
                                                     <select class="form-control" id="status" name="status">
-                                                        <option value="1" <?= ($row['Status'] == 1) ? 'selected' : '' ?>>Aktif</option>
-                                                        <option value="0" <?= ($row['Status'] == 0) ? 'selected' : '' ?>>Non-Aktif</option>
+                                                        <option value="1" <#?= ($row['Status'] == 1) ? 'selected' : '' ?>>Aktif</option>
+                                                        <option value="0" <#?= ($row['Status'] == 0) ? 'selected' : '' ?>>Non-Aktif</option>
                                                     </select>
-                                                </div>
+                                                </div> -->
                                             <?php } else { ?>
                                                 <input type="hidden" name="level" id="level" value="<?= $row['Level'] ?>">
                                                 <input type="hidden" name="status" id="status" value="<?= $row['Status'] ?>">
