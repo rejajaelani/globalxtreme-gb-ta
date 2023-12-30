@@ -38,7 +38,8 @@
   <script src="../assets/plugins/datatables-buttons/js/buttons.print.min.js"></script>
   <script src="../assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
   <!-- ChartJS -->
-  <script src="../assets/plugins/chart.js/Chart.min.js"></script>
+  <!-- <script src="../assets/plugins/chart.js/Chart.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- Sparkline -->
   <script src="../assets/plugins/sparklines/sparkline.js"></script>
   <!-- JQVMap -->

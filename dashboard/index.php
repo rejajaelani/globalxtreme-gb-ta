@@ -11,6 +11,10 @@ function formatRupiah($angka)
   return 'Rp ' . $format_rupiah;
 }
 
+//RUBAH INI BUAT NENTUIN TARGET CAPAIAN SALES
+$target = 10000000;
+//RUBAH INI BUAT NENTUIN TARGET CAPAIAN SALES
+
 ?>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -105,14 +109,17 @@ function formatRupiah($angka)
               </div>
             </div>
             <div class="col-6">
-              <div class="card">
-                <div class="card-body d-flex" style="gap: 20px;">
-                  <img src="../assets/images/trophy.png" width="auto" height="100px" alt="trophy">
-                  <div class="contentwrapper">
-                    <h4>Best Sales Performances</h4>
-                    <?php
+              <?php
+              if ($levelIs_login != 3) {
+              ?>
+                <div class="card">
+                  <div class="card-body d-flex" style="gap: 20px;">
+                    <img src="../assets/images/trophy.png" width="auto" height="100px" alt="trophy">
+                    <div class="contentwrapper">
+                      <h4>Best Seller Perfomances</h4>
+                      <?php
 
-                    $sqlTotRevenue = "SELECT 
+                      $sqlTotRevenue = "SELECT 
                       pg.`Nama`, SUM(pk.`Harga_jual`) AS Harga_jual
                       FROM prospect ps 
                       JOIN packages pk ON pk.`Id` = ps.`Id_packages` 
@@ -121,26 +128,23 @@ function formatRupiah($angka)
                       GROUP BY pg.`Nama` 
                       ORDER BY Harga_jual DESC 
                       LIMIT 1";
-                    $resultTotRevenue = mysqli_query($conn, $sqlTotRevenue);
-                    $totalRevenue = 0;
-                    $namaTop = "-";
-                    while ($rowTotRevenue = $resultTotRevenue->fetch_assoc()) {
-                      $totalRevenue += $rowTotRevenue['Harga_jual'];
-                      $namaTop = $rowTotRevenue['Nama'];
-                    }
+                      $resultTotRevenue = mysqli_query($conn, $sqlTotRevenue);
+                      $totalRevenue = 0;
+                      $namaTop = "-";
+                      while ($rowTotRevenue = $resultTotRevenue->fetch_assoc()) {
+                        $totalRevenue += $rowTotRevenue['Harga_jual'];
+                        $namaTop = $rowTotRevenue['Nama'];
+                      }
 
-                    //RUBAH INI BUAT NENTUIN TARGET CAPAIAN SALES
-                    $target = 1000000;
-                    //RUBAH INI BUAT NENTUIN TARGET CAPAIAN SALES
+                      $persent = ($totalRevenue / $target) * 100;
 
-                    $persent = ($totalRevenue / $target) * 100;
-
-                    ?>
-                    <h6><?= $namaTop ?> <span class="badge badge-success"><?= $persent ?>%</span></h6>
-                    <h5><?= formatRupiah($totalRevenue) ?></h5>
+                      ?>
+                      <h6><?= $namaTop ?> <span class="badge badge-success"><?= $persent ?>%</span></h6>
+                      <h5><?= formatRupiah($totalRevenue) ?></h5>
+                    </div>
                   </div>
                 </div>
-              </div>
+              <?php } ?>
             </div>
           </div>
           <div class="row">
@@ -196,40 +200,84 @@ function formatRupiah($angka)
                   <h6 style="opacity: 0.8;">Sales Tracking Report</h6>
                 </div>
                 <div class="card-body">
-                  <table id="myDataTable" class="table table-striped table-bordered display">
-                    <thead>
-                      <tr>
-                        <th style="width: 20px;">#</th>
-                        <th>Sales</th>
-                        <th>Cancel</th>
-                        <th>Converted</th>
-                        <th>Pending</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <!-- Data akan ditambahkan di sini -->
-                      <?php
-                      $sqlDT = "SELECT 
-                          pg.Nama, 
-                          (SELECT COUNT(nl.id_pengguna) FROM new_lead nl WHERE nl.id_pengguna = pg.id AND Probability = 'Cancel') AS Cancel, 
-                          (SELECT COUNT(nl.id_pengguna) FROM new_lead nl WHERE nl.id_pengguna = pg.id AND Probability = 'Converted') AS Converted, 
-                          (SELECT COUNT(nl.id_pengguna) FROM new_lead nl WHERE nl.id_pengguna = pg.id AND Probability = 'Pending') AS Pending 
-                          FROM pengguna pg";
-                      $resultDT = mysqli_query($conn, $sqlDT);
-                      $no = 1;
-                      while ($rowDT = $resultDT->fetch_assoc()) {
-                      ?>
+                  <?php if ($levelIs_login == 3) { ?>
+                    <table class="table table-striped table-bordered display">
+                      <thead>
                         <tr>
-                          <td><?= $no ?></td>
-                          <td><?= $rowDT['Nama'] ?></td>
-                          <td><?= $rowDT['Cancel'] ?></td>
-                          <td><?= $rowDT['Converted'] ?></td>
-                          <td><?= $rowDT['Pending'] ?></td>
+                          <th style="width: 20px;">#</th>
+                          <th>Sales</th>
+                          <th>Converted</th>
+                          <th>Cancel</th>
+                          <th>Pending</th>
                         </tr>
-                      <?php $no++;
-                      } ?>
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        <!-- Data akan ditambahkan di sini -->
+                        <?php
+                        $sqlDT = "SELECT 
+                                    pg.Nama, 
+                                    (SELECT COUNT(nl.id_pengguna) FROM new_lead nl WHERE nl.id_pengguna = pg.id AND nl.`Probability` = 'Cancel' AND MONTH(nl.`created_at`) = $bulan_src) AS Cancel, 
+                                    (SELECT SUM(pk.Harga_jual) FROM prospect ps JOIN packages pk ON pk.Id = ps.Id_packages JOIN new_lead nl ON nl.`Id` = ps.`Id_newlead` WHERE pg.Id = ps.Id_pengguna AND MONTH(nl.`created_at`) = $bulan_src) AS Harga_Jual, 
+                                    (SELECT COUNT(nl.id_pengguna) FROM new_lead nl WHERE nl.id_pengguna = pg.id AND nl.Probability = 'Pending' AND MONTH(nl.`created_at`) = $bulan_src) AS Pending 
+                                FROM 
+                                    pengguna pg
+                                WHERE pg.`Id` = $idIs_login 
+                                ";
+                        $resultDT = mysqli_query($conn, $sqlDT);
+                        $no = 1;
+                        while ($rowDT = $resultDT->fetch_assoc()) {
+                          $persentC = ($rowDT['Harga_Jual'] / $target) * 100;
+                        ?>
+                          <tr>
+                            <td><?= $no ?></td>
+                            <td><?= $rowDT['Nama'] ?></td>
+                            <td><?= $persentC . "%" ?></td>
+                            <td><?= $rowDT['Cancel'] ?></td>
+                            <td><?= $rowDT['Pending'] ?></td>
+                          </tr>
+                        <?php $no++;
+                        } ?>
+                      </tbody>
+                    </table>
+                  <?php } else { ?>
+                    <table id="myDataTable" class="table table-striped table-bordered display">
+                      <thead>
+                        <tr>
+                          <th style="width: 20px;">#</th>
+                          <th>Sales</th>
+                          <th>Converted</th>
+                          <th>Cancel</th>
+                          <th>Pending</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- Data akan ditambahkan di sini -->
+                        <?php
+                        $sqlDT = "SELECT 
+                                    pg.Nama, 
+                                    (SELECT COUNT(nl.id_pengguna) FROM new_lead nl WHERE nl.id_pengguna = pg.id AND Probability = 'Cancel') AS Cancel, 
+                                    (SELECT SUM(pk.Harga_jual) FROM prospect ps JOIN packages pk ON pk.Id = ps.Id_packages WHERE pg.Id = ps.Id_pengguna) AS Harga_Jual, 
+                                    (SELECT COUNT(nl.id_pengguna) FROM new_lead nl WHERE nl.id_pengguna = pg.id AND Probability = 'Pending') AS Pending 
+                                FROM 
+                                    pengguna pg;
+                                ";
+                        $resultDT = mysqli_query($conn, $sqlDT);
+                        $no = 1;
+                        while ($rowDT = $resultDT->fetch_assoc()) {
+                          $persentC = ($rowDT['Harga_Jual'] / $target) * 100;
+                        ?>
+                          <tr>
+                            <td><?= $no ?></td>
+                            <td><?= $rowDT['Nama'] ?></td>
+                            <td><?= $persentC . "%" ?></td>
+                            <td><?= $rowDT['Cancel'] ?></td>
+                            <td><?= $rowDT['Pending'] ?></td>
+                          </tr>
+                        <?php $no++;
+                        } ?>
+                      </tbody>
+                    </table>
+                  <?php } ?>
                 </div>
               </div>
             </div>
@@ -245,32 +293,61 @@ function formatRupiah($angka)
     <!-- Script Here -->
     <?php
 
-    $sqlNama = "SELECT * FROM pengguna ORDER BY nama ASC";
+    if ($levelIs_login == 3) {
+      $sqlNama = "SELECT * FROM pengguna WHERE Id = $idIs_login ORDER BY nama ASC";
+    } else {
+      $sqlNama = "SELECT * FROM pengguna ORDER BY nama ASC";
+    }
     $resultNama = mysqli_query($conn, $sqlNama);
     $dataNama = [];
     while ($rowNama = $resultNama->fetch_assoc()) {
       $dataNama[] = $rowNama['Nama'];
     }
 
-    $sqlCancel = "SELECT pg.`Nama`, COALESCE(COUNT(nl.`id_pengguna`), 0) AS jumlah FROM pengguna pg LEFT JOIN new_lead nl ON nl.`id_pengguna` = pg.`Id` AND MONTH(nl.`created_at`) = $bulan_src AND nl.`Probability` = 'Cancel' GROUP BY pg.`Nama` ORDER BY pg.`nama` ASC";
-    $resultCancel = mysqli_query($conn, $sqlCancel);
-    $dataCancel = [];
-    while ($rowCancel = $resultCancel->fetch_assoc()) {
-      $dataCancel[] = $rowCancel['jumlah'];
-    }
+    if ($levelIs_login == 3) {
+      $sqlCancel = "SELECT pg.`Nama`, COALESCE(COUNT(nl.`id_pengguna`), 0) AS jumlah FROM pengguna pg LEFT JOIN new_lead nl ON nl.`id_pengguna` = pg.`Id` AND MONTH(nl.`created_at`) = $bulan_src AND nl.`Probability` = 'Cancel' WHERE pg.`Id` = $idIs_login GROUP BY pg.`Nama` ORDER BY pg.`nama` ASC";
+      $resultCancel = mysqli_query($conn, $sqlCancel);
+      $dataCancel = [];
+      while ($rowCancel = $resultCancel->fetch_assoc()) {
+        $dataCancel[] = $rowCancel['jumlah'] / 100;
+      }
 
-    $sqlConverted = "SELECT pg.`Nama`, COALESCE(COUNT(nl.`id_pengguna`), 0) AS jumlah FROM pengguna pg LEFT JOIN new_lead nl ON nl.`id_pengguna` = pg.`Id` AND MONTH(nl.`created_at`) = $bulan_src AND nl.`Probability` = 'Converted' GROUP BY pg.`Nama` ORDER BY pg.`nama` ASC";
-    $resultConverted = mysqli_query($conn, $sqlConverted);
-    $dataConverted = [];
-    while ($rowConverted = $resultConverted->fetch_assoc()) {
-      $dataConverted[] = $rowConverted['jumlah'];
-    }
+      $sqlConverted = "SELECT pg.`Nama`, SUM(pk.`Harga_jual`) AS Harga_Jual FROM prospect ps JOIN packages pk ON pk.`Id` = ps.`Id_packages` JOIN new_lead nl ON nl.`Id` = ps.`Id_newlead` JOIN pengguna pg ON pg.`Id` = ps.`Id_pengguna` WHERE pg.`Id` = $idIs_login AND MONTH(nl.`created_at`) = $bulan_src GROUP BY pg.`Nama`";
+      $resultConverted = mysqli_query($conn, $sqlConverted);
+      $dataConverted = [];
+      while ($rowConverted = $resultConverted->fetch_assoc()) {
+        $persentConverted = ($rowConverted['Harga_Jual'] / $target) * 100 / 100;
+        $dataConverted[] = $persentConverted;
+      }
 
-    $sqlPending = "SELECT pg.`Nama`, COALESCE(COUNT(nl.`id_pengguna`), 0) AS jumlah FROM pengguna pg LEFT JOIN new_lead nl ON nl.`id_pengguna` = pg.`Id` AND MONTH(nl.`created_at`) = $bulan_src AND nl.`Probability` = 'Pending' GROUP BY pg.`Nama` ORDER BY pg.`nama` ASC";
-    $resultPending = mysqli_query($conn, $sqlPending);
-    $dataPending = [];
-    while ($rowPending = $resultPending->fetch_assoc()) {
-      $dataPending[] = $rowPending['jumlah'];
+      $sqlPending = "SELECT pg.`Nama`, COALESCE(COUNT(nl.`id_pengguna`), 0) AS jumlah FROM pengguna pg LEFT JOIN new_lead nl ON nl.`id_pengguna` = pg.`Id` AND MONTH(nl.`created_at`) = $bulan_src AND nl.`Probability` = 'Pending' WHERE pg.`Id` = $idIs_login GROUP BY pg.`Nama` ORDER BY pg.`nama` ASC";
+      $resultPending = mysqli_query($conn, $sqlPending);
+      $dataPending = [];
+      while ($rowPending = $resultPending->fetch_assoc()) {
+        $dataPending[] = $rowPending['jumlah'] / 100;
+      }
+    } else {
+      $sqlCancel = "SELECT pg.`Nama`, COALESCE(COUNT(nl.`id_pengguna`), 0) AS jumlah FROM pengguna pg LEFT JOIN new_lead nl ON nl.`id_pengguna` = pg.`Id` AND MONTH(nl.`created_at`) = $bulan_src AND nl.`Probability` = 'Cancel' GROUP BY pg.`Nama` ORDER BY pg.`nama` ASC";
+      $resultCancel = mysqli_query($conn, $sqlCancel);
+      $dataCancel = [];
+      while ($rowCancel = $resultCancel->fetch_assoc()) {
+        $dataCancel[] = $rowCancel['jumlah'] / 100;
+      }
+
+      $sqlConverted = "SELECT pg.`Nama`, SUM(pk.`Harga_jual`) AS Harga_Jual FROM prospect ps JOIN packages pk ON pk.`Id` = ps.`Id_packages` JOIN pengguna pg ON pg.`Id` = ps.`Id_pengguna` GROUP BY pg.`Nama`";
+      $resultConverted = mysqli_query($conn, $sqlConverted);
+      $dataConverted = [];
+      while ($rowConverted = $resultConverted->fetch_assoc()) {
+        $persentConverted = ($rowConverted['Harga_Jual'] / $target) * 100 / 100;
+        $dataConverted[] = $persentConverted;
+      }
+
+      $sqlPending = "SELECT pg.`Nama`, COALESCE(COUNT(nl.`id_pengguna`), 0) AS jumlah FROM pengguna pg LEFT JOIN new_lead nl ON nl.`id_pengguna` = pg.`Id` AND MONTH(nl.`created_at`) = $bulan_src AND nl.`Probability` = 'Pending' GROUP BY pg.`Nama` ORDER BY pg.`nama` ASC";
+      $resultPending = mysqli_query($conn, $sqlPending);
+      $dataPending = [];
+      while ($rowPending = $resultPending->fetch_assoc()) {
+        $dataPending[] = $rowPending['jumlah'] / 100;
+      }
     }
 
     ?>
@@ -327,7 +404,14 @@ function formatRupiah($angka)
               beginAtZero: true
             },
             y: {
-              beginAtZero: true
+              ticks: {
+                callback: function(value, index, values) {
+                  return (value * 100).toFixed(0) + '%'; // Mengonversi nilai ke persentase dengan 2 digit desimal
+                },
+                format: {
+                  style: 'percent'
+                }
+              }
             }
           }
         };

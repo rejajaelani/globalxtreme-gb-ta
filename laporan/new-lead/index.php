@@ -285,9 +285,10 @@ if (!$result) {
                             <div class="kop" style="margin: 15px 0;display: flex;align-items: center;gap: 10px;">
                                 <img src="../../images/logo.png" alt="logo.png" style="width: auto;height: 100px;">
                                 <div class="text-kop">
-                                    <p class="m-0">Global Xtreme</p>
-                                    <p class="m-0">Alamat : Penarungan, Kecamatan Mengwi, Babupaten Badung, Bali</p>
-                                    <p class="m-0">Telepon : 081907164770 </p>
+                                    <p class="m-0">GlobalXtreme</p>
+                                    <p class="m-0">Jl. Raya Kerobokan No.388X, Kerobokan Kelod, Kec. Kuta Utara, Kabupaten
+                                        Badung, Bali 80361</p>
+                                    <p class="m-0">Telepon : (0361) 736811</p>
                                 </div>
                             </div>
                             <div class="card">

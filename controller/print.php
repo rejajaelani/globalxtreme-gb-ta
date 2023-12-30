@@ -158,9 +158,10 @@ if (!$result) {
         <div class="kop" style="margin: 15px 0;padding: 5px;display: flex;align-items: center;gap: 10px;border: 1px solid #000;">
             <img src="../images/logo.png" alt="logo.png" style="width: auto;height: 100px;">
             <div class="text-kop" style="padding-left: 10px;border-left: 1px solid #000;">
-                <p style="margin: 0;">Global Xtreme</p>
-                <p style="margin: 0;">Alamat : Penarungan, Kecamatan Mengwi, Babupaten Badung, Bali</p>
-                <p style="margin: 0;">Telepon : 081907164770 </p>
+                <p style="margin: 0;">GlobalXtreme</p>
+                <p style="margin: 0;">Jl. Raya Kerobokan No.388X, Kerobokan Kelod, Kec. Kuta Utara, Kabupaten
+                    Badung, Bali 80361</p>
+                <p style="margin: 0;">Telepon : (0361) 736811</p>
             </div>
         </div>
         <p style="margin: 0;padding-bottom: 10px;font-size: 18px;font-weight: bold;">Laporan <?= $type ?></p>
